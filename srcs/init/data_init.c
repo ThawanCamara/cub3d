@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:57 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/04/28 05:43:15 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/04/28 08:05:43 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,3 @@ void	safe_exit(t_game *game)
 	render_clear(game);
 	data_clear(game);
 }
-
-// void	init_handler(t_game *game,
-// 	int (*ini)(t_game *), void (*clr)(t_game *))
-// {
-// 	const void **table = {
-// 		data_init, data_clear,
-// 		render_init, render_clear
-// 	}
-// 	while ()
-// 	{	
-// 	}
-// 	if (!ini(game))
-// 	{
-// 		clr(game);
-// 		exit(1);
-// 	}
-// }

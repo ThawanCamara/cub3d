@@ -6,7 +6,7 @@
 #    By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 07:08:10 by tde-souz          #+#    #+#              #
-#    Updated: 2023/04/28 06:29:25 by tde-souz         ###   ########.fr        #
+#    Updated: 2023/04/28 07:09:38 by tde-souz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,10 +62,9 @@ OBJS		=	$(SRCS:.c=.o)
 # ********************************************************************************
 all:		${NAME}
 
-#${MLX_DIR}${MLX}.a
-${NAME}:	${LIBFT_DIR}${LIBFT}.a  ${OBJS}
-	${CC} ${CFLAGS} ${OBJS} -o ${NAME}
-#	${CC} ${CFLAGS} ${LDFLAGS} ${OBJS} -o ${NAME}
+
+${NAME}:	${LIBFT_DIR}${LIBFT}.a ${MLX_DIR}${MLX}.a ${OBJS}
+	${CC} ${CFLAGS} ${LDFLAGS} ${OBJS} -o ${NAME}
 
 ${LIBFT_DIR}${LIBFT}.a:
 	make -C ${LIBFT_DIR}

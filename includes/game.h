@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:59 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/04/28 05:55:17 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/04/28 08:30:59 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <unistd.h>
 # include <math.h>
 # include "libft.h"
-//# include "mlx.h"
+# include "mlx.h"
 # include "colortag.h"
 
 // ****************************************************************************
@@ -60,10 +60,12 @@ typedef struct s_cam
 
 }	t_cam;
 
+/* Separar Render entre Game e Instance, Instance ficando responsavel pela gestão de dados de cada janela */
 typedef struct s_render
 {
 	void		*mlx;
 	void		*win;
+	void		*nwin;
 	int			screen_width;
 	int			screen_height;
 	const char*	title;

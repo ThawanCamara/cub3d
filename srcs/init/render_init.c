@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:55 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/04/28 06:24:05 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/04/28 08:06:49 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	render_init(t_game *game)
 	r = game->render;
 	r->screen_width = SCREEN_WIDTH;
 	r->screen_height = SCREEN_HEIGHT;
-	r->mlx = malloc(1);
-	//r->mlx = mlx_init();
-	r->win = malloc(1);
-	//r->win = mlx_new_window(r->mlx, r->screen_width, r->screen_height,
-			// TITLE);
-	return (r->mlx && r->win && 0);
+	r->mlx = mlx_init();
+	r->win = mlx_new_window(r->mlx, r->screen_width, r->screen_height,
+			TITLE);
+	r->nwin = mlx_new_window(r->mlx, r->screen_width, r->screen_height,
+			TITLE);
+	return (r->mlx && r->win);
 }
 
 void	render_clear(t_game *game)

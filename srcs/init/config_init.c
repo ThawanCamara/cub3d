@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 05:26:00 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/04/28 05:50:30 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/04/28 07:04:25 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,6 @@
 #ifndef FUNC_TABLE_SIZE
 # define FUNC_TABLE_SIZE 4
 #endif
-
-/* table = (void **)malloc(sizeof(void *) * FUNC_TABLE_SIZE);
-table[0] = data_init;
-table[1] = data_clear;
-table[2] = render_init;
-table[3] = render_clear;
-table[4] = NULL; */
 
 /* Set a static lookup table for all initilization functions */
 const void	**config_table_builder(void)
