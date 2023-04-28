@@ -1,0 +1,58 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   config_init.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/28 05:26:00 by tde-souz          #+#    #+#             */
+/*   Updated: 2023/04/28 05:50:30 by tde-souz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "game.h"
+
+#ifndef FUNC_TABLE_SIZE
+# define FUNC_TABLE_SIZE 4
+#endif
+
+/* table = (void **)malloc(sizeof(void *) * FUNC_TABLE_SIZE);
+table[0] = data_init;
+table[1] = data_clear;
+table[2] = render_init;
+table[3] = render_clear;
+table[4] = NULL; */
+
+/* Set a static lookup table for all initilization functions */
+const void	**config_table_builder(void)
+{
+	static const void	*table[FUNC_TABLE_SIZE] = {
+		data_init, data_clear,
+		render_init, render_clear
+	};
+
+	return ((const void **) table);
+}
+
+/* Calls init funcs in order, if one fails call the clear ones in reverse */
+void	init_handler(t_game *game)
+{
+	const void	**table = config_table_builder();
+	int			i;
+
+	i = 0;
+	while (i < FUNC_TABLE_SIZE)
+	{
+		if (!((int (*)())table[i++])(game))
+		{
+			while (i > 0)
+			{
+				((void (*)())table[i])(game);
+				i -= 2;
+			}
+			exit(1);
+		}
+		else
+			i++;
+	}
+}
