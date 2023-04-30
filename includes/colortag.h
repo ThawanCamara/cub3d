@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 09:41:46 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/02/02 12:56:44 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/04/28 18:29:19 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define SILVER		"\e[38;5;7m"
 # define GOLD		"\e[38;5;220m"
 # define LGREEN		"\e[38;5;42m"
+# define B_GRAY		"\e[1;38;5;8m"
 # define B_RED		"\e[1;38;5;9m"
 # define B_GREEN	"\e[1;38;5;10m"
 # define B_YELLOW	"\e[1;38;5;11m"

@@ -6,21 +6,19 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 05:26:00 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/04/28 07:04:25 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/04/29 23:34:54 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game.h"
 
-#ifndef FUNC_TABLE_SIZE
-# define FUNC_TABLE_SIZE 4
-#endif
-
 /* Set a static lookup table for all initilization functions */
 const void	**config_table_builder(void)
 {
 	static const void	*table[FUNC_TABLE_SIZE] = {
+		map_init, map_clear,
 		data_init, data_clear,
+		inst_init, inst_clear,
 		render_init, render_clear
 	};
 
@@ -33,19 +31,23 @@ void	init_handler(t_game *game)
 	const void	**table = config_table_builder();
 	int			i;
 
-	i = 0;
-	while (i < FUNC_TABLE_SIZE)
+	i = -1;
+	while (++i < FUNC_TABLE_SIZE)
 	{
 		if (!((int (*)())table[i++])(game))
-		{
-			while (i > 0)
-			{
-				((void (*)())table[i])(game);
-				i -= 2;
-			}
-			exit(1);
-		}
-		else
-			i++;
+			clear_handler(game, i);
 	}
+}
+
+void	clear_handler(t_game *game, int i)
+{
+	const void	**table = config_table_builder();
+
+	printf("\n====%s Freeing Memory %s====\n", B_TEAL, RESET);
+	while (i > 0)
+	{
+		((void (*)())table[i])(game);
+		i -= 2;
+	}
+	exit(1);
 }

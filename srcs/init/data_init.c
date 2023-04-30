@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:57 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/04/28 08:05:43 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/04/29 23:23:23 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,26 @@
 /* Initializes memory for the game's modules */
 int	data_init(t_game *game)
 {
-	printf("%sInitialization:%s %sData%s\n", B_GREEN, RESET, B_SILVER, RESET);
-	game->render = (t_render *)malloc(sizeof(t_render));
-	game->map = (t_map *)malloc(sizeof(t_map));
-	game->cam = (t_cam *)malloc(sizeof(t_cam));
-	return (game->render && game->map && game->cam);
+	header_log("Initialization", "Data", B_ORANGE);
+	print_log(1, STR_MLX_CONNECT);
+	//game->mlx = malloc(1);
+	game->mlx = mlx_init();
+	condition_log(game->mlx != NULL, STR_MLX_CONNECT_S, STR_MLX_CONNECT_F);
+	return (game->mlx != NULL);
 }
 
 /* Clears allocations made for the game hub */
 void	data_clear(t_game *game)
 {
-	printf("%sClear:%s %sData%s\n", B_YELLOW, RESET, B_SILVER, RESET);
-	free(game->render);
-	free(game->map);
-	free(game->cam);
+	header_log("Clear", "Data", B_YELLOW);
+	free(game->mlx);
 }
 
 /*  */
 void	safe_exit(t_game *game)
 {
 	render_clear(game);
+	inst_clear(game);
 	data_clear(game);
+	map_clear(game);
 }
