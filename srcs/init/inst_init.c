@@ -26,10 +26,8 @@ int	inst_init(t_game *game)
 	while (++i < game->total_insts)
 	{
 		ins = &game->inst[i];
-		ins->render = (t_render *)malloc(sizeof(t_render) * game->total_insts);
-		ins->cam = (t_cam *)malloc(sizeof(t_cam) * game->total_insts);
-		//ins->cam = NULL;
-		validation *= ins->render && ins->cam;
+		ins->cam = (t_cam *)malloc(sizeof(t_cam));
+		validation *= ins->cam != NULL;
 	}
 	condition_log(game->inst && validation, STR_SET_INST_S, STR_SET_INST_F);
 	return (game->inst && validation);
@@ -45,7 +43,6 @@ void	inst_clear(t_game *game)
 	while (++i < game->total_insts)
 	{
 		ins = &game->inst[i];
-		free(ins->render);
 		free(ins->cam);
 	}
 	free(game->inst);

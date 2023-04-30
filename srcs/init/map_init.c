@@ -24,7 +24,7 @@ int	map_init(t_game *game)
 	game->mapdata->path_so = ft_strdup("path_to_south");
 	game->mapdata->path_we = ft_strdup("path_to_west");
 	game->mapdata->path_ea = ft_strdup("path_to_east");
-	game->mapdata->inst_rot = ft_strdup("NWWS");
+	game->mapdata->inst_rot = ft_strdup("NW");
 
 
 	condition_log(game->mapdata != NULL, STR_BUILD_MAP_S, STR_BUILD_DATA_F);

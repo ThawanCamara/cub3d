@@ -6,7 +6,7 @@
 #    By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 07:08:10 by tde-souz          #+#    #+#              #
-#    Updated: 2023/04/29 01:44:07 by tde-souz         ###   ########.fr        #
+#    Updated: 2023/04/30 16:06:28 by tde-souz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,8 +55,9 @@ SRCS		:=	\
 				srcs/init/data_init.c	\
 				srcs/init/map_init.c	\
 				srcs/init/inst_init.c	\
-				srcs/init/render_init.c	\
 				srcs/utils/log.c	\
+				srcs/draw/draw_rect.c	\
+				srcs/draw/check_bounds.c	\
 				srcs/main.c
 
 # ******************************************************************************

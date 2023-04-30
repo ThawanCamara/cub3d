@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:59 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/04/29 23:19:44 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/04/30 17:38:05 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@
 #  define TITLE			"SILENT VIRAS"
 # endif
 
-# define SCREEN_WIDTH	800
+# define SCREEN_OFFSET	800
+# define SCREEN_WIDTH	1600
 # define SCREEN_HEIGHT	600
 
-# define FUNC_TABLE_SIZE 8
+# define FUNC_TABLE_SIZE 6
 
 // ****************************************************************************
 // *                                   ENUMS                                  *
@@ -75,6 +76,14 @@ enum	e_coordinates
 // *                                  STRUCTS                                 *
 // ****************************************************************************
 
+typedef struct	s_imgdata {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_imgdata;
+
 /* typedef struct s_ray
 {
 
@@ -99,18 +108,9 @@ typedef struct s_cam
 	double	pos[2];
 }	t_cam;
 
-typedef struct s_render
-{
-	void		*win;
-	int			screen_width;
-	int			screen_height;
-	const char*	title;
-}	t_render;
-
 typedef struct s_instance
 {
 	double		start_rotation;
-	t_render	*render;
 	t_cam		*cam;
 }	t_inst;
 
@@ -119,8 +119,10 @@ typedef struct s_game
 	short		total_insts;
 	char		enable_parallax;
 	void		*mlx;
+	void		*win;
 	t_map		*mapdata;
 	t_inst		*inst;
+	t_imgdata	*imgdata;
 }	t_game;
 
 const void	**config_table_builder(void);
@@ -143,5 +145,9 @@ void		render_clear(t_game *game);
 void		print_log(int n, ...);
 void		condition_log(char test, char *str_true, char *str_false);
 void		header_log(char *header, char *message, char *color);
+
+
+/* Drawing Functions */
+void	draw_rect(t_game *game, int *size, int *pos, int color);
 
 #endif

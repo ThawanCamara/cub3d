@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:55 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/04/29 23:23:27 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/04/30 14:55:26 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	render_init(t_game *game)
 		r = &game->inst->render[i];
 		r->screen_width = SCREEN_WIDTH;
 		r->screen_height = SCREEN_HEIGHT;
-		//r->win = malloc(1);
 		r->win = mlx_new_window(game->mlx, r->screen_width, r->screen_height,
 			TITLE);
 		validation *= r->win != NULL;
@@ -48,6 +47,6 @@ void	render_clear(t_game *game)
 	{
 		r = &game->inst->render[i];
 		free(r->win);
-		//mlx_destroy_window(game->mlx, r->win);
+		mlx_destroy_window(game->mlx, r->win);
 	}
 }
