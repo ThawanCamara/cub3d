@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:53 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/04/30 17:56:20 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/05/01 00:48:58 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	mouse_test(t_game *game)
 	return (0);
 }
 
+// plotter(t_game *game, t_imgdata *imgdata, )
+
 int	main(int argc, char *argv[])
 {
 	t_game	game;
@@ -54,6 +56,7 @@ int	main(int argc, char *argv[])
 	int y = 200;
 	
 	game.imgdata = malloc(sizeof(t_imgdata));
+	//game.imgdata->img = mlx_new_image(game.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	game.imgdata->img = mlx_new_image(game.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	game.imgdata->addr = mlx_get_data_addr(game.imgdata->img, &game.imgdata->bits_per_pixel, &game.imgdata->line_length, &game.imgdata->endian);
 	for (int i = 0; i < 300; i++)
@@ -65,18 +68,19 @@ int	main(int argc, char *argv[])
 		for (int j = 0; j < 200; j++)
 			my_mlx_pixel_put(game.imgdata, i, j, 0x0000FFAA);
 	mlx_put_image_to_window(game.mlx, game.win, game.imgdata->img, 0, 0);
-/* 	t_imgdata imgdata;
+
+	t_imgdata imgdata;
 
 	imgdata.img = mlx_new_image(game.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	imgdata.addr = mlx_get_data_addr(imgdata.img, &imgdata.bits_per_pixel, &imgdata.line_length, &imgdata.endian);
 	for (int i = 0; i < 300; i++)
 		for (int j = 0; j < 200; j++)
-			my_mlx_pixel_put(&imgdata, i, j, 0x00FFFF00);
+			my_mlx_pixel_put(&imgdata, i, j, 0x0022FF00);
 	for (int i = 0 + SCREEN_OFFSET; i < 300 + SCREEN_OFFSET; i++)
 		for (int j = 0; j < 200; j++)
-			my_mlx_pixel_put(&imgdata, i, j, 0x0000FFAA);
-	mlx_put_image_to_window(game.mlx, game.win, imgdata.img, 0, 0); */
-
+			my_mlx_pixel_put(&imgdata, i, j, 0x00ee3300);
+	mlx_put_image_to_window(game.mlx, game.win, imgdata.img, 0, 0);
+	
 	mlx_string_put(game.mlx, game.win, x, y, 0x00ff0000, "PINTO");
 	mlx_string_put(game.mlx, game.win, x + SCREEN_OFFSET, y, 0x0000ff00, "PENIS");
 /* 	int size[2];
