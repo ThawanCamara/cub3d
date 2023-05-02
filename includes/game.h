@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:59 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/04/30 17:38:05 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/05/02 14:08:33 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <math.h>
 # include "libft.h"
 # include "mlx.h"
+# include "mlx_int.h"
 # include "colortag.h"
 
 // ****************************************************************************
@@ -44,10 +45,12 @@
 // *                                   ENUMS                                  *
 // ****************************************************************************
 
-enum	e_coordinates
+enum	e_screen_mapping
 {
 	X = 0,
-	Y = 1
+	Y = 1,
+	WIDTH = 2,
+	HEIGHT = 3
 };
 
 // ****************************************************************************
@@ -79,6 +82,8 @@ enum	e_coordinates
 typedef struct	s_imgdata {
 	void	*img;
 	char	*addr;
+	unsigned int	*addr2;
+	unsigned long	*addr3;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;

@@ -20,7 +20,7 @@ int	map_init(t_game *game)
 	game->mapdata = malloc(sizeof(t_map));
 
 	/* Inicialização temporaria */
-	game->mapdata->path_no = ft_strdup("path_to_north");
+	game->mapdata->path_no = ft_strdup("assets/textures/darkcube2d_2.xpm");
 	game->mapdata->path_so = ft_strdup("path_to_south");
 	game->mapdata->path_we = ft_strdup("path_to_west");
 	game->mapdata->path_ea = ft_strdup("path_to_east");
