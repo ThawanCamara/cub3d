@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:53 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/05/02 14:19:13 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:18:10 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,6 @@ void	my_mlx_pixel_put(t_imgdata *imgdata, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int	mouse_test(t_game *game)
-{
-	int pos[2];
-
-	mlx_mouse_get_pos(game->mlx, game->win, &pos[X], &pos[Y]);
-	printf("> X: %d | Y: %d\n", pos[X], pos[Y]);
-	int size[2];
-	size[X] = 8;
-	size[Y] = 8;
-	if (pos[X] < SCREEN_WIDTH && pos[X] > 0 && pos[Y] < SCREEN_HEIGHT && pos[Y] > 0)
-		draw_rect(game, size, pos, 0x00ffff00);
-		//mlx_pixel_put(game->mlx, game->win, pos[X], pos[Y], 0x00ffffff);
-		//int	mlx_pixel_put(void *mlx_ptr, void *win_ptr, int x, int y, int color);
-		//my_mlx_pixel_put(game->imgdata, pos[X], pos[Y], 0x000033AA);
-	//my_mlx_pixel_put(game.imgdata, i, j, 0x0000FFAA);
-	return (0);
-}
-
-// plotter(t_game *game, t_imgdata *imgdata, )
-
 int	main(int argc, char *argv[])
 {
 	t_game	game;
@@ -51,39 +31,44 @@ int	main(int argc, char *argv[])
 	game.enable_parallax = 0;
 	game.total_insts = 2;
 
-	init_handler(&game);
-//  4294967236
-//	FF0A8B1C
+	init_handler(&game);	
+	// int size[2];
+	// t_imgdata *imgdata = malloc(sizeof(t_imgdata));
+	// imgdata->img = mlx_xpm_file_to_image(game.mlx, game.mapdata->tex_path[NORTH], &size[X], &size[Y]);
+	// imgdata->addr = mlx_get_data_addr(imgdata->img, &imgdata->bits_per_pixel, &imgdata->line_length, &imgdata->endian);
+	// t_imgdata img2;
+	// img2.img = mlx_new_image(game.mlx, 64, 32);
+	// img2.addr = mlx_get_data_addr(img2.img, &img2.bits_per_pixel, &img2.line_length, &img2.endian);
+	// my_mlx_pixel_put(&img2, 16, 16, 0x0022FF00);
+	// img2.addr = ft_strdup(imgdata->addr);
+	// mlx_put_image_to_window(game.mlx, game.win, img2.img, 0, 0);
+	mlx_loop(game.mlx);
+	return (0);
+}
 
-// >> 4278881052
 
-	int size[2];
+
+
+/* 	int size[2];
 	t_imgdata *imgdata = malloc(sizeof(t_imgdata));
 	imgdata->img = mlx_xpm_file_to_image(game.mlx, game.mapdata->path_no, &size[X], &size[Y]);
 	imgdata->addr = mlx_get_data_addr(imgdata->img, &imgdata->bits_per_pixel, &imgdata->line_length, &imgdata->endian);
 	imgdata->addr2 = (unsigned int *)mlx_get_data_addr(imgdata->img, &imgdata->bits_per_pixel, &imgdata->line_length, &imgdata->endian);
-	imgdata->addr3 = (unsigned long *)mlx_get_data_addr(imgdata->img, &imgdata->bits_per_pixel, &imgdata->line_length, &imgdata->endian);
 	printf("bpp: %d\n", imgdata->bits_per_pixel);
 	printf("len: %d\n", imgdata->line_length);
+	printf("size X: %d\n", size[X]);
+	printf("size X: %d\n", size[Y]);
 	printf("\nchar * : \n");
 	for(int i = 0; i < imgdata->line_length ; i++)
 	{
 		ft_printf("|%X|", imgdata->addr[i]);
 	}
-	printf("\nuint * : \n");
-	for(int i = 0; i < imgdata->line_length ; i++)
+	for(int i = 0; i < 731880 ; i++)
 	{
-		ft_printf("|%X|", imgdata->addr2[i]);
+		if (i > 730000)
+			ft_printf("%d > |%X|\n", i, imgdata->addr2[i]);
 	}
-	printf("\nulong * : \n");
-	for(int i = 0; i < imgdata->line_length ; i++)
-	{
-		printf("|%lu\n|", imgdata->addr3[i]);
-	}
-	mlx_put_image_to_window(game.mlx, game.win, imgdata->img, 0, 0);
-	/* 
-	int x = 200;
-	int y = 200; */
+	mlx_put_image_to_window(game.mlx, game.win, imgdata->img, 0, 0); */
 	
 /* 	game.imgdata = malloc(sizeof(t_imgdata));
 	game.imgdata->img = mlx_new_image(game.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -124,8 +109,3 @@ int	main(int argc, char *argv[])
 	pos[X] = 175;
 	pos[Y] = 305;
 	draw_rect(&game, size, pos, 0x00ffff00); */
-	//mlx_loop_hook (game.mlx, mouse_test, &game);
-	mlx_loop(game.mlx);
-	clear_handler(&game, FUNC_TABLE_SIZE - 1);
-	return (0);
-}

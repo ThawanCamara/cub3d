@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:59 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/05/02 14:08:33 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/05/03 17:18:13 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include "libft.h"
 # include "mlx.h"
 # include "mlx_int.h"
+# include "keys.h"
+# include "events.h"
 # include "colortag.h"
 
 // ****************************************************************************
@@ -51,6 +53,22 @@ enum	e_screen_mapping
 	Y = 1,
 	WIDTH = 2,
 	HEIGHT = 3
+};
+
+enum	e_texture_paths
+{
+	NORTH,
+	SOUTH,
+	WEST,
+	EAST
+};
+
+enum	e_game_state
+{
+	MENU,
+	PLAY,
+	PAUSE,
+	END	
 };
 
 // ****************************************************************************
@@ -97,10 +115,7 @@ typedef struct	s_imgdata {
 typedef struct s_map
 {
 	char	**map;
-	char	*path_no;
-	char	*path_so;
-	char	*path_we;
-	char	*path_ea;
+	char	**tex_path;
 	// int		bound_X;
 	// int		bound_Y;
 	char	*inst_rot;
@@ -121,8 +136,9 @@ typedef struct s_instance
 
 typedef struct s_game
 {
-	short		total_insts;
 	char		enable_parallax;
+	int			total_insts;
+	int			state;
 	void		*mlx;
 	void		*win;
 	t_map		*mapdata;
@@ -136,6 +152,7 @@ void		clear_handler(t_game *game, int i);
 
 int			data_init(t_game *game);
 void		data_clear(t_game *game);
+void		setup_controls(t_game *game);
 void		safe_exit(t_game *game);
 
 int			inst_init(t_game *game);
@@ -154,5 +171,20 @@ void		header_log(char *header, char *message, char *color);
 
 /* Drawing Functions */
 void	draw_rect(t_game *game, int *size, int *pos, int color);
+
+void	my_mlx_pixel_put(t_imgdata *imgdata, int x, int y, int color);
+
+/* Controls */
+int		keyboard_onpress(int key, t_game *game);
+int		keyboard_onrelease(int key, t_game *game);
+int		mouse_onpress(int key, int x, int y, t_game *game);
+int		mouse_onrelease(int key, int x, int y, t_game *game);
+int		mouse_move(int x, int y, t_game *game);
+int		window_onclose(t_game *game);
+int		window_onresize(t_game *game);
+
+char*	get_key_name(int value);
+int		get_key_value(char* name);
+
 
 #endif

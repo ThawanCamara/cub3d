@@ -6,7 +6,7 @@
 #    By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 07:08:10 by tde-souz          #+#    #+#              #
-#    Updated: 2023/04/30 16:06:28 by tde-souz         ###   ########.fr        #
+#    Updated: 2023/05/03 15:07:14 by tde-souz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,11 @@ SRCS		:=	\
 				srcs/utils/log.c	\
 				srcs/draw/draw_rect.c	\
 				srcs/draw/check_bounds.c	\
+				srcs/controls/keyboard_controls.c	\
+				srcs/controls/mouse_controls.c	\
+				srcs/controls/window_controls.c	\
+				srcs/controls/keymapper.c	\
+				srcs/controls/setup_controls.c	\
 				srcs/main.c
 
 # ******************************************************************************
@@ -78,7 +83,7 @@ else
 endif
 
 ${LIBFT_DIR}${LIBFT}.a:
-	make -C ${LIBFT_DIR}
+	make -C ${LIBFT_DIR} extra
 
 ${MLX_DIR}${MLX}.a:
 	make -C ${MLX_DIR}
