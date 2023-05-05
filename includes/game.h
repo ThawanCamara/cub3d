@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:59 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/05/03 17:18:13 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/05/04 23:45:37 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,20 @@ enum	e_game_state
 // *                                  STRUCTS                                 *
 // ****************************************************************************
 
-typedef struct	s_imgdata {
+// typedef struct	s_point
+// {
+// 	char	wall;
+// 	char	*content;
+// }	t_point;
+
+typedef struct	s_imgdata
+{
 	void	*img;
 	char	*addr;
 	unsigned int	*addr2;
 	unsigned long	*addr3;
-	int		bits_per_pixel;
-	int		line_length;
+	int		bpp;
+	int		len;
 	int		endian;
 }	t_imgdata;
 
@@ -116,6 +123,7 @@ typedef struct s_map
 {
 	char	**map;
 	char	**tex_path;
+	int		size[2];
 	// int		bound_X;
 	// int		bound_Y;
 	char	*inst_rot;
@@ -146,6 +154,10 @@ typedef struct s_game
 	t_imgdata	*imgdata;
 }	t_game;
 
+// ****************************************************************************
+// *                                FUNCTIONS                                 *
+// ****************************************************************************
+
 const void	**config_table_builder(void);
 void		init_handler(t_game *game);
 void		clear_handler(t_game *game, int i);
@@ -165,14 +177,16 @@ int			render_init(t_game *game);
 void		render_clear(t_game *game);
 
 void		print_log(int n, ...);
-void		condition_log(char test, char *str_true, char *str_false);
+int			assert_log(char test, char *str_true, char *str_false);
 void		header_log(char *header, char *message, char *color);
 
 
 /* Drawing Functions */
-void	draw_rect(t_game *game, int *size, int *pos, int color);
+void	draw_rect(t_imgdata *idata, int *size, int *pos, int color);
+void	draw_pixel(t_imgdata *idata, int *pos, int color);
 
-void	my_mlx_pixel_put(t_imgdata *imgdata, int x, int y, int color);
+/* Vectors */
+void	vector2(int i, int j, int *target_i, int *target_j);
 
 /* Controls */
 int		keyboard_onpress(int key, t_game *game);

@@ -1,33 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_square.c                                      :+:      :+:    :+:   */
+/*   vector_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/30 15:03:06 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/04/30 15:03:06 by tde-souz         ###   ########.fr       */
+/*   Created: 2023/05/04 21:40:45 by tde-souz          #+#    #+#             */
+/*   Updated: 2023/05/04 21:40:45 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game.h"
 
-void	draw_rect(t_imgdata *idata, int *size, int *pos, int color)
+void	vector2(int i, int j, int *target_i, int *target_j)
 {
-	int	i[2];
-	int	newpos[2];
-	i[X] = 0;
-	i[Y] = 0;
-	while (i[X] < size[X] && i[Y] < size[Y])
-	{
-		newpos[X] = pos[X] + i[X];
-		newpos[Y] = pos[Y] + i[Y];
-		draw_pixel(idata, newpos, color);
-		i[X]++;
-		if (i[X] == size[X] && i[Y] < size[Y])
-		{
-			i[X] = 0;
-			i[Y]++;
-		}
-	}
+	*target_i = i;
+	*target_j = j;
 }

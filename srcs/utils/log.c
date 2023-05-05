@@ -27,13 +27,13 @@ void	print_log(int n, ...)
 	va_end(args);
 }
 
-void	condition_log(char test, char *str_true, char *str_false)
+int	assert_log(char test, char *str_true, char *str_false)
 {
 	if (!str_true || !str_false)
-		return ;
+		return (0);
 	if (test)
 		printf("%s%s%s\n", "\033[38;5;65m", str_true, RESET);
 	else
 		printf("%s%s%s\n", "\033[38;5;124m", str_false, RESET);
-
+	return (test);
 }

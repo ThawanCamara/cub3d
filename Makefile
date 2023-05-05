@@ -6,7 +6,7 @@
 #    By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 07:08:10 by tde-souz          #+#    #+#              #
-#    Updated: 2023/05/03 15:07:14 by tde-souz         ###   ########.fr        #
+#    Updated: 2023/05/04 22:20:40 by tde-souz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,8 @@ SRCS		:=	\
 				srcs/controls/window_controls.c	\
 				srcs/controls/keymapper.c	\
 				srcs/controls/setup_controls.c	\
+				srcs/draw/draw_pixel.c	\
+				srcs/draw/vector_utils.c	\
 				srcs/main.c
 
 # ******************************************************************************

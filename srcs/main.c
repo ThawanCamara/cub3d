@@ -6,18 +6,61 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:53 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/05/04 15:18:10 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/05/05 00:33:24 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game.h"
 
-void	my_mlx_pixel_put(t_imgdata *imgdata, int x, int y, int color)
+void	tmp_init_screen(t_game *game)
 {
-	char	*dst;
+	t_imgdata *idata;
 
-	dst = imgdata->addr + (y * imgdata->line_length + x * (imgdata->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	idata = game->imgdata;
+	idata->img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	idata->addr = mlx_get_data_addr(idata->img, &idata->bpp, &idata->len, &idata->endian);
+}
+
+void	draw_map(t_game *game, int *size)
+{
+	int	i[2];
+	int	anchor[2];
+	int	offset[2];
+	int	box[2];
+
+	double scale;
+	scale = 1;
+	if ((300 / ((double)size[X] * 16)) < scale)
+		scale = 300 / ((double)size[X] * 16);
+	if ((200 / ((double)size[Y] * 16)) < scale)
+		scale = 200 / ((double)size[Y] * 16);
+	// double scale[2];
+	// scale[Y] = 200 / ((double)size[Y] * 16);
+
+	printf("%f / %f\n", (double)size[X], (double)300);
+	printf("%d - %f\n", size[X], scale);
+	// printf("%f / %f\n", (double)size[X], (double)300);
+	// printf("%d - %f\n", size[X], scale[X]);
+	vector2(0, 0, &i[X], &i[Y]);
+	vector2(600, 250, &anchor[X], &anchor[Y]);
+	vector2(16 * scale, 16 * scale, &box[X], &box[Y]);
+	// vector2(16 * scale[X], 16 * scale[Y], &box[X], &box[Y]);
+	while (i[X] < size[X] && i[Y] < size[Y])
+	{
+		//vector2(i[X] * box[X], i[Y] * box[Y], &pos[X], &pos[Y]);
+		offset[X] = i[X] * box[X] + anchor[X];
+		offset[Y] = i[Y] * box[Y] + anchor[Y];
+		if (game->mapdata->map[i[Y]][i[X]] == 49)
+			draw_rect(game->imgdata, box, offset, 0x0077771E);
+		else if (game->mapdata->map[i[Y]][i[X]] == 48)
+			draw_rect(game->imgdata, box, offset, 0x00FFFFFF);
+		i[X]++;
+		if (i[X] == size[X] && i[Y] < size[Y])
+		{
+			i[X] = 0;
+			i[Y]++;
+		}
+	}
 }
 
 int	main(int argc, char *argv[])
@@ -31,17 +74,17 @@ int	main(int argc, char *argv[])
 	game.enable_parallax = 0;
 	game.total_insts = 2;
 
-	init_handler(&game);	
-	// int size[2];
-	// t_imgdata *imgdata = malloc(sizeof(t_imgdata));
-	// imgdata->img = mlx_xpm_file_to_image(game.mlx, game.mapdata->tex_path[NORTH], &size[X], &size[Y]);
-	// imgdata->addr = mlx_get_data_addr(imgdata->img, &imgdata->bits_per_pixel, &imgdata->line_length, &imgdata->endian);
-	// t_imgdata img2;
-	// img2.img = mlx_new_image(game.mlx, 64, 32);
-	// img2.addr = mlx_get_data_addr(img2.img, &img2.bits_per_pixel, &img2.line_length, &img2.endian);
-	// my_mlx_pixel_put(&img2, 16, 16, 0x0022FF00);
-	// img2.addr = ft_strdup(imgdata->addr);
-	// mlx_put_image_to_window(game.mlx, game.win, img2.img, 0, 0);
+	init_handler(&game);
+	tmp_init_screen(&game);
+	
+	int size[2];
+	int pos[2];
+	vector2(300, 200, &size[X], &size[Y]);
+	vector2(600, 250, &pos[X], &pos[Y]);
+	draw_rect(game.imgdata, size, pos, 0x0000FF00);
+	
+	draw_map(&game, game.mapdata->size);
+	mlx_put_image_to_window(game.mlx, game.win, game.imgdata->img, 0, 0);
 	mlx_loop(game.mlx);
 	return (0);
 }

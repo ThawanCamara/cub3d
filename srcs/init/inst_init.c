@@ -29,7 +29,7 @@ int	inst_init(t_game *game)
 		ins->cam = (t_cam *)malloc(sizeof(t_cam));
 		validation *= ins->cam != NULL;
 	}
-	condition_log(game->inst && validation, STR_SET_INST_S, STR_SET_INST_F);
+	assert_log(game->inst && validation, STR_SET_INST_S, STR_SET_INST_F);
 	return (game->inst && validation);
 }
 

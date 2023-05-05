@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:55 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/04/30 14:55:26 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/05/04 22:31:46 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	render_init(t_game *game)
 			TITLE);
 		validation *= r->win != NULL;
 	}
-	condition_log(validation, STR_SET_RENDER_S, STR_SET_RENDER_F);
+	assert_log(validation, STR_SET_RENDER_S, STR_SET_RENDER_F);
 	return (validation);
 }
 
