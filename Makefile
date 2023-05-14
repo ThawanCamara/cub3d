@@ -6,7 +6,7 @@
 #    By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 07:08:10 by tde-souz          #+#    #+#              #
-#    Updated: 2023/05/14 14:35:33 by tde-souz         ###   ########.fr        #
+#    Updated: 2023/05/14 16:37:44 by tde-souz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,6 +80,7 @@ SRCS		:=	\
 				srcs/commands/change_dir.c	\
 				srcs/commands/change_rot.c	\
 				srcs/init/inst_utils.c	\
+				srcs/raycaster/raycaster.c	\
 				srcs/main.c
 
 # ******************************************************************************

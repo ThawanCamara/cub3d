@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:59 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/05/14 14:28:41 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/05/14 16:59:20 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,21 +139,28 @@ enum	e_game_state
 // *                                  STRUCTS                                 *
 // ****************************************************************************
 
+typedef struct s_rayhit
+{
+	char	wall;
+	double	distance;
+	char	*filter;
+}	t_rayhit;
+
 typedef struct s_ray
 {
-	double	len[2];
-	double	distance;
-	
+	double		distx;
+	double		disty;
+	t_rayhit	hit;
 }	t_ray;
 
-typedef struct s_draw_info
+typedef struct s_info
 {
 	int		size[2];
 	int		pos[2];
 	int		color;
 	int		length;
 	double	radians;
-}	t_draw_info;
+}	t_info;
 
 typedef struct s_pane
 {
@@ -206,6 +213,7 @@ typedef struct s_cam
 
 typedef struct s_object
 {
+	char	tag;
 	double	rotation;
 	double	speed;
 	double	turn_rate;
@@ -280,7 +288,7 @@ void		header_log(char *header, char *message, char *color);
 /* Drawing */
 
 int	check_bounds(int *pos, int *min, int *max);
-void		draw_line(t_pane *pane, t_draw_info *info);
+void		draw_line(t_pane *pane, t_info *info);
 void		draw_rect(t_screen *idata, int *size, int *pos, int color);
 void		draw_pixel(t_screen *idata, int *pos, int color);
 

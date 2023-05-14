@@ -38,6 +38,7 @@ void	set_cam_data(t_inst *inst)
 
 void	set_obj_data(t_game *game, t_inst *inst, int i)
 {
+	inst->obj->tag = 'P';
 	inst->obj->pos[X] = game->mapdata->start_pos[X + (i * 2)];
 	inst->obj->pos[Y] = game->mapdata->start_pos[Y + (i * 2)];
 	inst->obj->rotation = get_rotation(game->mapdata->inst_rot[i]);

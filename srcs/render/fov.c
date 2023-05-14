@@ -16,7 +16,7 @@ void	get_fov(t_game *game, t_inst *inst, int length, int color)
 {
 	int			i;
 	double		add;
-	t_draw_info	info;
+	t_info	info;
 
 	i = -1 - inst->cam->fov_half;
 	add = 0 - inst->cam->fov_half;

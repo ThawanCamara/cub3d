@@ -12,7 +12,7 @@
 
 #include "game.h"
 
-static void	set_data(t_draw_info *info, int *pos, int *delta, int *step)
+static void	set_data(t_info *info, int *pos, int *delta, int *step)
 {
 	pos[X] = info->pos[X] + info->length * cos(-info->radians);
 	pos[Y] = info->pos[Y] + info->length * sin(-info->radians);
@@ -22,7 +22,7 @@ static void	set_data(t_draw_info *info, int *pos, int *delta, int *step)
 	step[Y] = 1 + (!(info->pos[Y] < pos[Y]) * -2);
 }
 
-void	draw_line(t_pane *pane, t_draw_info *info)
+void	draw_line(t_pane *pane, t_info *info)
 {
 	int	delta[2];
 	int	pos[2];
