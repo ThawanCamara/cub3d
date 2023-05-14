@@ -6,14 +6,22 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 02:52:25 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/05/03 18:24:49 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:03:39 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef KEYS_H
 # define KEYS_H
 
+// ****************************************************************************
+// *                                  DEFINES                                 *
+// ****************************************************************************
+
 # define TOTAL_KEYS 56
+
+// ****************************************************************************
+// *                                   ENUMS                                  *
+// ****************************************************************************
 
 # ifdef __linux__
 
@@ -25,10 +33,10 @@ enum e_keys
 	KEY_LALT = 65513,
 	KEY_RALT = 65514,
 	KEY_LCTRL = 65507,
-	KEY_ARROW_U = 65362,
-	KEY_ARROW_L = 65361,
-	KEY_ARROW_D = 65363,
-	KEY_ARROW_R = 65364,
+	KEY_UP = 65362,
+	KEY_LEFT = 65361,
+	KEY_DOWN = 65364,
+	KEY_RIGHT = 65363,
 	KEY_LMB = 1,
 	KEY_MMB = 2,
 	KEY_RMB = 3,
@@ -77,7 +85,6 @@ enum e_keys
 	KEY_ENTER = 65293
 };
 
-
 # else
 
 enum e_keys
@@ -88,10 +95,10 @@ enum e_keys
 	KEY_LALT = 58,
 	KEY_RALT = 61,
 	KEY_LCTRL = 59,
-	KEY_ARROW_U = 126,
-	KEY_ARROW_L = 123,
-	KEY_ARROW_D = 124,
-	KEY_ARROW_R = 125,
+	KEY_UP = 126,
+	KEY_LEFT = 123,
+	KEY_DOWN = 124,
+	KEY_RIGHT = 125,
 	KEY_LMB = 1,
 	KEY_MMB = 2,
 	KEY_RMB = 3,

@@ -13,6 +13,10 @@
 #ifndef EVENTS_H
 # define EVENTS_H
 
+// ****************************************************************************
+// *                                  DEFINES                                 *
+// ****************************************************************************
+
 # define EVENT_KEY_PRESS 2
 # define EVENT_KEY_RELEASE 3
 # define EVENT_MOUSE_PRESS 4

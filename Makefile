@@ -6,7 +6,7 @@
 #    By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 07:08:10 by tde-souz          #+#    #+#              #
-#    Updated: 2023/05/04 22:20:40 by tde-souz         ###   ########.fr        #
+#    Updated: 2023/05/10 19:32:37 by tde-souz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,10 +34,11 @@ BOLD		:=	\e[1m
 # ******************************************************************************
 CC			:=	cc
 CFLAGS		=	-Wall -Wextra -Werror -g $(INCLUDES) -DTITLE='${TITLE}'
+
 ifeq ($(CURRENT_OS), Linux)
 CFLAGS		+=	-fPIE
-LDFLAGS		=	-L ${MLX_DIR} -l mlx -L libft/ -l ft -lXext -lX11 -lm -lz -O3
 TITLE		:=	"Silent Viras [ Linux edition ]"
+LDFLAGS		=	-L ${MLX_DIR} -l mlx -L libft/ -l ft -lXext -lX11 -lm -lz -O3
 INCLUDES	+=	-I minilibx/minilibx_linux/
 MLX_DIR		=	minilibx/minilibx_linux/
 else
@@ -65,6 +66,20 @@ SRCS		:=	\
 				srcs/controls/setup_controls.c	\
 				srcs/draw/draw_pixel.c	\
 				srcs/draw/vector_utils.c	\
+				srcs/draw/draw_line.c	\
+				srcs/init/screen_init.c	\
+				srcs/init/pane_init.c	\
+				srcs/init/window_init.c	\
+				srcs/init/pane_utils.c	\
+				srcs/utils/ui.c	\
+				srcs/init/ui_init.c	\
+				srcs/render/fov.c	\
+				srcs/render/minimap.c	\
+				srcs/render/render.c	\
+				srcs/behaviour/navigation.c	\
+				srcs/commands/change_dir.c	\
+				srcs/behaviour/setup_behaviour.c	\
+				srcs/commands/change_rot.c	\
 				srcs/main.c
 
 # ******************************************************************************

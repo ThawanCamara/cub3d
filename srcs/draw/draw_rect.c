@@ -12,7 +12,7 @@
 
 #include "game.h"
 
-void	draw_rect(t_imgdata *idata, int *size, int *pos, int color)
+void	draw_rect(t_screen *idata, int *size, int *pos, int color)
 {
 	int	i[2];
 	int	newpos[2];

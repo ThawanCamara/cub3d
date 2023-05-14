@@ -10,11 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/* #include "game.h"
+#include "game.h"
 
-int	check_bounds(int *pos, int offset)
+int	check_bounds(int *pos, int *min, int *max)
 {
-	int bounds[2];
-
-
-} */
+	return (pos[X] >= min[X]
+		&& pos[X] < max[X]
+		&& pos[Y] >= min[Y]
+		&& pos[Y] < max[Y]);
+}

@@ -14,52 +14,58 @@
 
 const char **get_map()
 {
+	// static const char *map[] = 
+	// {
+	// 	"11111",
+	// 	"10001",
+	// 	"1N011",
+	// 	"10011",
+	// 	"11111",
+	// 	NULL
+	// };
 	static const char *map[] = 
 	{
-		"11111111111111111111111111111111111111",
-		"10000000000000000000000000000000000001",
-		"10010000000000000000000000000000001001",
-		"1000000N000000000000000000000000000001",
-		"10010000000000000000000000000000001001",
-		"11111111111111111111111111111111111111",
+		"1111111111111111111111111111111111111111",
+		"1000000000000000000000000000000000000001",
+		"1001000000000000000000000000000000001001",
+		"1000000000000000000N00000000000000000001",
+		"1001000000000000000000000000000000001001",
+		"1000000000000000000000000000000000000001",
+		"1000000000000000000000000000000000000001",
+		"1000000000000000000000000000000000000001",
+		"1000000000000000000000000000000000000001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1001000000000000000000000000000000001001",
+		"1111111111111111111111111111111111111111",
 		NULL
 	};
-	// static const char *map[] = 
-	// {
-	// 	"1111111111111",
-	// 	"1000000000001",
-	// 	"1001000000001",
-	// 	"1000000N00001",
-	// 	"1000000000001",
-	// 	"1000000000001",
-	// 	"1000000000001",
-	// 	"1000000000001",
-	// 	"1000000000001",
-	// 	"1000000000001",
-	// 	"1000010000001",
-	// 	"1000000000001",
-	// 	"1000000000001",
-	// 	"1000000010001",
-	// 	"1000000011111",
-	// 	"1000000000001",
-	// 	"1000110000001",
-	// 	"1000000000001",
-	// 	"1000000000001",
-	// 	"1111111111111",
-	// 	NULL
-	// };
-	// static const char *map[] = 
-	// {
-	// 	"11111111111111111111111111111111111111",
-	// 	"10000000000000000000000000000000000001",
-	// 	"10010000000000000000000000000000001001",
-	// 	"1000000000000000000N000000000000000001",
-	// 	"10010000000000000000000000000000001001",
-	// 	"10000000000000000000000000000000000001",
-	// 	"11111111111111111111111111111111111111",
-	// 	NULL
-	// };
 	return ((const char **)map);
+}
+static int	validate_textures(char **textures)
+{
+	return (textures[NORTH] &&
+		textures[SOUTH] &&
+		textures[WEST] &&
+		textures[EAST]);
 }
 
 int	map_init(t_game *game)
@@ -67,12 +73,10 @@ int	map_init(t_game *game)
 	header_log("Initialization", "Map", B_ORANGE);
 	print_log(1, STR_BUILD_MAP);
 	game->mapdata = (t_map *)malloc(sizeof(t_map));
-	if (!game->mapdata)
-		return (0);
-	game->mapdata->tex_path = (char **)malloc(sizeof(char *) * 5);
-	if (!game->mapdata->tex_path)
-		return (0);
-
+	if (game->mapdata)
+		game->mapdata->tex_path = (char **)malloc(sizeof(char *) * 5);
+	if (!game->mapdata || !game->mapdata->tex_path)
+		return (assert_log(0, STR_BUILD_MAP_S, STR_BUILD_DATA_F));
 	/* Inicialização temporaria */
 	game->mapdata->tex_path[NORTH] = ft_strdup("assets/textures/darkcube2d_3.xpm");
 	game->mapdata->tex_path[SOUTH] = ft_strdup("path_to_south");
@@ -80,14 +84,23 @@ int	map_init(t_game *game)
 	game->mapdata->tex_path[EAST] = ft_strdup("path_to_east");
 	game->mapdata->tex_path[4] = NULL;
 	game->mapdata->inst_rot = ft_strdup("NW");
-	assert_log(game->mapdata->tex_path[NORTH] &&
-		game->mapdata->tex_path[SOUTH] &&
-		game->mapdata->tex_path[WEST] &&
-		game->mapdata->tex_path[EAST],
-		STR_BUILD_MAP_S, STR_BUILD_DATA_F);
+
 	game->mapdata->map = (char **)get_map();
 	game->mapdata->size[X] = ft_strlen(game->mapdata->map[0]);
 	game->mapdata->size[Y] = ft_strarr_size(game->mapdata->map);
+	game->mapdata->start_pos = (int *)malloc(sizeof(int) * (2 * game->total_insts));
+	// game->mapdata->start_pos[X] = 19;
+	// game->mapdata->start_pos[Y] = 3;
+	game->mapdata->start_pos[X] = 1;
+	game->mapdata->start_pos[Y] = 2;
+	if (game->total_insts > 1)
+	{
+		game->mapdata->start_pos[X + 2] = 5;
+		game->mapdata->start_pos[Y + 2] = 4;
+	}
+	/*  */
+	assert_log(validate_textures(game->mapdata->tex_path),
+		STR_BUILD_MAP_S, STR_BUILD_DATA_F);
 	return (game->mapdata != NULL);
 }
 
@@ -97,6 +110,6 @@ void	map_clear(t_game *game)
 	//free(game->mapdata->map);
 	ft_free_arr((void **)game->mapdata->tex_path);
 	free(game->mapdata->inst_rot);
+	free(game->mapdata->start_pos);
 	free(game->mapdata);
-	(void)game;
 }

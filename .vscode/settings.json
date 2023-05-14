@@ -1,6 +1,7 @@
 {
 	"C_Cpp.errorSquiggles": "disabled",
 	"files.associations": {
-		"game.h": "c"
+		"game.h": "c",
+		"colortag.h": "c"
 	}
 }

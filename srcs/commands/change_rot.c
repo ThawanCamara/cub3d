@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_pixel.c                                       :+:      :+:    :+:   */
+/*   change_rot.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 21:11:41 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/05/04 21:11:41 by tde-souz         ###   ########.fr       */
+/*   Created: 2023/05/11 14:27:45 by tde-souz          #+#    #+#             */
+/*   Updated: 2023/05/11 14:27:45 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game.h"
 
-void	draw_pixel(t_screen *idata, int *pos, int color)
+/* Mandatory */
+void	cmd_chrot(t_game *game, int key, char pressed)
 {
-	char	*dst;
-
-	dst = idata->addr + (pos[Y] * idata->len + pos[X] * (idata->bpp / 8));
-	*(unsigned int*)dst = color;
+	if (key == KEY_D)
+		game->inst[0].cam->orientation[STARBOARD] = pressed;
+	if (key == KEY_A)
+		game->inst[0].cam->orientation[PORT] = pressed;
+	if (game->enable_parallax)
+	{
+		if (key == KEY_RIGHT)
+			game->inst[1].cam->orientation[STARBOARD] = pressed;
+		if (key == KEY_LEFT)
+			game->inst[1].cam->orientation[PORT] = pressed;
+	}
 }
