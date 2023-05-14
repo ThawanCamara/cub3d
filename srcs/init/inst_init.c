@@ -12,8 +12,6 @@
 
 #include "game.h"
 
-static double	get_rotation(char rot);
-
 int	inst_init(t_game *game)
 {
 	short	i;
@@ -27,44 +25,20 @@ int	inst_init(t_game *game)
 	while (++i < game->total_insts)
 	{
 		game->inst[i].cam = (t_cam *)malloc(sizeof(t_cam));
-		if (!game->inst[i].cam)
-			return (assert_log(game->inst[i].cam != NULL,
-					STR_SET_INST_S, STR_SET_INST_F));
-		game->inst[i].cam->pos[X] = game->mapdata->start_pos[X + (i * 2)]; 
-		game->inst[i].cam->pos[Y] = game->mapdata->start_pos[Y + (i * 2)]; 
-		game->inst[i].cam->rotation = get_rotation(game->mapdata->inst_rot[i]);
-		game->inst[i].cam->axis[TOP] = 0;
-		game->inst[i].cam->axis[BOT] = 0;
-		game->inst[i].cam->axis[LEFT] = 0;
-		game->inst[i].cam->axis[RIGHT] = 0;
-		game->inst[i].cam->speed = PLAYER_SPEED * 0.01;
-		game->inst[i].cam->turn_rate = PLAYER_TURN * 0.01;
-		game->inst[i].cam->fov = 66;
-		game->inst[i].cam->fov_half = SCREEN_WIDTH / 2;
-		game->inst[i].cam->fov_increment = (double)game->inst[i].cam->fov / SCREEN_WIDTH;
-		// game->inst[i].cam->collision = 0.4;
+		game->inst[i].obj = (t_obj *)malloc(sizeof(t_obj));
+		if (!game->inst[i].obj || !game->inst[i].cam)
+			return (assert_log(0, STR_SET_INST_S, STR_SET_INST_F));
+		set_cam_data(&game->inst[i]);
+		set_obj_data(game, &game->inst[i], i);
 	}
 	return (assert_log(game->inst != NULL,
 			STR_SET_INST_S, STR_SET_INST_F));
 }
 
-static double	get_rotation(char rot)
-{
-	if (rot == 'N')
-		return (90);
-	else if (rot == 'S')
-		return (270);
-	else if (rot == 'W')
-		return (180);
-	else if (rot == 'E')
-		return (0);
-	return (35);
-}
-
 void	inst_clear(t_game *game)
 {
 	short	i;
-	t_inst *ins;
+	t_inst	*ins;
 
 	header_log("Clear", "Instances", B_YELLOW);
 	i = -1;
@@ -72,6 +46,7 @@ void	inst_clear(t_game *game)
 	{
 		ins = &game->inst[i];
 		free(ins->cam);
+		free(ins->obj);
 	}
 	free(game->inst);
 }

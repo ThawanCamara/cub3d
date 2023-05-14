@@ -19,7 +19,8 @@ void	render_minimap(t_game *game)
 	int	box[2];
 
 	vector2(0, 0, &i[X], &i[Y]);
-	vector2(game->ui->minimap_box_size, game->ui->minimap_box_size, &box[X], &box[Y]);
+	vector2(game->ui->minimap_box_size, game->ui->minimap_box_size,
+		&box[X], &box[Y]);
 	while (i[X] < game->mapdata->size[X] && i[Y] < game->mapdata->size[Y])
 	{
 		offset[X] = i[X] * box[X] + game->pane[MINIMAP]->offset[X];

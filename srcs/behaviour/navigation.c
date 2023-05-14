@@ -20,18 +20,20 @@ void	player_move_rot(t_game *game, t_inst *inst)
 
 	axis = inst->cam->axis[BOT] - inst->cam->axis[TOP];
 	angle = inst->cam->orientation[PORT] - inst->cam->orientation[STARBOARD];
-	inst->cam->pos[X] -= cos(-inst->cam->rotation * game->degtorad) * axis * inst->cam->speed;
-	inst->cam->pos[Y] -= sin(-inst->cam->rotation * game->degtorad) * axis * inst->cam->speed;
-	inst->cam->rotation += angle * inst->cam->turn_rate;
+	inst->obj->pos[X] -= cos(-inst->obj->rotation * game->degtorad) * axis
+		* inst->obj->speed;
+	inst->obj->pos[Y] -= sin(-inst->obj->rotation * game->degtorad) * axis
+		* inst->obj->speed;
+	inst->obj->rotation += angle * inst->obj->turn_rate;
 }
 
-void	player_move_rot_bonus(t_inst *inst)
-{
-	int	v_axis;
-	int	h_axis;
+// void	player_move_rot_bonus(t_inst *inst)
+// {
+// 	int	v_axis;
+// 	int	h_axis;
 
-	v_axis = inst->cam->axis[BOT] - inst->cam->axis[TOP];
-	h_axis = inst->cam->axis[RIGHT] - inst->cam->axis[LEFT];
-	inst->cam->pos[X] += v_axis * inst->cam->speed;
-	inst->cam->pos[Y] += h_axis * inst->cam->speed;
-}
+// 	v_axis = inst->cam->axis[BOT] - inst->cam->axis[TOP];
+// 	h_axis = inst->cam->axis[RIGHT] - inst->cam->axis[LEFT];
+// 	inst->cam->pos[X] += v_axis * inst->cam->speed;
+// 	inst->cam->pos[Y] += h_axis * inst->cam->speed;
+// }

@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:59 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/05/14 13:38:45 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/05/14 14:28:41 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,10 +139,12 @@ enum	e_game_state
 // *                                  STRUCTS                                 *
 // ****************************************************************************
 
-/* typedef struct s_ray
+typedef struct s_ray
 {
-
-}	t_ray; */
+	double	len[2];
+	double	distance;
+	
+}	t_ray;
 
 typedef struct s_draw_info
 {
@@ -200,16 +202,21 @@ typedef struct s_cam
 	int		fov;
 	int		fov_half;
 	double	fov_increment;
+}	t_cam;
+
+typedef struct s_object
+{
 	double	rotation;
 	double	speed;
 	double	turn_rate;
 	double	collision;
 	double	pos[2];
-}	t_cam;
+}	t_obj;
 
 typedef struct s_instance
 {
 	t_cam	*cam;
+	t_obj	*obj;
 }	t_inst;
 
 typedef struct s_game
@@ -243,6 +250,8 @@ void		safe_exit(t_game *game);
 
 int			inst_init(t_game *game);
 void		inst_clear(t_game *game);
+void		set_cam_data(t_inst *inst);
+void		set_obj_data(t_game *game, t_inst *inst, int i);
 
 int			map_init(t_game *game);
 void		map_clear(t_game *game);

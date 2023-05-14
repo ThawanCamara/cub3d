@@ -12,7 +12,7 @@
 
 #include "game.h"
 
-const char **get_map()
+const char **get_map(void)
 {
 	// static const char *map[] = 
 	// {

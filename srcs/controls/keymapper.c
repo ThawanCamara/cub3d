@@ -18,8 +18,8 @@ static const char	**get_keytable_name(void)
 		"RALT", "LCTRL", "Arrow Up", "Arrow Left", "Arrow Down", "Arrow Right",
 		"LMB", "MMB", "RMB", "Scroll Up", "Scroll Down", "SPACE", "-",
 		"DOTCOMMA", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "EQUAL",
-		"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q",
-		"R","S","T","U","V","W","X","Y","Z","ENTER"};
+		"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
+		"O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "ENTER"};
 
 	return ((const char **)keytable_name);
 }
@@ -27,13 +27,13 @@ static const char	**get_keytable_name(void)
 static const int	*get_keytable_id(void)
 {
 	static const int	keytable_id[] = {KEY_ESC, KEY_LSHIFT, KEY_RSHIFT,
-		KEY_LALT, KEY_RALT, KEY_LCTRL, KEY_UP ,KEY_LEFT ,KEY_DOWN,
+		KEY_LALT, KEY_RALT, KEY_LCTRL, KEY_UP, KEY_LEFT, KEY_DOWN,
 		KEY_RIGHT, KEY_LMB, KEY_MMB, KEY_RMB, KEY_SCR_UP, KEY_SCR_DOWN,
 		KEY_SPACE, KEY_MINUS, KEY_DOTCOMMA, KEY_ZERO, KEY_ONE, KEY_TWO,
 		KEY_THREE, KEY_FOUR, KEY_FIVE, KEY_SIX, KEY_SEVEN, KEY_EIGHT, KEY_NINE,
-		KEY_EQUAL,KEY_A,KEY_B,KEY_C,KEY_D,KEY_E,KEY_F,KEY_G,KEY_H,KEY_I,KEY_J,
-		KEY_K,KEY_L,KEY_M,KEY_N,KEY_O,KEY_P,KEY_Q,KEY_R,KEY_S,KEY_T,KEY_U,KEY_V,
-		KEY_W,KEY_X,KEY_Y,KEY_Z, KEY_ENTER};
+		KEY_EQUAL, KEY_A, KEY_B, KEY_C, KEY_D, KEY_E, KEY_F, KEY_G, KEY_H,
+		KEY_I, KEY_J, KEY_K, KEY_L, KEY_M, KEY_N, KEY_O, KEY_P, KEY_Q, KEY_R,
+		KEY_S, KEY_T, KEY_U, KEY_V, KEY_W, KEY_X, KEY_Y, KEY_Z, KEY_ENTER};
 
 	return ((const int *)keytable_id);
 }

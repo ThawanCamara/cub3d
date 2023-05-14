@@ -33,15 +33,15 @@ int	pane_init(t_game *game)
 			STR_SET_PANE_S, STR_SET_PANE_F));
 }
 
+// vector2(100, 140, &offset[X], &offset[Y]);
+// pane_setdata(pane[MINIMAP], size, offset);
 static int	pane_fill(t_game *game, t_pane **pane)
 {
 	int	size[2];
 	int	offset[2];
 
 	vector2(256, 192, &size[X], &size[Y]);
-	// vector2(100, 140, &offset[X], &offset[Y]);
 	pane[MINIMAP] = create_pane(game, "minimap");
-	// pane_setdata(pane[MINIMAP], size, offset);
 	pane_setdata_ratio(pane[MINIMAP], size, 50, 50);
 	vector2(0, 0, &offset[X], &offset[Y]);
 	pane[MAZE3D] = create_pane(game, "maze");

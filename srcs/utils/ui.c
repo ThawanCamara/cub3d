@@ -14,7 +14,7 @@
 
 double	get_minimap_scale(t_game *game, t_pane *pane)
 {
-	double scale;
+	double	scale;
 	t_map	*mapdata;
 
 	mapdata = game->mapdata;

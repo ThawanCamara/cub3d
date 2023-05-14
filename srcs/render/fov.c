@@ -12,7 +12,7 @@
 
 #include "game.h"
 
- void	get_fov(t_game *game, t_inst *inst, int length, int color)
+void	get_fov(t_game *game, t_inst *inst, int length, int color)
 {
 	int			i;
 	double		add;
@@ -22,11 +22,13 @@
 	add = 0 - inst->cam->fov_half;
 	while (++i < inst->cam->fov_half)
 	{
-		info.pos[X] = inst->cam->pos[X] * game->ui->minimap_box_size + game->pane[MINIMAP]->offset[X];
-		info.pos[Y] = inst->cam->pos[Y] * game->ui->minimap_box_size + game->pane[MINIMAP]->offset[Y];
+		info.pos[X] = inst->obj->pos[X] * game->ui->minimap_box_size
+			+ game->pane[MINIMAP]->offset[X];
+		info.pos[Y] = inst->obj->pos[Y] * game->ui->minimap_box_size
+			+ game->pane[MINIMAP]->offset[Y];
 		info.length = length;
 		info.color = color;
-		info.radians = (inst->cam->rotation + add) * game->degtorad;
+		info.radians = (inst->obj->rotation + add) * game->degtorad;
 		draw_line(game->pane[MINIMAP], &info);
 		add += inst->cam->fov_increment;
 	}

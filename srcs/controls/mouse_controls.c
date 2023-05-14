@@ -32,11 +32,11 @@ int	mouse_onrelease(int key, int x, int y, t_game *game)
 	return (0);
 }
 
+// ft_printf("Mouse moved. Current position is [%d,%d]\n", x, y);
 int	mouse_move(int x, int y, t_game *game)
 {
 	(void)game;
 	(void)x;
 	(void)y;
-//	ft_printf("Mouse moved. Current position is [%d,%d]\n", x, y);
 	return (0);
 }

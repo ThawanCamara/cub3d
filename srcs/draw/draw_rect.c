@@ -16,6 +16,7 @@ void	draw_rect(t_screen *idata, int *size, int *pos, int color)
 {
 	int	i[2];
 	int	newpos[2];
+
 	i[X] = 0;
 	i[Y] = 0;
 	while (i[X] < size[X] && i[Y] < size[Y])

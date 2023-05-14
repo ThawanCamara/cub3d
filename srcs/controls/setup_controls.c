@@ -14,11 +14,18 @@
 
 void	setup_controls(t_game *game)
 {
-	mlx_hook(game->win, EVENT_KEY_PRESS, MASK_KEY_PRESS, keyboard_onpress, game);
-	mlx_hook(game->win, EVENT_KEY_RELEASE, MASK_KEY_RELEASE, keyboard_onrelease, game);
-	mlx_hook(game->win, EVENT_MOUSE_PRESS, MASK_MOUSE_PRESS, mouse_onpress, game);
-	mlx_hook(game->win, EVENT_MOUSE_RELEASE, MASK_MOUSE_RELEASE, mouse_onrelease, game);
-	mlx_hook(game->win, EVENT_MOUSE_MOTION, MASK_MOUSE_MOTION, mouse_move, game);
-	mlx_hook(game->win, EVENT_EXPOSE, MASK_EXPOSURE, window_onresize, game);
-	mlx_hook(game->win, EVENT_CLOSE, MASK_STRUCTNOTIFY, window_onclose, game);
+	mlx_hook(game->win, EVENT_KEY_PRESS, MASK_KEY_PRESS,
+		keyboard_onpress, game);
+	mlx_hook(game->win, EVENT_KEY_RELEASE, MASK_KEY_RELEASE,
+		keyboard_onrelease, game);
+	mlx_hook(game->win, EVENT_MOUSE_PRESS, MASK_MOUSE_PRESS,
+		mouse_onpress, game);
+	mlx_hook(game->win, EVENT_MOUSE_RELEASE, MASK_MOUSE_RELEASE,
+		mouse_onrelease, game);
+	mlx_hook(game->win, EVENT_MOUSE_MOTION, MASK_MOUSE_MOTION,
+		mouse_move, game);
+	mlx_hook(game->win, EVENT_EXPOSE, MASK_EXPOSURE,
+		window_onresize, game);
+	mlx_hook(game->win, EVENT_CLOSE, MASK_STRUCTNOTIFY,
+		window_onclose, game);
 }

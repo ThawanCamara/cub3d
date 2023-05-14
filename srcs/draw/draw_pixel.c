@@ -17,5 +17,5 @@ void	draw_pixel(t_screen *idata, int *pos, int color)
 	char	*dst;
 
 	dst = idata->addr + (pos[Y] * idata->len + pos[X] * (idata->bpp / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
 }

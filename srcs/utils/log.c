@@ -14,7 +14,7 @@
 
 void	header_log(char *header, char *message, char *color)
 {
-	printf("%s%s:%s %s%s%s\n", color, header, RESET, BOLD, message, RESET);	
+	printf("%s%s:%s %s%s%s\n", color, header, RESET, BOLD, message, RESET);
 }
 
 void	print_log(int n, ...)
