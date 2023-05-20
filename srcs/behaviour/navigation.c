@@ -12,28 +12,47 @@
 
 #include "game.h"
 
+int	check_map(t_map *map, int *pos)
+{
+ 	// printf("Pos[X] : %d\n", pos[X]);
+ 	// printf("Pos[Y] : %d\n", pos[Y]);
+ 	// printf("MAP : %c\n", map->map[pos[Y]][pos[X]]);
+	return (map->map[pos[Y]][pos[X]] != '1');
+}
+
 /* Mandatory */
 void	player_move_rot(t_game *game, t_inst *inst)
 {
 	int	axis;
 	int	angle;
+	int	lower[2];
+	int	upper[2];
+	int	pos[2];
 
 	axis = inst->cam->axis[BOT] - inst->cam->axis[TOP];
 	angle = inst->cam->orientation[PORT] - inst->cam->orientation[STARBOARD];
-	inst->obj->pos[X] -= cos(-inst->obj->rotation * game->degtorad) * axis
-		* inst->obj->speed;
-	inst->obj->pos[Y] -= sin(-inst->obj->rotation * game->degtorad) * axis
-		* inst->obj->speed;
+	inst->obj->dir[X] = cos(-inst->obj->rotation * game->degtorad);
+	inst->obj->dir[Y] = sin(-inst->obj->rotation * game->degtorad);
+	// inst->cam->plane[X] = 0.707;
+	// inst->cam->plane[Y] = 0.707;
+	// inst->cam->plane[X] = cos(inst->obj->rotation * game->degtorad);
+	// inst->cam->plane[Y] = sin(inst->obj->rotation * game->degtorad);
+	vector2(0, 0, &lower[X], &lower[Y]);
+	vector2(game->mapdata->size[X], game->mapdata->size[Y], &upper[X], &upper[Y]);
+	pos[X] = inst->obj->pos[X] - inst->obj->dir[X] * axis * inst->obj->speed;
+	pos[Y] = inst->obj->pos[Y] - inst->obj->dir[Y] * axis * inst->obj->speed;
+	// printf("Pos : (%d, %d) - (%.2f, %.2f)\n", pos[X], pos[Y], inst->obj->pos[X], inst->obj->pos[Y]);
+	// printf("Rot : (%.2f) - (%.2f, %.2f)\n", inst->obj->rotation, inst->obj->dir[X], inst->obj->dir[Y]);
+	// printf("Valid: %d\n", check_bounds(pos, lower, upper));
+	// if (check_map(game->mapdata, pos))
+	if (check_bounds(pos, lower, upper))
+	{
+		inst->obj->pos[X] -= inst->obj->dir[X] * axis * inst->obj->speed;
+		inst->obj->pos[Y] -= inst->obj->dir[Y] * axis * inst->obj->speed;
+	}
 	inst->obj->rotation += angle * inst->obj->turn_rate;
+	if (inst->obj->rotation < 0)
+		inst->obj->rotation = 360 + inst->obj->rotation;
+	if (inst->obj->rotation >= 360)
+		inst->obj->rotation = 360 - inst->obj->rotation;
 }
-
-// void	player_move_rot_bonus(t_inst *inst)
-// {
-// 	int	v_axis;
-// 	int	h_axis;
-
-// 	v_axis = inst->cam->axis[BOT] - inst->cam->axis[TOP];
-// 	h_axis = inst->cam->axis[RIGHT] - inst->cam->axis[LEFT];
-// 	inst->cam->pos[X] += v_axis * inst->cam->speed;
-// 	inst->cam->pos[Y] += h_axis * inst->cam->speed;
-// }

@@ -12,6 +12,12 @@
 
 #include "game.h"
 
+// 16
+// 256 x 192
+// 48 x 36
+
+// 48 * (16 * f)
+
 void	render_minimap(t_game *game)
 {
 	int	i[2];
@@ -25,10 +31,26 @@ void	render_minimap(t_game *game)
 	{
 		offset[X] = i[X] * box[X] + game->pane[MINIMAP]->offset[X];
 		offset[Y] = i[Y] * box[Y] + game->pane[MINIMAP]->offset[Y];
+		/* temp */
 		if (game->mapdata->map[i[Y]][i[X]] == 49)
-			draw_rect(game->screen, box, offset, 0x0077771E);
+				draw_rect(game->screen, box, offset, 0x0077771E);
 		else if (game->mapdata->map[i[Y]][i[X]] == 48)
-			draw_rect(game->screen, box, offset, 0x00FFFFFF);
+		{
+			if (i[Y] % 2)
+			{
+				if (i[X] % 2)
+					draw_rect(game->screen, box, offset, 0x00FFFFFF);
+				else
+					draw_rect(game->screen, box, offset, 0x00999999);
+			}
+			else
+			{
+				if (i[X] % 2)
+					draw_rect(game->screen, box, offset, 0x00999999);
+				else
+					draw_rect(game->screen, box, offset, 0x00FFFFFF);
+			}
+		}
 		i[X]++;
 		if (i[X] == game->mapdata->size[X] && i[Y] < game->mapdata->size[Y])
 		{

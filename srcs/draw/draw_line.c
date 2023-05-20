@@ -12,7 +12,9 @@
 
 #include "game.h"
 
-static void	set_data(t_info *info, int *pos, int *delta, int *step)
+//Note: Could use dirX dirY instead of cos(-info->radians)
+
+static void	set_data_r(t_info *info, int *pos, int *delta, int *step)
 {
 	pos[X] = info->pos[X] + info->length * cos(-info->radians);
 	pos[Y] = info->pos[Y] + info->length * sin(-info->radians);
@@ -22,14 +24,14 @@ static void	set_data(t_info *info, int *pos, int *delta, int *step)
 	step[Y] = 1 + (!(info->pos[Y] < pos[Y]) * -2);
 }
 
-void	draw_line(t_pane *pane, t_info *info)
+void	draw_line_r(t_pane *pane, t_info *info)
 {
 	int	delta[2];
 	int	pos[2];
 	int	step[2];
 	int	err[2];
 
-	set_data(info, pos, delta, step);
+	set_data_r(info, pos, delta, step);
 	err[0] = delta[X] - delta[Y];
 	while (info->pos[X] != pos[X] || info->pos[Y] != pos[Y])
 	{
@@ -49,42 +51,39 @@ void	draw_line(t_pane *pane, t_info *info)
 	}
 }
 
-// void draw_line(t_screen *imgdata, int *start, double angle, int *limits)
-// {
-// 	int	delta[2];
-// 	int	pos[2];
-// 	int	step[2];
-// 	int	err;
+static void	set_data_dir(t_info *info, int *pos, int *delta, int *step)
+{
+	pos[X] = info->pos[X] + info->length * info->dir[X];
+	pos[Y] = info->pos[Y] + info->length * info->dir[Y];
+	delta[X] = abs(pos[X] - info->pos[X]);
+	delta[Y] = abs(pos[Y] - info->pos[Y]);
+	step[X] = 1 + (!(info->pos[X] < pos[X]) * -2);
+	step[Y] = 1 + (!(info->pos[Y] < pos[Y]) * -2);
+}
 
-// 	int length = 150;
+void	draw_line_dir(t_pane *pane, t_info *info)
+{
+	int	delta[2];
+	int	pos[2];
+	int	step[2];
+	int	err[2];
 
-// 	double rad = -angle * (M_PI / 180);
-
-// 	pos[X] = start[X] + length * cos(rad);
-// 	pos[Y] = start[Y] + length * sin(rad);
-// 	delta[X] = abs(pos[X] - start[X]);
-// 	delta[Y] = abs(pos[Y] - start[Y]);
-// 	step[X] = 1 + (!(start[X] < pos[X]) * -2);
-// 	step[Y] = 1 + (!(start[Y] < pos[Y]) * -2);
-
-// 	err = delta[X] - delta[Y];
-//     while (start[X] != pos[X] || start[Y] != pos[Y])
-//     {
-//         int e2 = err << 1;
-
-//         if (e2 > -delta[Y])
-//         {
-// 			err -= delta[Y];
-// 			start[X] += step[X];
-//         }
-
-//         if (e2 < delta[X])
-//         {
-// 			err += delta[X];
-// 			start[Y] += step[Y];
-//         }
-
-//         if (check_bounds(start, limits))
-// 			draw_pixel(imgdata, start, 0x0000FF00);
-//     }
-// }
+	set_data_dir(info, pos, delta, step);
+	err[0] = delta[X] - delta[Y];
+	while (info->pos[X] != pos[X] || info->pos[Y] != pos[Y])
+	{
+		err[1] = err[0] << 1;
+		if (err[1] > -delta[Y])
+		{
+			err[0] -= delta[Y];
+			info->pos[X] += step[X];
+		}
+		if (err[1] < delta[X])
+		{
+			err[0] += delta[X];
+			info->pos[Y] += step[Y];
+		}
+		if (check_bounds(info->pos, pane->min_bounds, pane->max_bounds))
+			draw_pixel(pane->screen, info->pos, info->color);
+	}
+}

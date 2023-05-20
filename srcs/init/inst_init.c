@@ -28,7 +28,7 @@ int	inst_init(t_game *game)
 		game->inst[i].obj = (t_obj *)malloc(sizeof(t_obj));
 		if (!game->inst[i].obj || !game->inst[i].cam)
 			return (assert_log(0, STR_SET_INST_S, STR_SET_INST_F));
-		set_cam_data(&game->inst[i]);
+		set_cam_data(game, &game->inst[i]);
 		set_obj_data(game, &game->inst[i], i);
 	}
 	return (assert_log(game->inst != NULL,

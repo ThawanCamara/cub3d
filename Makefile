@@ -6,7 +6,7 @@
 #    By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 07:08:10 by tde-souz          #+#    #+#              #
-#    Updated: 2023/05/14 16:37:44 by tde-souz         ###   ########.fr        #
+#    Updated: 2023/05/19 09:04:23 by tde-souz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,7 +80,10 @@ SRCS		:=	\
 				srcs/commands/change_dir.c	\
 				srcs/commands/change_rot.c	\
 				srcs/init/inst_utils.c	\
+				srcs/utils/loop_handler.c	\
+				srcs/render/skyfloor.c	\
 				srcs/raycaster/raycaster.c	\
+				srcs/raycaster/ray2.c	\
 				srcs/main.c
 
 # ******************************************************************************

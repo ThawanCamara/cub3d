@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 02:52:25 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/05/11 16:03:39 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/05/16 19:07:23 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ enum e_keys
 	KEY_LCTRL = 59,
 	KEY_UP = 126,
 	KEY_LEFT = 123,
-	KEY_DOWN = 124,
-	KEY_RIGHT = 125,
-	KEY_LMB = 1,
-	KEY_MMB = 2,
-	KEY_RMB = 3,
+	KEY_DOWN = 125,
+	KEY_RIGHT = 124,
+	KEY_LMB = 1000,
+	KEY_MMB = 2000,
+	KEY_RMB = 3000,
 	KEY_SCR_UP = 4,
 	KEY_SCR_DOWN = 5,
 	KEY_SPACE = 49,

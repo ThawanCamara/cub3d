@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:59 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/05/14 16:59:20 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/05/19 10:50:47 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <math.h>
 # include "libft.h"
 # include "mlx.h"
-# include "mlx_int.h"
+// # include "mlx_int.h"
 # include "keys.h"
 # include "events.h"
 # include "colortag.h"
@@ -43,12 +43,12 @@
 
 # define FUNC_TABLE_SIZE 14
 
-# define PANE_AMOUNT	2
+# define PANE_AMOUNT	6
 
 /* Size of the boxes drawn by mapdata measured in pixels */
 # define BOX_SIZE		16
-# define PLAYER_SPEED	100
-# define PLAYER_TURN	200
+# define PLAYER_SPEED	40
+# define PLAYER_TURN	300
 
 // ****************************************************************************
 // *                                   ENUMS                                  *
@@ -60,10 +60,20 @@ enum	e_bool
 	TRUE = 1
 };
 
+enum	e_skyfloor
+{
+	SKY = 0,
+	FLOOR = 1
+};
+
 enum	e_pane_id
 {
 	MINIMAP = 0,
-	MAZE3D = 1
+	FULLSCREEN = 1,
+	TOPHALF = 2,
+	BOTHALF = 3,
+	LWING = 4,
+	RWING = 5
 };
 
 enum	e_screen_mapping
@@ -148,8 +158,17 @@ typedef struct s_rayhit
 
 typedef struct s_ray
 {
-	double		distx;
-	double		disty;
+	int		side;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+	int		hit_flag; // needed?
+	int		map[2];
+	int		step[2];
+	double	sideDist[2];
+	double	rayDir[2];
+	double	deltaDist[2];
+	double	perp_wall_dist;
 	t_rayhit	hit;
 }	t_ray;
 
@@ -160,6 +179,7 @@ typedef struct s_info
 	int		color;
 	int		length;
 	double	radians;
+	double	dir[2];
 }	t_info;
 
 typedef struct s_pane
@@ -193,8 +213,7 @@ typedef struct	s_screen
 
 typedef struct s_map
 {
-	int		floor_trgb;
-	int		roof_trgb;
+	int		trgb[2];
 	int		size[2];
 	char	*inst_rot;
 	char	**map;
@@ -206,9 +225,11 @@ typedef struct s_cam
 {	
 	int		axis[4];
 	int		orientation[2];
-	int		fov;
-	int		fov_half;
-	double	fov_increment;
+	int		fov; // probably deprecated
+	int		fov_half; // probably deprecated
+	double	fov_increment; // probably deprecated
+	double	plane[2];
+	double	cameraX;
 }	t_cam;
 
 typedef struct s_object
@@ -219,6 +240,7 @@ typedef struct s_object
 	double	turn_rate;
 	double	collision;
 	double	pos[2];
+	double	dir[2];
 }	t_obj;
 
 typedef struct s_instance
@@ -258,7 +280,7 @@ void		safe_exit(t_game *game);
 
 int			inst_init(t_game *game);
 void		inst_clear(t_game *game);
-void		set_cam_data(t_inst *inst);
+void		set_cam_data(t_game *game, t_inst *inst);
 void		set_obj_data(t_game *game, t_inst *inst, int i);
 
 int			map_init(t_game *game);
@@ -287,10 +309,12 @@ void		header_log(char *header, char *message, char *color);
 
 /* Drawing */
 
-int	check_bounds(int *pos, int *min, int *max);
-void		draw_line(t_pane *pane, t_info *info);
+int			check_bounds(int *pos, int *min, int *max);
+void		draw_line_r(t_pane *pane, t_info *info);
+void		draw_line_dir(t_pane *pane, t_info *info);
 void		draw_rect(t_screen *idata, int *size, int *pos, int color);
 void		draw_pixel(t_screen *idata, int *pos, int color);
+
 
 
 /* Vectors */
@@ -342,6 +366,17 @@ int			map_getpixel_y(t_pane *pane, int y);
 
 int			render_game(t_game *game);
 void		render_fov(t_game *game);
+void		render_skyfloor(t_game *game);
 void		render_minimap(t_game *game);
+
+/* Raycasting */
+
+t_rayhit	*ray(t_game *game, t_inst *inst, t_pane *pane, double cameraX, int w);
+t_rayhit	*ray2(t_game *game, t_inst *inst, t_pane *pane);
+
+
+/* Other */
+
+int			loop_handler(t_game *game);
 
 #endif
