@@ -1,0 +1,43 @@
+Core Idea:
+The core idea lies in providing the main requirements of the project and, at least, small bonuses such as the minimap while also offering a splitscreen experience.
+
+
+Project Concepts:
+  - Math Optimizations
+      There are a few design concepts where are aiming for: avoid the use trigonometric functions (specially sqrt()) and divisions inside of the game loop as much as possible. The idea is to replace them for precalculated values or mathematical simplifications when doable.
+  
+  - Player Composition
+    Every player is named an Instance of the game. An instance is a container for information regarding the player, not directly the character itself, because a player is not a character. However, since we are mostly not likely going to implement real gameplay or further depth in player data, deeper abstraction seems uneeded. However, such abstraction feels useful in case of any needed expansion of the player concept.
+    
+  - Module Loading
+    Data is loaded to memory in blocks of scheduled modules (eg.: Map, Window, UI, etc). Such modules are paired with cleaning modules. If a loading model fails during memory allocation, then memory will be freed by calling cleaning modules in reverse order.
+
+
+Main Structures:
+
+t_game : This structure is the main source of data. All substructures, except t_info, are just child structures.
+  - enable_parallax: When set to true allows two players at once.
+  - total_inst: Amount of active players. Initially is 1, but increases if enable_parallax returns true.
+  - state: Unused for now. Its goal was to determine if the game was in a specific state such as Paused, InGame, MainMenu, ScoreScreen, or any other convenient one.
+  - degtorad: Constant that is initialized with the value PI / 180. Multiplying an euler angle (360 degrees) by this value will yield its counterpart in radians.
+  - ui: Pointer to ui struct.
+  - mapdata: Pointer to map struct.
+  - inst: Pointer to an array of players.
+  - screen: Pointer to MLX Window.
+  - pane: Pointer to an array of panes.
+
+t_inst : Represents the player.
+  - cam: Pointer to camera struct.
+  - obj: Pointer to the character, represented by a struct.
+
+t_obj : Represents any character.
+  - tag: Unused for now. Capable of holding a char to represent a given character.
+  - rotation: Direction where the player is facing. Represented as a double.
+  - speed: Traversal movement speed. As a double. Take its value from the defined constant PLAYER_SPEED.
+  - turn: Turn speed using while rotating. Take its value from the defined constant PLAYER_TURN.
+  - collision: Unused for now. Should be considered as a radius around the character where it halts movement when detecting another "collider" (or a wall).
+  - pos: Position vector. Used to represent the character's position in the simulated world. Expressed as a pair of doubles.
+  - dir: Direction vector. No much use for now. Represents the same orientation of 'rotation'. For being a vector it would be for more interesting to use.
+  
+t_cam : Hold camera information, much of its original purpose is a bit messed up
+  - axis: A four dimensional array to represent each possible choice of movement: TOP, BOT, LEFT, RIGHT. Mandatory only uses TOP and BOT. Such values are used to hold the values.
