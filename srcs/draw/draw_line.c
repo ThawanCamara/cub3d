@@ -87,3 +87,16 @@ void	draw_line_dir(t_pane *pane, t_info *info)
 			draw_pixel(pane->screen, info->pos, info->color);
 	}
 }
+
+void	draw_column(t_pane *pane, t_info *info)
+{
+	int	i;
+
+	i = 0;
+	while (i < info->length)
+	{
+		info->pos[Y] += 1;
+		draw_pixel(pane->screen, info->pos, info->color);
+		i++;
+	}
+}

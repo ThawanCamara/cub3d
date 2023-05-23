@@ -15,9 +15,9 @@
 static double	get_rotation(char rot)
 {
 	if (rot == 'N')
-		return (90);
-	else if (rot == 'S')
 		return (270);
+	else if (rot == 'S')
+		return (90);
 	else if (rot == 'W')
 		return (180);
 	else if (rot == 'E')
@@ -34,8 +34,17 @@ void	set_cam_data(t_game *game, t_inst *inst)
 	inst->cam->orientation[PORT] = 0;
 	inst->cam->orientation[STARBOARD] = 0;
 	inst->cam->fov = 66;
-	inst->cam->fov_half = game->screen->size[X] / 2;
-	inst->cam->fov_increment = (double)inst->cam->fov / SCREEN_WIDTH;
+	inst->cam->fov_half = inst->cam->fov / 2;
+	if (!game->enable_parallax)
+	{
+		inst->cam->fov_sc_half = game->pane[FULLSCREEN]->size[X] / 2; // trocar por pane
+		inst->cam->fov_increment = (double)inst->cam->fov / game->pane[FULLSCREEN]->size[X]; // trocar por pane
+	}
+	else
+	{
+		inst->cam->fov_sc_half = game->pane[RWING]->size[X] / 2; // trocar por pane
+		inst->cam->fov_increment = (double)inst->cam->fov / game->pane[RWING]->size[X]; // trocar por pane
+	}
 	inst->cam->plane[X] = 0;
 	inst->cam->plane[Y] = 0.66;
 }
@@ -50,5 +59,5 @@ void	set_obj_data(t_game *game, t_inst *inst, int i)
 	inst->obj->dir[Y] = 1;
 	// inst->obj->collision = 100 * 0.01;
 	inst->obj->speed = PLAYER_SPEED * 0.01;
-	inst->obj->turn_rate = PLAYER_TURN * 0.01;
+	inst->obj->turn_rate = PLAYER_TURN * 0.005;
 }

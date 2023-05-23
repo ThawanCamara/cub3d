@@ -39,7 +39,7 @@ void	render_minimap(t_game *game)
 			if (i[Y] % 2)
 			{
 				if (i[X] % 2)
-					draw_rect(game->screen, box, offset, 0x00FFFFFF);
+					draw_rect(game->screen, box, offset, 0x00999999);
 				else
 					draw_rect(game->screen, box, offset, 0x00999999);
 			}
@@ -48,7 +48,7 @@ void	render_minimap(t_game *game)
 				if (i[X] % 2)
 					draw_rect(game->screen, box, offset, 0x00999999);
 				else
-					draw_rect(game->screen, box, offset, 0x00FFFFFF);
+					draw_rect(game->screen, box, offset, 0x00999999);
 			}
 		}
 		i[X]++;

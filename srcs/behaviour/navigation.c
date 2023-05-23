@@ -12,13 +12,7 @@
 
 #include "game.h"
 
-int	check_map(t_map *map, int *pos)
-{
- 	// printf("Pos[X] : %d\n", pos[X]);
- 	// printf("Pos[Y] : %d\n", pos[Y]);
- 	// printf("MAP : %c\n", map->map[pos[Y]][pos[X]]);
-	return (map->map[pos[Y]][pos[X]] != '1');
-}
+
 
 /* Mandatory */
 void	player_move_rot(t_game *game, t_inst *inst)
@@ -29,17 +23,17 @@ void	player_move_rot(t_game *game, t_inst *inst)
 	int	upper[2];
 	int	pos[2];
 
-	axis = inst->cam->axis[BOT] - inst->cam->axis[TOP];
+	axis = inst->cam->axis[TOP] - inst->cam->axis[BOT];
 	angle = inst->cam->orientation[PORT] - inst->cam->orientation[STARBOARD];
-	inst->obj->dir[X] = cos(-inst->obj->rotation * game->degtorad);
-	inst->obj->dir[Y] = sin(-inst->obj->rotation * game->degtorad);
+	inst->obj->dir[X] = cos(inst->obj->rotation * game->degtorad);
+	inst->obj->dir[Y] = sin(inst->obj->rotation * game->degtorad);
 	// inst->cam->plane[X] = 0.707;
 	// inst->cam->plane[Y] = 0.707;
 	// inst->cam->plane[X] = cos(inst->obj->rotation * game->degtorad);
 	// inst->cam->plane[Y] = sin(inst->obj->rotation * game->degtorad);
 	vector2(0, 0, &lower[X], &lower[Y]);
 	vector2(game->mapdata->size[X], game->mapdata->size[Y], &upper[X], &upper[Y]);
-	pos[X] = inst->obj->pos[X] - inst->obj->dir[X] * axis * inst->obj->speed;
+	pos[X] = inst->obj->pos[X] + inst->obj->dir[X] * axis * inst->obj->speed;
 	pos[Y] = inst->obj->pos[Y] - inst->obj->dir[Y] * axis * inst->obj->speed;
 	// printf("Pos : (%d, %d) - (%.2f, %.2f)\n", pos[X], pos[Y], inst->obj->pos[X], inst->obj->pos[Y]);
 	// printf("Rot : (%.2f) - (%.2f, %.2f)\n", inst->obj->rotation, inst->obj->dir[X], inst->obj->dir[Y]);
@@ -47,7 +41,7 @@ void	player_move_rot(t_game *game, t_inst *inst)
 	// if (check_map(game->mapdata, pos))
 	if (check_bounds(pos, lower, upper))
 	{
-		inst->obj->pos[X] -= inst->obj->dir[X] * axis * inst->obj->speed;
+		inst->obj->pos[X] += inst->obj->dir[X] * axis * inst->obj->speed;
 		inst->obj->pos[Y] -= inst->obj->dir[Y] * axis * inst->obj->speed;
 	}
 	inst->obj->rotation += angle * inst->obj->turn_rate;

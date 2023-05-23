@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:59 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/05/19 10:50:47 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/05/23 01:03:49 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ typedef struct s_rayhit
 typedef struct s_ray
 {
 	int		side;
+	int		face;
 	int		line_height;
 	int		draw_start;
 	int		draw_end;
@@ -227,6 +228,7 @@ typedef struct s_cam
 	int		orientation[2];
 	int		fov; // probably deprecated
 	int		fov_half; // probably deprecated
+	int		fov_sc_half; // probably deprecated
 	double	fov_increment; // probably deprecated
 	double	plane[2];
 	double	cameraX;
@@ -314,7 +316,7 @@ void		draw_line_r(t_pane *pane, t_info *info);
 void		draw_line_dir(t_pane *pane, t_info *info);
 void		draw_rect(t_screen *idata, int *size, int *pos, int color);
 void		draw_pixel(t_screen *idata, int *pos, int color);
-
+void		draw_column(t_pane *pane, t_info *info);
 
 
 /* Vectors */
@@ -371,7 +373,8 @@ void		render_minimap(t_game *game);
 
 /* Raycasting */
 
-t_rayhit	*ray(t_game *game, t_inst *inst, t_pane *pane, double cameraX, int w);
+t_rayhit	*ray(t_game *game, t_inst *inst, t_pane *pane, double camera_x, int w, int color);
+// t_rayhit	*ray(t_game *game, t_inst *inst, t_pane *pane, double cameraX, int w);
 t_rayhit	*ray2(t_game *game, t_inst *inst, t_pane *pane);
 
 

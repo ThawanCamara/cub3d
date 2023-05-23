@@ -57,7 +57,6 @@ static int	pane_fill(t_game *game, t_screen *screen, t_pane **pane)
 	pane[BOTHALF] = create_pane(game, "sc_bothalf");
 	pane_setdata_ratio(pane[BOTHALF], size, 0, 50);
 	
-	
 	vector2(screen->size[X] / 2, screen->size[Y], &size[X], &size[Y]);
 	pane[LWING] = create_pane(game, "sc_lwing");
 	pane_setdata_ratio(pane[LWING], size, 0, 0);

@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 05:26:00 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/05/19 10:50:03 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/05/23 00:08:56 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ const void	**config_table_builder(void)
 		map_init, map_clear,
 		data_init, data_clear,
 		screen_init, screen_clear,
-		inst_init, inst_clear,
 		pane_init, pane_clear,
+		inst_init, inst_clear,
 		ui_init, ui_clear,
 		window_init, window_clear
 	};
