@@ -23,7 +23,8 @@ void	draw_rect(t_screen *idata, int *size, int *pos, int color)
 	{
 		newpos[X] = pos[X] + i[X];
 		newpos[Y] = pos[Y] + i[Y];
-		draw_pixel(idata, newpos, color);
+		// if (i[X] != 0 && i[X] != size[X] && i[Y] != 0 && i[Y] != size[Y])
+			draw_pixel(idata, newpos, color);
 		i[X]++;
 		if (i[X] == size[X] && i[Y] < size[Y])
 		{

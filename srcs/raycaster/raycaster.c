@@ -19,9 +19,9 @@ int	check_map_bounds(t_map *map, int *pos)
 	return (0);
 }
 
-static void	sidestep(t_inst *inst, t_ray *ray)
+static void	get_side_steps(t_inst *inst, t_ray *ray)
 {
-	if (ray->rayDir[X] < 0)
+	if (ray->dir[X] < 0)
 	{
 		ray->step[X] = -1;
 		ray->sideDist[X] = (inst->obj->pos[X] - ray->map[X]) * ray->deltaDist[X];
@@ -31,7 +31,7 @@ static void	sidestep(t_inst *inst, t_ray *ray)
 		ray->step[X] = 1;
 		ray->sideDist[X] = (ray->map[X] + 1.0 - inst->obj->pos[X]) * ray->deltaDist[X];
 	}
-	if (ray->rayDir[Y] < 0)
+	if (ray->dir[Y] < 0)
 	{
 		ray->step[Y] = -1;
 		ray->sideDist[Y] = (inst->obj->pos[Y] - ray->map[Y]) * ray->deltaDist[Y];
@@ -43,22 +43,22 @@ static void	sidestep(t_inst *inst, t_ray *ray)
 	}
 }
 
-t_rayhit	*ray(t_game *game, t_inst *inst, t_pane *pane, double angle, int w, int color)
+t_rayhit	*ray(t_game *game, t_inst *inst, t_pane *pane, double angle, int width, double view, int color)
 {
 	t_ray	ray;
 
-	ray.rayDir[X] = cos(angle);
-	ray.rayDir[Y] = sin(-angle);
+	ray.dir[X] = cos(angle);
+	ray.dir[Y] = sin(-angle);
 
-	ray.deltaDist[X] = (fabs(ray.rayDir[X]) < 1e-9) ? game->mapdata->size[X] : fabs(1 / ray.rayDir[X]);
-	ray.deltaDist[Y] = (fabs(ray.rayDir[Y]) < 1e-9) ? game->mapdata->size[Y] : fabs(1 / ray.rayDir[Y]);
+	ray.deltaDist[X] = (fabs(ray.dir[X]) < 1e-9) ? game->mapdata->size[X] : fabs(1 / ray.dir[X]);
+	ray.deltaDist[Y] = (fabs(ray.dir[Y]) < 1e-9) ? game->mapdata->size[Y] : fabs(1 / ray.dir[Y]);
 
 	ray.map[X] = (int)inst->obj->pos[X];
 	ray.map[Y] = (int)inst->obj->pos[Y];
 
 	ray.hit_flag = 0;
 
-	sidestep(inst, &ray);
+	get_side_steps(inst, &ray);
 
 	while (ray.hit_flag == 0)
 	{
@@ -69,7 +69,7 @@ t_rayhit	*ray(t_game *game, t_inst *inst, t_pane *pane, double angle, int w, int
 			ray.side = 0;
 			ray.face = 1 + ray.step[X];
 			
-			ray.hit.distance = ray.sideDist[X];
+			ray.hit.distance = ray.sideDist[X] - ray.deltaDist[X];
 		}
 		else
 		{
@@ -78,17 +78,9 @@ t_rayhit	*ray(t_game *game, t_inst *inst, t_pane *pane, double angle, int w, int
 			ray.side = 1;
 			ray.face = 5 + ray.step[Y];
 			
-			ray.hit.distance = ray.sideDist[Y];
+			ray.hit.distance = ray.sideDist[Y] - ray.deltaDist[Y];
 		}
-		// int	v[2];
-		// vector2(0, 0, &v[X], &v[Y]);
-		// if (check_bounds(ray.map, v, game->mapdata->size))
-		// printf("%d + %d\n", !check_map_bounds(game->mapdata, ray.map) && game->mapdata->map[ray.map[Y]][ray.map[X]] == '1', ray.map[X]);
-		// if (check_map_bounds(game->mapdata, ray.map))
-		// {
-		// 	ray.hit_flag = 1;
-		// 	break ;
-		// }
+
 		if (game->mapdata->map[ray.map[Y]][ray.map[X]] == '1')
 			ray.hit_flag = 1;
 	}
@@ -103,76 +95,92 @@ t_rayhit	*ray(t_game *game, t_inst *inst, t_pane *pane, double angle, int w, int
 	// else
 	// 	draw_rect(game->screen, size, pos, 0x00004400);
 	/*  */
-
-	(void)color;
 	
 	// printf("%f\n", angle * (180 / M_PI));
 
+	(void)color;
+	(void)view;
 	t_info info;
+	// info.pos[X] = inst->obj->pos[X] * game->ui->minimap_box_size
+	// 	+ game->pane[MINIMAP]->offset[X];
+	// info.pos[Y] = inst->obj->pos[Y] * game->ui->minimap_box_size
+	// 	+ game->pane[MINIMAP]->offset[Y];
+	// info.length = ray.hit.distance * game->ui->minimap_box_size;
+	// info.color = 0x00880000;
+	// info.dir[X] = ray.dir[X];
+	// info.dir[Y] = ray.dir[Y];
+	// draw_line_dir(game->pane[MINIMAP], &info);
+	// info.pos[X] = inst->obj->pos[X] * game->ui->minimap_box_size
+	// 	+ game->pane[MINIMAP]->offset[X] + ray.hit.distance * game->ui->minimap_box_size * cos(angle);
+	// info.pos[Y] = inst->obj->pos[Y] * game->ui->minimap_box_size
+	// 	+ game->pane[MINIMAP]->offset[Y] - ray.hit.distance * game->ui->minimap_box_size * sin(angle);
+	// info.length = ray.hit.distance * game->ui->minimap_box_size * cos(inst->obj->rotation * game->degtorad - angle);
+	// info.color = 0x00FF0000;
+	// info.rad = (inst->obj->rotation + 180) * game->degtorad;
+	// draw_line_r(game->pane[MINIMAP], &info);
+
 	if (ray.sideDist[X] < ray.sideDist[Y])
 	{
 		/* Red Line */
-		info.pos[X] = inst->obj->pos[X] * game->ui->minimap_box_size
-			+ game->pane[MINIMAP]->offset[X];
-		info.pos[Y] = inst->obj->pos[Y] * game->ui->minimap_box_size
-			+ game->pane[MINIMAP]->offset[Y];
-		info.length = ray.sideDist[X] * game->ui->minimap_box_size;
-		info.color = color;
-		info.dir[X] = ray.rayDir[X];
-		info.dir[Y] = ray.rayDir[Y];
-		draw_line_dir(game->pane[MINIMAP], &info);
+		// info.pos[X] = inst->obj->pos[X] * game->ui->minimap_box_size
+		// 	+ game->pane[MINIMAP]->offset[X];
+		// info.pos[Y] = inst->obj->pos[Y] * game->ui->minimap_box_size
+		// 	+ game->pane[MINIMAP]->offset[Y];
+		// info.length = fabs(ray.hit.distance) * game->ui->minimap_box_size;
+		// info.color = 0x00880000;
+		// info.dir[X] = ray.rayDir[X];
+		// info.dir[Y] = ray.rayDir[Y];
+		// draw_line_dir(game->pane[MINIMAP], &info);
 		/*  */
 
 		/* rebatimento */
-		double dist = (ray.sideDist[X]) * game->ui->minimap_box_size;
+		// double dist = (ray.sideDist[X]) * game->ui->minimap_box_size;
 
-		// bx = px + h * cos(a);
-		// by = py - h * sin(a);
 
-		info.pos[X] = inst->obj->pos[X] * game->ui->minimap_box_size
-			+ game->pane[MINIMAP]->offset[X] + dist * cos(angle);
-		info.pos[Y] = inst->obj->pos[Y] * game->ui->minimap_box_size
-			+ game->pane[MINIMAP]->offset[Y] - dist * sin(angle);
-		info.length = ray.sideDist[X] * game->ui->minimap_box_size * cos((inst->obj->rotation * game->degtorad) - angle);
-		// printf(">> Dist: \e[38;5;1m%f \e[0m| Len:\e[38;5;1m %d\e[0m\n", ray.sideDist[X] * game->ui->minimap_box_size, info.length);
-		// printf(">> Angle:\e[38;5;1m %f \e[0m| Cos:\e[38;5;1m %f\e[0m\n", angle * (180/M_PI), cos(angle));
-		info.color = 0x00FF0000;
-		info.radians = (inst->obj->rotation + 180) * game->degtorad;
-		draw_line_r(game->pane[MINIMAP], &info);
+		// info.pos[X] = inst->obj->pos[X] * game->ui->minimap_box_size
+		// 	+ game->pane[MINIMAP]->offset[X] + dist * cos(angle);
+		// info.pos[Y] = inst->obj->pos[Y] * game->ui->minimap_box_size
+		// 	+ game->pane[MINIMAP]->offset[Y] - dist * sin(angle);
+		// info.length = ray.sideDist[X] * game->ui->minimap_box_size * cos(inst->obj->rotation * game->degtorad - angle);
+		// info.color = 0x00FF0000;
+		// info.radians = (inst->obj->rotation + 180) * game->degtorad;
+		// draw_line_r(game->pane[MINIMAP], &info);
 	}
 	else
 	{
 		/* Green Line */
-		info.pos[X] = inst->obj->pos[X] * game->ui->minimap_box_size
-			+ game->pane[MINIMAP]->offset[X];
-		info.pos[Y] = inst->obj->pos[Y] * game->ui->minimap_box_size
-			+ game->pane[MINIMAP]->offset[Y];
-		info.length = ray.sideDist[Y] * game->ui->minimap_box_size;
-		info.color = color;
-		info.dir[X] = ray.rayDir[X];
-		info.dir[Y] = ray.rayDir[Y];
-		draw_line_dir(game->pane[MINIMAP], &info);
+		// info.pos[X] = inst->obj->pos[X] * game->ui->minimap_box_size
+		// 	+ game->pane[MINIMAP]->offset[X];
+		// info.pos[Y] = inst->obj->pos[Y] * game->ui->minimap_box_size
+		// 	+ game->pane[MINIMAP]->offset[Y];
+		// info.length = fabs(ray.sideDist[Y] - ray.deltaDist[Y]) * game->ui->minimap_box_size;
+		// info.color = 0x00008800;
+		// info.dir[X] = ray.rayDir[X];
+		// info.dir[Y] = ray.rayDir[Y];
+		// draw_line_dir(game->pane[MINIMAP], &info);
 		/*  */
 
 		/* rebatimento */
-		double dist = (ray.sideDist[Y] ) * game->ui->minimap_box_size;
+		// double dist = (ray.sideDist[Y] ) * game->ui->minimap_box_size;
 
-		info.pos[X] = inst->obj->pos[X] * game->ui->minimap_box_size
-			+ game->pane[MINIMAP]->offset[X] + dist * cos(angle);
-		info.pos[Y] = inst->obj->pos[Y] * game->ui->minimap_box_size
-			+ game->pane[MINIMAP]->offset[Y] - dist * sin(angle);
-		info.length = ray.sideDist[Y] * game->ui->minimap_box_size * cos((inst->obj->rotation * game->degtorad) - angle);
-		// printf(">> Dist: \e[38;5;2m%f \e[0m| Len:\e[38;5;2m %d\e[0m\n", ray.sideDist[Y] * game->ui->minimap_box_size, info.length);
-		// printf(">> Angle:\e[38;5;2m %f \e[0m| Cos:\e[38;5;2m %f\e[0m\n", angle * (180/M_PI), cos(angle));
-		info.color = 0x00FF0000;
-		info.radians = (inst->obj->rotation + 180) * game->degtorad;
-		draw_line_r(game->pane[MINIMAP], &info);
+		// info.pos[X] = inst->obj->pos[X] * game->ui->minimap_box_size
+		// 	+ game->pane[MINIMAP]->offset[X] + dist * cos(angle);
+		// info.pos[Y] = inst->obj->pos[Y] * game->ui->minimap_box_size
+		// 	+ game->pane[MINIMAP]->offset[Y] - dist * sin(angle);
+		// info.length = ray.sideDist[Y] * game->ui->minimap_box_size * cos(inst->obj->rotation * game->degtorad - angle);
+		// info.color = 0x00FF0000;
+		// info.radians = (inst->obj->rotation + 180) * game->degtorad;
+		// draw_line_r(game->pane[MINIMAP], &info);
 	}
 
-	if (ray.side == 0)
-		ray.perp_wall_dist = (ray.sideDist[X] - ray.deltaDist[X]) * cos((inst->obj->rotation * game->degtorad) - angle);
-	else
-		ray.perp_wall_dist = (ray.sideDist[Y] - ray.deltaDist[Y]) * cos((inst->obj->rotation * game->degtorad) - angle);
+	// printf("%f - %f = %f\n", inst->obj->rotation * game->degtorad, angle, inst->obj->rotation * game->degtorad - angle);
+
+	// if (ray.side == 0)
+	// 	ray.perp_wall_dist = (ray.sideDist[X] - ray.deltaDist[X]) * cos(inst->obj->rotation * game->degtorad - angle);
+	// else
+	// 	ray.perp_wall_dist = (ray.sideDist[Y] - ray.deltaDist[Y]) * cos(inst->obj->rotation * game->degtorad - angle);
+	ray.perp_wall_dist = ray.hit.distance * cos(inst->obj->rotation * game->degtorad - angle);
+	// ray.line_height = (int) (pane->size[Y] / ray.perp_wall_dist);
 	ray.line_height = (int) (pane->size[Y] / ray.perp_wall_dist);
 	ray.draw_start = -ray.line_height / 2 + pane->size[Y] / 2;
 	if (ray.draw_start < 0)
@@ -185,7 +193,7 @@ t_rayhit	*ray(t_game *game, t_inst *inst, t_pane *pane, double angle, int w, int
 	// t_info info;
 
 	/* Red Wall */
-	info.pos[X] = w + pane->offset[X];
+	info.pos[X] = width + pane->offset[X];
 	info.pos[Y] = ray.draw_start;
 	info.length = ray.draw_end - ray.draw_start;
 
@@ -203,3 +211,9 @@ t_rayhit	*ray(t_game *game, t_inst *inst, t_pane *pane, double angle, int w, int
 	/*  */
 	return (NULL);
 }	
+
+
+
+/* 
+ 	x * cos(angle) 
+ */

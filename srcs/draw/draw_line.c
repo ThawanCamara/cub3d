@@ -16,8 +16,8 @@
 
 static void	set_data_r(t_info *info, int *pos, int *delta, int *step)
 {
-	pos[X] = info->pos[X] + info->length * cos(-info->radians);
-	pos[Y] = info->pos[Y] + info->length * sin(-info->radians);
+	pos[X] = info->pos[X] + info->length * cos(-info->rad);
+	pos[Y] = info->pos[Y] + info->length * sin(-info->rad);
 	delta[X] = abs(pos[X] - info->pos[X]);
 	delta[Y] = abs(pos[Y] - info->pos[Y]);
 	step[X] = 1 + (!(info->pos[X] < pos[X]) * -2);

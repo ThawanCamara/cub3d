@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:59 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/05/23 01:03:49 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/05/23 22:42:03 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,9 +151,11 @@ enum	e_game_state
 
 typedef struct s_rayhit
 {
-	char	wall;
+	//char	wall;
 	double	distance;
-	char	*filter;
+	//char	*filter;
+	int		side;
+	int		face;
 }	t_rayhit;
 
 typedef struct s_ray
@@ -167,10 +169,10 @@ typedef struct s_ray
 	int		map[2];
 	int		step[2];
 	double	sideDist[2];
-	double	rayDir[2];
+	double	dir[2];
 	double	deltaDist[2];
 	double	perp_wall_dist;
-	t_rayhit	hit;
+	t_rayhit hit;
 }	t_ray;
 
 typedef struct s_info
@@ -179,7 +181,7 @@ typedef struct s_info
 	int		pos[2];
 	int		color;
 	int		length;
-	double	radians;
+	double	rad;
 	double	dir[2];
 }	t_info;
 
@@ -230,6 +232,7 @@ typedef struct s_cam
 	int		fov_half; // probably deprecated
 	int		fov_sc_half; // probably deprecated
 	double	fov_increment; // probably deprecated
+	double	view_increment;
 	double	plane[2];
 	double	cameraX;
 }	t_cam;
@@ -373,9 +376,8 @@ void		render_minimap(t_game *game);
 
 /* Raycasting */
 
-t_rayhit	*ray(t_game *game, t_inst *inst, t_pane *pane, double camera_x, int w, int color);
-// t_rayhit	*ray(t_game *game, t_inst *inst, t_pane *pane, double cameraX, int w);
-t_rayhit	*ray2(t_game *game, t_inst *inst, t_pane *pane);
+t_rayhit	*ray2(t_game *game, t_inst *inst, t_info *info);
+t_rayhit	*ray(t_game *game, t_inst *inst, t_pane *pane, double camera_x, int w, double view, int color);
 
 
 /* Other */

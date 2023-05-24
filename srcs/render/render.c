@@ -20,7 +20,7 @@ int	render_game(t_game *game)
 	// int pos[2];
 	// int size[2];
 	render_minimap(game);
-	render_fov(game);
+	// render_fov(game);
 	
 	t_info info;
 	/* player white angle */
@@ -37,20 +37,19 @@ int	render_game(t_game *game)
 			+ game->pane[MINIMAP]->offset[Y];
 		info.length = 300;
 		info.color = 0x00ffffff;
-		info.radians = game->inst[i].obj->rotation * game->degtorad;
+		info.rad = game->inst[i].obj->rotation * game->degtorad;
 		draw_line_r(game->pane[MINIMAP], &info);
-		info.pos[X] = game->inst[i].obj->pos[X] * game->ui->minimap_box_size;
-		info.pos[Y] = game->inst[i].obj->pos[Y] * game->ui->minimap_box_size;
+		info.pos[X] = game->inst[i].obj->pos[X] * game->ui->minimap_box_size + game->pane[MINIMAP]->offset[X];
+		info.pos[Y] = game->inst[i].obj->pos[Y] * game->ui->minimap_box_size + game->pane[MINIMAP]->offset[Y];
 		info.length = game->mapdata->size[Y] * game->ui->minimap_box_size;
 		info.color = 0x000000FF;
-		info.radians = (game->inst[i].obj->rotation - 90) * game->degtorad;
+		info.rad = (game->inst[i].obj->rotation - 90) * game->degtorad;
 		draw_line_r(game->pane[FULLSCREEN], &info);
-		info.pos[X] = game->inst[i].obj->pos[X] * game->ui->minimap_box_size
-			+ game->pane[MINIMAP]->offset[X];
-		info.pos[Y] = game->inst[i].obj->pos[Y] * game->ui->minimap_box_size;
+		info.pos[X] = game->inst[i].obj->pos[X] * game->ui->minimap_box_size + game->pane[MINIMAP]->offset[X];
+		info.pos[Y] = game->inst[i].obj->pos[Y] * game->ui->minimap_box_size + game->pane[MINIMAP]->offset[Y];
 		info.length = -game->mapdata->size[Y] * game->ui->minimap_box_size;
 		info.color = 0x000000FF;
-		info.radians = (game->inst[i].obj->rotation - 90) * game->degtorad;
+		info.rad = (game->inst[i].obj->rotation - 90) * game->degtorad;
 		draw_line_r(game->pane[FULLSCREEN], &info);
 	}
 

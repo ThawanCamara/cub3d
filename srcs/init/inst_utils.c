@@ -35,15 +35,16 @@ void	set_cam_data(t_game *game, t_inst *inst)
 	inst->cam->orientation[STARBOARD] = 0;
 	inst->cam->fov = 66;
 	inst->cam->fov_half = inst->cam->fov / 2;
+	inst->cam->view_increment = (double) 2 / inst->cam->fov / game->pane[FULLSCREEN]->size[X];
 	if (!game->enable_parallax)
 	{
-		inst->cam->fov_sc_half = game->pane[FULLSCREEN]->size[X] / 2; // trocar por pane
-		inst->cam->fov_increment = (double)inst->cam->fov / game->pane[FULLSCREEN]->size[X]; // trocar por pane
+		inst->cam->fov_sc_half = game->pane[FULLSCREEN]->size[X] / 2;
+		inst->cam->fov_increment = (double)inst->cam->fov / game->pane[FULLSCREEN]->size[X];
 	}
 	else
 	{
-		inst->cam->fov_sc_half = game->pane[RWING]->size[X] / 2; // trocar por pane
-		inst->cam->fov_increment = (double)inst->cam->fov / game->pane[RWING]->size[X]; // trocar por pane
+		inst->cam->fov_sc_half = game->pane[RWING]->size[X] / 2;
+		inst->cam->fov_increment = (double)inst->cam->fov / game->pane[RWING]->size[X];
 	}
 	inst->cam->plane[X] = 0;
 	inst->cam->plane[Y] = 0.66;
