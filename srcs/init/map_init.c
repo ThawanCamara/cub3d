@@ -91,46 +91,30 @@ int	map_init(t_game *game)
 {
 	header_log("Initialization", "Map", B_ORANGE);
 	print_log(1, STR_BUILD_MAP);
-	game->mapdata = (t_map *)malloc(sizeof(t_map));
-	if (game->mapdata)
-		game->mapdata->tex_path = (char **)malloc(sizeof(char *) * 5);
-	if (!game->mapdata || !game->mapdata->tex_path)
-		return (assert_log(0, STR_BUILD_MAP_S, STR_BUILD_DATA_F));
-	/* Inicialização temporaria */
-	game->mapdata->tex_path[NORTH] = ft_strdup("assets/textures/darkcube2d_3.xpm");
-	game->mapdata->tex_path[SOUTH] = ft_strdup("path_to_south");
-	game->mapdata->tex_path[WEST] = ft_strdup("path_to_west");
-	game->mapdata->tex_path[EAST] = ft_strdup("path_to_east");
-	game->mapdata->tex_path[4] = NULL;
-	game->mapdata->inst_rot = ft_strdup("EW");
-	game->mapdata->trgb[SKY] = 0x00505065;
-	game->mapdata->trgb[FLOOR] = 0x00666666;
-
-	game->mapdata->map = (char **)get_map();
-	game->mapdata->size[X] = ft_strlen(game->mapdata->map[0]);
-	game->mapdata->size[Y] = ft_strarr_size(game->mapdata->map);
-	game->mapdata->start_pos = (int *)malloc(sizeof(int) * (2 * game->total_insts));
-	// game->mapdata->start_pos[X] = 19;
-	// game->mapdata->start_pos[Y] = 3;
-	game->mapdata->start_pos[X] = 6;
-	game->mapdata->start_pos[Y] = 6;
-	if (game->total_insts > 1)
-	{
-		game->mapdata->start_pos[X + 2] = 5;
-		game->mapdata->start_pos[Y + 2] = 4;
-	}
-	/*  */
-	assert_log(validate_textures(game->mapdata->tex_path),
+	game->mapdata = NULL;
+	map_loader(game, game->mapname);
+	assert_log(validate_textures((char**)game->mapdata->texture),
 		STR_BUILD_MAP_S, STR_BUILD_DATA_F);
 	return (game->mapdata != NULL);
 }
 
 void	map_clear(t_game *game)
 {
+	size_t	i;
 	header_log("Clear", "Map", B_YELLOW);
-	//free(game->mapdata->map);
-	ft_free_arr((void **)game->mapdata->tex_path);
-	free(game->mapdata->inst_rot);
-	free(game->mapdata->start_pos);
+	ft_free_arr((void **)game->mapdata->map);
+	if (game->mapdata)
+	{
+		i = 0;
+		while (i < 4)
+		{
+			if (game->mapdata->texture[i].img != NULL)
+				mlx_destroy_image(game->mlx, game->mapdata->texture[i].img);
+			i++;
+		}
+		free(game->mapdata->texture);
+		// free(game->mapdata->inst_rot);
+		free(game->mapdata->start_pos);
+	}
 	free(game->mapdata);
 }

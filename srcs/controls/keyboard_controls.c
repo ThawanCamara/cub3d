@@ -15,12 +15,12 @@
 int	keyboard_onpress(int key, t_game *game)
 {
 	// ft_printf("Keyboard key %s(%d) was pressed\n", get_key_name(key), key);
-	if (key == KEY_W || key == KEY_S)
-		cmd_chdir_two(game, key, TRUE);
-	if (key == KEY_A || key == KEY_D)
+	if (key == KEY_W || key == KEY_S || key == KEY_A || key == KEY_D)
+		cmd_chdir_four(game, key, TRUE);
+	if (key == KEY_LEFT || key == KEY_RIGHT)
 		cmd_chrot(game, key, TRUE);
 	if (game->enable_parallax && (key == KEY_UP || key == KEY_DOWN))
-		cmd_chdir_two(game, key, TRUE);
+		cmd_chdir_four(game, key, TRUE);
 	if (game->enable_parallax && (key == KEY_LEFT || key == KEY_RIGHT))
 		cmd_chrot(game, key, TRUE);
 	return (0);
@@ -29,12 +29,12 @@ int	keyboard_onpress(int key, t_game *game)
 int	keyboard_onrelease(int key, t_game *game)
 {
 	// ft_printf("Keyboard key %s(%d) was released\n", get_key_name(key), key);
-	if (key == KEY_W || key == KEY_S)
-		cmd_chdir_two(game, key, FALSE);
-	if (key == KEY_A || key == KEY_D)
+	if (key == KEY_W || key == KEY_S || key == KEY_A || key == KEY_D)
+		cmd_chdir_four(game, key, FALSE);
+	if (key == KEY_LEFT || key == KEY_RIGHT)
 		cmd_chrot(game, key, FALSE);
 	if (game->enable_parallax && (key == KEY_UP || key == KEY_DOWN))
-		cmd_chdir_two(game, key, FALSE);
+		cmd_chdir_four(game, key, FALSE);
 	if (game->enable_parallax && (key == KEY_LEFT || key == KEY_RIGHT))
 		cmd_chrot(game, key, FALSE);
 	if (key == KEY_ESC)

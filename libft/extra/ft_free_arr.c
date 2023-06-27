@@ -15,6 +15,7 @@
 // Free memory from a single array
 void	ft_free_arr(void **arr)
 {
-	ft_striter((char **)arr, free);
+	if (arr)
+		ft_striter((char **)arr, free);
 	free(arr);
 }

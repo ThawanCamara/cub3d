@@ -6,7 +6,7 @@
 #    By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 07:08:10 by tde-souz          #+#    #+#              #
-#    Updated: 2023/05/19 09:04:23 by tde-souz         ###   ########.fr        #
+#    Updated: 2023/06/26 18:56:26 by tde-souz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,17 +83,26 @@ SRCS		:=	\
 				srcs/utils/loop_handler.c	\
 				srcs/render/skyfloor.c	\
 				srcs/raycaster/raycaster.c	\
-				srcs/raycaster/ray2.c	\
+				srcs/raycaster/ray.c	\
+				srcs/debug/debug_ray.c	\
+				srcs/validation/map_loader.c	\
+				srcs/validation/get_textures.c	\
+				srcs/validation/check_args.c	\
+				srcs/validation/validation_utils.c	\
+				srcs/validation/read_loop.c	\
+				srcs/validation/get_skyfloor.c	\
+				srcs/validation/build_map.c	\
+				srcs/validation/map_checker.c	\
+				srcs/render/textures.c	\
 				srcs/main.c
 
 # ******************************************************************************
-# *								   SOURCE FILES								   *
+# *								   OBJECT FILES								   *
 # ******************************************************************************
 OBJS		=	$(SRCS:.c=.o)
-
 # ********************************************************************************
-#                                      RULES                                     *
-# ********************************************************************************
+#                                     RULES                                    *
+# ******************************************************************************
 all:		${NAME}
 
 ${NAME}:	${LIBFT_DIR}${LIBFT}.a ${MLX_DIR}${MLX}.a ${OBJS}

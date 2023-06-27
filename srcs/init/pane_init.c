@@ -41,7 +41,7 @@ static int	pane_fill(t_game *game, t_screen *screen, t_pane **pane)
 	int	offset[2];
 
 	// vector2(256, 192, &size[X], &size[Y]);
-	vector2(256, 256, &size[X], &size[Y]);
+	vector2(300, 200, &size[X], &size[Y]);
 	pane[MINIMAP] = create_pane(game, "minimap");
 	pane_setdata_ratio(pane[MINIMAP], size, 0, 0);
 	// pane_setdata(pane[MINIMAP], size, offset);

@@ -15,51 +15,55 @@
 int	render_game(t_game *game)
 {
 	render_skyfloor(game);
-	// draw_rect(game->screen, game->pane[MINIMAP]->size,
-	// 	game->pane[MINIMAP]->offset, 0x00545454);
-	// int pos[2];
-	// int size[2];
 	render_minimap(game);
-	// render_fov(game);
+	render_fov(game);
 	
-	t_info info;
-	/* player white angle */
+	t_iray		iray;
+	t_rayhit	hit;
 
-	/* player blue plane */
-	int	i;
 
-	i = -1;
-	while (++i < game->total_insts)
-	{		
-		info.pos[X] = game->inst[i].obj->pos[X] * game->ui->minimap_box_size
-			+ game->pane[MINIMAP]->offset[X];
-		info.pos[Y] = game->inst[i].obj->pos[Y] * game->ui->minimap_box_size
-			+ game->pane[MINIMAP]->offset[Y];
-		info.length = 300;
-		info.color = 0x00ffffff;
-		info.rad = game->inst[i].obj->rotation * game->degtorad;
-		draw_line_r(game->pane[MINIMAP], &info);
-		info.pos[X] = game->inst[i].obj->pos[X] * game->ui->minimap_box_size + game->pane[MINIMAP]->offset[X];
-		info.pos[Y] = game->inst[i].obj->pos[Y] * game->ui->minimap_box_size + game->pane[MINIMAP]->offset[Y];
-		info.length = game->mapdata->size[Y] * game->ui->minimap_box_size;
-		info.color = 0x000000FF;
-		info.rad = (game->inst[i].obj->rotation - 90) * game->degtorad;
-		draw_line_r(game->pane[FULLSCREEN], &info);
-		info.pos[X] = game->inst[i].obj->pos[X] * game->ui->minimap_box_size + game->pane[MINIMAP]->offset[X];
-		info.pos[Y] = game->inst[i].obj->pos[Y] * game->ui->minimap_box_size + game->pane[MINIMAP]->offset[Y];
-		info.length = -game->mapdata->size[Y] * game->ui->minimap_box_size;
-		info.color = 0x000000FF;
-		info.rad = (game->inst[i].obj->rotation - 90) * game->degtorad;
-		draw_line_r(game->pane[FULLSCREEN], &info);
+	t_idraw info;
+
+	info.pos[X] = (game->inst[0].obj->pos[X] + game->inst[0].obj->dir[X] + game->pane[MINIMAP]->offset[X]) * game->ui->minimap_box_size;
+	info.pos[Y] = (game->inst[0].obj->pos[Y] - game->inst[0].obj->dir[Y] + game->pane[MINIMAP]->offset[Y]) * game->ui->minimap_box_size;
+	info.length = fabs(game->inst[0].cam->plane[X] - game->inst[0].cam->plane[Y]) * game->ui->minimap_box_size;
+	info.rad = (game->inst[0].obj->rotation + 90) * game->degtorad;
+	info.color = 0x00ff0000;
+	draw_line_r(game->pane[MINIMAP], &info);
+
+	info.pos[X] = (game->inst[0].obj->pos[X] + game->inst[0].obj->dir[X] + game->pane[MINIMAP]->offset[X]) * game->ui->minimap_box_size;
+	info.pos[Y] = (game->inst[0].obj->pos[Y] - game->inst[0].obj->dir[Y] + game->pane[MINIMAP]->offset[Y]) * game->ui->minimap_box_size;
+	info.length = fabs(game->inst[0].cam->plane[X] - game->inst[0].cam->plane[Y]) * game->ui->minimap_box_size;
+	info.rad = (game->inst[0].obj->rotation + 90) * game->degtorad;
+	info.color = 0x00ff0000;
+	draw_line_r(game->pane[MINIMAP], &info);
+
+	// iray.rad = (game->inst[0].obj->rotation) * game->degtorad;
+	iray.dir[X] = game->inst[0].obj->dir[X];
+	iray.dir[Y] = -game->inst[0].obj->dir[Y];
+	iray.start[X] = game->inst[0].obj->pos[X];
+	iray.start[Y] = game->inst[0].obj->pos[Y];
+	iray.max_len = 100;
+	ray2(game, &iray, &hit);
+	int color;
+		color = 0x000000ff;
+	debug_ray(game, &hit, color);
+	for (int i = 0; i < 4; i++)
+	{
+		// iray.rad = ((game->inst[0].obj->rotation) + (360/4) * i) * game->degtorad;
+		iray.dir[X] = cos((game->inst[0].obj->rotation + 90 * i) * game->degtorad);
+		iray.dir[Y] = -sin((game->inst[0].obj->rotation + 90 * i) * game->degtorad);
+		iray.start[X] = game->inst[0].obj->pos[X];
+		iray.start[Y] = game->inst[0].obj->pos[Y];
+		iray.max_len = 2;
+		ray2(game, &iray, &hit);
+		if (hit.flag == 1)
+			color = 0x00ff0000;
+		else
+			color = 0x0000ff00;
+		debug_ray(game, &hit, color);
 	}
 
-	// t_info	info;
-
-	// info.pos[X] = 300;
-	// info.pos[Y] = 100;
-	// info.length = 100;
-	// info.color = 0x00FF0000;
-	// draw_column(game->pane[FULLSCREEN], &info);
 	mlx_put_image_to_window(game->mlx, game->win, game->screen->img, 0, 0);
 	return (0);
 }

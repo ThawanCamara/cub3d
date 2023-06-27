@@ -19,3 +19,11 @@ int	check_bounds(int *pos, int *min, int *max)
 		&& pos[Y] >= min[Y]
 		&& pos[Y] < max[Y]);
 }
+
+int	check_mapbounds(int *pos, int *bounds)
+{
+	return (pos[X] >= 0
+		&& pos[X] < bounds[X]
+		&& pos[Y] >= 0
+		&& pos[Y] < bounds[Y]);
+}

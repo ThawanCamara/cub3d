@@ -14,7 +14,7 @@
 
 //Note: Could use dirX dirY instead of cos(-info->radians)
 
-static void	set_data_r(t_info *info, int *pos, int *delta, int *step)
+static void	set_data_r(t_idraw *info, int *pos, int *delta, int *step)
 {
 	pos[X] = info->pos[X] + info->length * cos(-info->rad);
 	pos[Y] = info->pos[Y] + info->length * sin(-info->rad);
@@ -24,7 +24,7 @@ static void	set_data_r(t_info *info, int *pos, int *delta, int *step)
 	step[Y] = 1 + (!(info->pos[Y] < pos[Y]) * -2);
 }
 
-void	draw_line_r(t_pane *pane, t_info *info)
+void	draw_line_r(t_pane *pane, t_idraw *info)
 {
 	int	delta[2];
 	int	pos[2];
@@ -51,7 +51,7 @@ void	draw_line_r(t_pane *pane, t_info *info)
 	}
 }
 
-static void	set_data_dir(t_info *info, int *pos, int *delta, int *step)
+static void	set_data_dir(t_idraw *info, int *pos, int *delta, int *step)
 {
 	pos[X] = info->pos[X] + info->length * info->dir[X];
 	pos[Y] = info->pos[Y] + info->length * info->dir[Y];
@@ -61,7 +61,7 @@ static void	set_data_dir(t_info *info, int *pos, int *delta, int *step)
 	step[Y] = 1 + (!(info->pos[Y] < pos[Y]) * -2);
 }
 
-void	draw_line_dir(t_pane *pane, t_info *info)
+void	draw_line_dir(t_pane *pane, t_idraw *info)
 {
 	int	delta[2];
 	int	pos[2];
@@ -88,7 +88,7 @@ void	draw_line_dir(t_pane *pane, t_info *info)
 	}
 }
 
-void	draw_column(t_pane *pane, t_info *info)
+void	draw_column(t_pane *pane, t_idraw *info)
 {
 	int	i;
 
@@ -96,7 +96,8 @@ void	draw_column(t_pane *pane, t_info *info)
 	while (i < info->length)
 	{
 		info->pos[Y] += 1;
-		draw_pixel(pane->screen, info->pos, info->color);
+		if (check_bounds(info->pos, pane->min_bounds, pane->max_bounds))
+			draw_pixel(pane->screen, info->pos, info->color);
 		i++;
 	}
 }

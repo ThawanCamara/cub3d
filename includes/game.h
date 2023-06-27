@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:59 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/05/23 22:42:03 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/06/27 15:57:37 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,14 @@
 # define SCREEN_HEIGHT	600
 
 # define FUNC_TABLE_SIZE 14
-
 # define PANE_AMOUNT	6
+# define MAP_BORDERS	"1 \0"
+# define MAP_CONTENT	"10NSWE \0"
 
 /* Size of the boxes drawn by mapdata measured in pixels */
 # define BOX_SIZE		16
-# define PLAYER_SPEED	40
-# define PLAYER_TURN	300
+# define PLAYER_SPEED	20
+# define PLAYER_TURN	60
 
 // ****************************************************************************
 // *                                   ENUMS                                  *
@@ -114,6 +115,14 @@ enum	e_game_state
 	END	
 };
 
+enum	e_ray_face
+{
+	FACE_WEST = 0,
+	FACE_EAST =	2,
+	FACE_NORTH = 4,
+	FACE_SOUTH = 6
+};
+
 // ****************************************************************************
 // *                                  STRINGS                                 *
 // ****************************************************************************
@@ -144,6 +153,7 @@ enum	e_game_state
 # define STR_SET_WINDOW "Preparing to launch the game window..."
 # define STR_SET_WINDOW_S "Successfully launched the game window!"
 # define STR_SET_WINDOW_F "Failed to launch the game window."
+# define ERR_MAPREAD "An error occurred while reading the map."
 
 // ****************************************************************************
 // *                                  STRUCTS                                 *
@@ -151,31 +161,46 @@ enum	e_game_state
 
 typedef struct s_rayhit
 {
-	//char	wall;
-	double	distance;
-	//char	*filter;
 	int		side;
 	int		face;
+	int		flag;
+	double	distance;
+	double	rad;
+	double	pos[2];
+	double	start[2];
+	double	dir[2];
 }	t_rayhit;
 
 typedef struct s_ray
 {
 	int		side;
 	int		face;
-	int		line_height;
-	int		draw_start;
-	int		draw_end;
+	int		line_height; //not
+	int		draw_start; //not
+	int		draw_end; //not
 	int		hit_flag; // needed?
 	int		map[2];
 	int		step[2];
+	double	perp_wall_dist; //not
 	double	sideDist[2];
 	double	dir[2];
 	double	deltaDist[2];
-	double	perp_wall_dist;
+	char	*col;
+	double	*p;
+	int		*f;
 	t_rayhit hit;
 }	t_ray;
 
-typedef struct s_info
+typedef struct s_iray
+{
+	double	max_len;
+	double	rad;
+	double	dir[2];
+	double	start[2];
+	char	*filter;
+}	t_iray;
+
+typedef struct s_idraw
 {
 	int		size[2];
 	int		pos[2];
@@ -183,7 +208,7 @@ typedef struct s_info
 	int		length;
 	double	rad;
 	double	dir[2];
-}	t_info;
+}	t_idraw;
 
 typedef struct s_pane
 {
@@ -216,11 +241,13 @@ typedef struct	s_screen
 
 typedef struct s_map
 {
+	char	valid_skyfloor[2];
 	int		trgb[2];
 	int		size[2];
-	char	*inst_rot;
+	int		tex_size[4][2];
+	char	inst_rot[2];
 	char	**map;
-	char	**tex_path;
+	t_screen	*texture;
 	int		*start_pos;
 }	t_map;
 
@@ -260,8 +287,10 @@ typedef struct s_game
 	int			total_insts;
 	int			state;
 	double		degtorad;
+	char		*mapname;
 	void		*mlx;
 	void		*win;
+	float		zoom;
 	t_ui		*ui;
 	t_map		*mapdata;
 	t_inst		*inst;
@@ -310,16 +339,18 @@ void		setup_controls(t_game *game);
 void		print_log(int n, ...);
 int			assert_log(char test, char *str_true, char *str_false);
 void		header_log(char *header, char *message, char *color);
+int			error_log(char *msg);
 
 
 /* Drawing */
 
 int			check_bounds(int *pos, int *min, int *max);
-void		draw_line_r(t_pane *pane, t_info *info);
-void		draw_line_dir(t_pane *pane, t_info *info);
+int			check_mapbounds(int *pos, int *bounds);
+void		draw_line_r(t_pane *pane, t_idraw *info);
+void		draw_line_dir(t_pane *pane, t_idraw *info);
 void		draw_rect(t_screen *idata, int *size, int *pos, int color);
 void		draw_pixel(t_screen *idata, int *pos, int color);
-void		draw_column(t_pane *pane, t_info *info);
+void		draw_column(t_pane *pane, t_idraw *info);
 
 
 /* Vectors */
@@ -373,11 +404,31 @@ int			render_game(t_game *game);
 void		render_fov(t_game *game);
 void		render_skyfloor(t_game *game);
 void		render_minimap(t_game *game);
+void		render_textures(t_game *game, t_rayhit *hit, int screen_x);
+
 
 /* Raycasting */
 
-t_rayhit	*ray2(t_game *game, t_inst *inst, t_info *info);
+void		ray2(t_game *game, t_iray *iray, t_rayhit *hit);
 t_rayhit	*ray(t_game *game, t_inst *inst, t_pane *pane, double camera_x, int w, double view, int color);
+
+
+/* Debugging */
+
+void		debug_ray(t_game *game, t_rayhit *hit, int color);
+
+
+/* Validation */
+
+int			check_args(t_game *game, int argc, char *argv[]);
+int			map_loader(t_game *game, char *mapname);
+int			map_setup_memory(t_game *game);
+double		get_rotation(char rot);
+int			map_read_loop(t_game *game, int fd);
+int			get_textures(t_game *game, char **input);
+int			get_skyfloor(t_game *game, char **arr, int sf);
+int			build_map(t_game *game, int fd);
+int			map_checker(t_game *game);
 
 
 /* Other */

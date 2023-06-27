@@ -37,3 +37,13 @@ int	assert_log(char test, char *str_true, char *str_false)
 		printf("%s%s%s\n", "\033[38;5;124m", str_false, RESET);
 	return (test);
 }
+
+int	error_log(char *msg)
+{
+	ft_putstr_fd(RED, STDERR_FILENO);
+	ft_putstr_fd("ERROR:\t", STDERR_FILENO);
+	ft_putstr_fd(RESET, STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	return (1);
+}

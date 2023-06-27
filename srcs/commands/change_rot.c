@@ -15,15 +15,15 @@
 /* Mandatory */
 void	cmd_chrot(t_game *game, int key, char pressed)
 {
-	if (key == KEY_D)
+	if (key == KEY_RIGHT)
 		game->inst[0].cam->orientation[STARBOARD] = pressed;
-	if (key == KEY_A)
+	if (key == KEY_LEFT)
 		game->inst[0].cam->orientation[PORT] = pressed;
-	if (game->enable_parallax)
-	{
-		if (key == KEY_RIGHT)
-			game->inst[1].cam->orientation[STARBOARD] = pressed;
-		if (key == KEY_LEFT)
-			game->inst[1].cam->orientation[PORT] = pressed;
-	}
+	// if (game->enable_parallax)
+	// {
+	// 	if (key == KEY_RIGHT)
+	// 		game->inst[1].cam->orientation[STARBOARD] = pressed;
+	// 	if (key == KEY_LEFT)
+	// 		game->inst[1].cam->orientation[PORT] = pressed;
+	// }
 }

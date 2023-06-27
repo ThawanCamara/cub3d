@@ -39,5 +39,11 @@
     "**/.vscode",
     "**/.vscode/**"
   ],
-  "C_Cpp_Runner.useAddressSanitizer": false
+"C_Cpp_Runner.useAddressSanitizer": false,
+"files.autoSave": "afterDelay",
+"editor.renderWhitespace": "boundary",
+"editor.wordWrap": "on",
+"files.exclude": {
+	"**/*.o": true
+}
 }

@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:57 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/05/16 19:00:54 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:40:29 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	data_init(t_game *game)
 void	data_clear(t_game *game)
 {
 	header_log("Clear", "Data", B_YELLOW);
-	// mlx_destroy_display(game->mlx);
+	mlx_destroy_display(game->mlx);
 	free(game->mlx);
 }
 
@@ -35,10 +35,11 @@ void	data_clear(t_game *game)
 void	safe_exit(t_game *game)
 {
 	window_clear(game);
+	ui_clear(game);
+	inst_clear(game);
 	pane_clear(game);
 	screen_clear(game);
-	inst_clear(game);
-	data_clear(game);
 	map_clear(game);
+	data_clear(game);
 	exit(0);
 }

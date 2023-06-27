@@ -14,5 +14,11 @@
 
 int	ft_isescape(int c)
 {
-	return (c == '\t' || c == '\v');
+	return (c == '\a'
+		|| c == '\b'
+		|| c == '\t'
+		|| c == '\n'
+		|| c == '\v'
+		|| c == '\f'
+		|| c == '\r');
 }

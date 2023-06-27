@@ -12,19 +12,6 @@
 
 #include "game.h"
 
-static double	get_rotation(char rot)
-{
-	if (rot == 'N')
-		return (270);
-	else if (rot == 'S')
-		return (90);
-	else if (rot == 'W')
-		return (180);
-	else if (rot == 'E')
-		return (0);
-	return (35);
-}
-
 void	set_cam_data(t_game *game, t_inst *inst)
 {
 	inst->cam->axis[TOP] = 0;
@@ -35,7 +22,7 @@ void	set_cam_data(t_game *game, t_inst *inst)
 	inst->cam->orientation[STARBOARD] = 0;
 	inst->cam->fov = 66;
 	inst->cam->fov_half = inst->cam->fov / 2;
-	inst->cam->view_increment = (double) 2 / inst->cam->fov / game->pane[FULLSCREEN]->size[X];
+	inst->cam->view_increment = (double) 2 / inst->cam->fov / game->pane[FULLSCREEN]->size[X]; //deadvar
 	if (!game->enable_parallax)
 	{
 		inst->cam->fov_sc_half = game->pane[FULLSCREEN]->size[X] / 2;
@@ -52,13 +39,12 @@ void	set_cam_data(t_game *game, t_inst *inst)
 
 void	set_obj_data(t_game *game, t_inst *inst, int i)
 {
+	(void)game;
+	(void)i;
 	inst->obj->tag = 'P';
-	inst->obj->pos[X] = game->mapdata->start_pos[X + (i * 2)];
-	inst->obj->pos[Y] = game->mapdata->start_pos[Y + (i * 2)];
-	inst->obj->rotation = get_rotation(game->mapdata->inst_rot[i]);
 	inst->obj->dir[X] = 0;
 	inst->obj->dir[Y] = 1;
 	// inst->obj->collision = 100 * 0.01;
-	inst->obj->speed = PLAYER_SPEED * 0.01;
-	inst->obj->turn_rate = PLAYER_TURN * 0.005;
+	inst->obj->speed = PLAYER_SPEED * 0.002;
+	inst->obj->turn_rate = PLAYER_TURN * 0.01;
 }
