@@ -33,14 +33,14 @@ static void	cast_rays(t_game *game, double *raydir, int screen_x)
 	// iray.rad = 
 	iray.start[X] = game->inst[0].obj->pos[X];
 	iray.start[Y] = game->inst[0].obj->pos[Y];
-	iray.max_len = 100;
 	// iray.max_len = 0;
+	iray.max_len = 0;
 	ray2(game, &iray, &hit);
 	color = 0x0000ffff;
 	debug_ray(game, &hit, color);
 	// printf("%f,%f\n", hit.pos[X], hit.pos[Y]);
 	// if (hit.flag != -1)
-		// render_textures(game, &hit, screen_x);
+		render_textures(game, &hit, screen_x);
 }
 
 // static void	cast_rays(t_game *game, double angle, int screen_x)
@@ -106,8 +106,8 @@ void	get_fov(t_game *game, t_inst *inst, t_pane *pane)
 		camera_x = -2 * i / (double)pane->size[X] + 1;
 		raydir[X] = inst->obj->dir[X] + inst->cam->plane[X] * camera_x;
 		raydir[Y] = inst->obj->dir[Y] + inst->cam->plane[Y] * camera_x;
-		cast_rays(game, raydir, i);
 		// if (camera_x < 0.002500 && camera_x > -0.002500)
+			cast_rays(game, raydir, i);
 	}
 }
 

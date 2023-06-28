@@ -20,6 +20,10 @@ int	map_setup_memory(t_game *game)
 	game->mapdata->texture = (t_screen *)malloc(sizeof(t_screen ) * 4);
 	if (game->mapdata->texture == NULL)
 		return (1);
+	game->mapdata->texture[NORTH].img = NULL;
+	game->mapdata->texture[SOUTH].img = NULL;
+	game->mapdata->texture[WEST].img = NULL;
+	game->mapdata->texture[EAST].img = NULL;
 	game->mapdata->start_pos = (int *)malloc(sizeof(int) * (2 * game->total_insts));
 	if (game->mapdata->start_pos == NULL)
 		return (1);

@@ -89,13 +89,14 @@ static int	validate_textures(char **textures)
 
 int	map_init(t_game *game)
 {
+	char	valid;
 	header_log("Initialization", "Map", B_ORANGE);
 	print_log(1, STR_BUILD_MAP);
 	game->mapdata = NULL;
-	map_loader(game, game->mapname);
-	assert_log(validate_textures((char**)game->mapdata->texture),
+	valid = map_loader(game, game->mapname);
+	assert_log(validate_textures((char**)game->mapdata->texture) && valid == 0,
 		STR_BUILD_MAP_S, STR_BUILD_DATA_F);
-	return (game->mapdata != NULL);
+	return (game->mapdata != NULL && valid == 0);
 }
 
 void	map_clear(t_game *game)

@@ -22,21 +22,7 @@ int	render_game(t_game *game)
 	t_rayhit	hit;
 
 
-	t_idraw info;
-
-	info.pos[X] = (game->inst[0].obj->pos[X] + game->inst[0].obj->dir[X] + game->pane[MINIMAP]->offset[X]) * game->ui->minimap_box_size;
-	info.pos[Y] = (game->inst[0].obj->pos[Y] - game->inst[0].obj->dir[Y] + game->pane[MINIMAP]->offset[Y]) * game->ui->minimap_box_size;
-	info.length = fabs(game->inst[0].cam->plane[X] - game->inst[0].cam->plane[Y]) * game->ui->minimap_box_size;
-	info.rad = (game->inst[0].obj->rotation + 90) * game->degtorad;
-	info.color = 0x00ff0000;
-	draw_line_r(game->pane[MINIMAP], &info);
-
-	info.pos[X] = (game->inst[0].obj->pos[X] + game->inst[0].obj->dir[X] + game->pane[MINIMAP]->offset[X]) * game->ui->minimap_box_size;
-	info.pos[Y] = (game->inst[0].obj->pos[Y] - game->inst[0].obj->dir[Y] + game->pane[MINIMAP]->offset[Y]) * game->ui->minimap_box_size;
-	info.length = fabs(game->inst[0].cam->plane[X] - game->inst[0].cam->plane[Y]) * game->ui->minimap_box_size;
-	info.rad = (game->inst[0].obj->rotation + 90) * game->degtorad;
-	info.color = 0x00ff0000;
-	draw_line_r(game->pane[MINIMAP], &info);
+	// t_idraw info;
 
 	// iray.rad = (game->inst[0].obj->rotation) * game->degtorad;
 	iray.dir[X] = game->inst[0].obj->dir[X];

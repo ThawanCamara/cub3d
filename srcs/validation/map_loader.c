@@ -26,14 +26,16 @@ static int	open_file(char *raw_name)
 
 int	map_loader(t_game *game, char *mapname)
 {
-	int		fd;
+	int	fd;
+	int	ret;
 	
 	if (map_setup_memory(game))
 		return (1);
 	fd = open_file(mapname);
 	if (fd < 0)
 		return (error_log(ERR_MAPREAD));
-	map_read_loop(game, fd);
+	ret = map_read_loop(game, fd);
+	printf("RETORNO: %d\n",ret);
 	close(fd);
 	//map_clear(game);
 	//inst_clear(game);
@@ -41,5 +43,5 @@ int	map_loader(t_game *game, char *mapname)
 	//screen_clear(game);
 	//data_clear(game);
 	//exit(0);
-	return (0);
+	return (ret);
 }
