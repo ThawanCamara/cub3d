@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 09:03:28 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/07/04 03:58:55 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/07/04 19:46:48 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ static void	ray_loop(t_game *game, t_ray *ray, t_iray *iray)
 		ray->side = !(ray->sideDist[X] < ray->sideDist[Y]);
 		ray->sideDist[ray->side] += ray->deltaDist[ray->side];
 		ray->map[ray->side] += ray->step[ray->side];
-		ray->face = (1 + (ray->side * 4)) + ray->step[ray->side];
+		ray->face = ray_get_face(ray->step[ray->side], ray->side);
+		// ray->face = (1 + (ray->side * 4)) + ray->step[ray->side];
 		if (iray->max_len > 0 && ray->sideDist[ray->side]
 			>= iray->max_len + ray->deltaDist[ray->side])
 		{

@@ -46,8 +46,11 @@ void	render_textures(t_game *game, t_rayhit *hit, int screen_x)
 	
 	// if (hit->flag == -1)
 		// return ;
-	wall_dist = hit->distance/*  * cos(fabs(game->inst[0].obj->rotation * game->degtorad - hit->rad))*/; 
+	wall_dist = hit->distance;
 	wall_height = (int) (game->pane[FULLSCREEN]->size[Y] / wall_dist);
+	// wall_height = (int) (200 - wall_dist * 64);
+	// if (wall_dist == 0)
+		// wall_height = 20;
 	draw_start = -wall_height / 2 + game->pane[FULLSCREEN]->size[Y] / 2;
 	// if (draw_start < 0)
 		// draw_start = 0;
@@ -58,7 +61,7 @@ void	render_textures(t_game *game, t_rayhit *hit, int screen_x)
 	info.pos[Y] = draw_start;
 	info.length = draw_end - draw_start;
 
-	if (hit->face == FACE_EAST)
+	if (hit->face == EAST)
 	{
 		t_screen *tex;
 		double x = hit->pos[Y] - (int)(hit->pos[Y]);
@@ -75,7 +78,7 @@ void	render_textures(t_game *game, t_rayhit *hit, int screen_x)
 			draw_column(game->pane[FULLSCREEN], &info);
 		}
 	}
-	if (hit->face == FACE_WEST)
+	if (hit->face == WEST)
 	{
 		t_screen *tex;
 		double x = hit->pos[Y] - (int)(hit->pos[Y]);
@@ -92,7 +95,7 @@ void	render_textures(t_game *game, t_rayhit *hit, int screen_x)
 			draw_column(game->pane[FULLSCREEN], &info);
 		}
 	}
-	if (hit->face == FACE_NORTH)
+	if (hit->face == NORTH)
 	{
 		t_screen *tex;
 		double x = hit->pos[X] - (int)(hit->pos[X]);
@@ -109,7 +112,7 @@ void	render_textures(t_game *game, t_rayhit *hit, int screen_x)
 			draw_column(game->pane[FULLSCREEN], &info);
 		}
 	}
-	if (hit->face == FACE_SOUTH)
+	if (hit->face == SOUTH)
 	{
 		t_screen *tex;
 		double x = hit->pos[X] - (int)(hit->pos[X]);

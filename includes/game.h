@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:59 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/07/04 01:31:04 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/07/04 19:46:15 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -413,6 +413,8 @@ void		render_textures(t_game *game, t_rayhit *hit, int screen_x);
 
 void		ray2(t_game *game, t_iray *iray, t_rayhit *hit);
 t_rayhit	*ray(t_game *game, t_inst *inst, t_pane *pane, double camera_x, int w, double view, int color);
+int			ray_get_face(int step, int side);
+
 
 
 /* Debugging */

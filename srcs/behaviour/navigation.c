@@ -24,7 +24,7 @@ int	perception(t_game *game, t_inst *inst, int value, int angle)
 	* game->degtorad);
 	iray.start[X] = inst->obj->pos[X];
 	iray.start[Y] = inst->obj->pos[Y];
-	iray.max_len = 0.1;
+	iray.max_len = 0.2;
 	if (angle == 0)
 		iray.max_len = 0.35;
 	ray2(game, &iray, &hit);

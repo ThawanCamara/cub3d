@@ -34,5 +34,5 @@ void	set_obj_data(t_game *game, t_inst *inst, int i)
 	inst->obj->dir[Y] = 1;
 	inst->obj->collision = 40;
 	inst->obj->speed = PLAYER_SPEED * 0.002;
-	inst->obj->turn_rate = PLAYER_TURN * 0.01;
+	inst->obj->turn_rate = PLAYER_TURN * 0.05;
 }

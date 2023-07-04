@@ -124,8 +124,8 @@ int	map_checker(t_game *game)
 	}
 	if (is_map_closed(game->mapdata))
 		return (1);
-	game->inst[0].obj->pos[X] = game->mapdata->start_pos[X];
-	game->inst[0].obj->pos[Y] = game->mapdata->start_pos[Y];
+	game->inst[0].obj->pos[X] = game->mapdata->start_pos[X] + 0.5;
+	game->inst[0].obj->pos[Y] = game->mapdata->start_pos[Y] + 0.5;
 	game->inst[0].obj->rotation = get_rotation(game->mapdata->inst_rot[0]);
 	return ((check || player != 1));
 }

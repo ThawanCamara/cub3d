@@ -93,6 +93,7 @@ SRCS		:=	\
 				srcs/validation/build_map.c	\
 				srcs/validation/map_checker.c	\
 				srcs/render/textures.c	\
+				srcs/raycaster/ray_utils.c	\
 				srcs/main.c
 
 # ******************************************************************************

@@ -53,9 +53,9 @@ void	get_fov(t_game *game, t_rayhit *hit, t_inst *inst, t_pane *pane)
 		// if (camera_x < 0.013500 && camera_x > -0.013500)
 		{
 			cast_rays(game, hit, raydir, i);
-			// printf("%d) dist %f, side: %d\n", i, hit[i].distance, hit[i].side);
+			// printf("%d) dist %f, face: %d\n", i, hit[i].distance, hit[i].face);
 
-			// printf("%d)face: %d (%d)\n", i, hit[i].face, hit[i].side);
+			// printf("%d)face: %d\n", i, hit[i].face);
 
 		}
 	}
