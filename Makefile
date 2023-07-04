@@ -6,7 +6,7 @@
 #    By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 07:08:10 by tde-souz          #+#    #+#              #
-#    Updated: 2023/06/26 18:56:26 by tde-souz         ###   ########.fr        #
+#    Updated: 2023/07/03 19:27:08 by tde-souz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,6 @@ SRCS		:=	\
 				srcs/init/inst_utils.c	\
 				srcs/utils/loop_handler.c	\
 				srcs/render/skyfloor.c	\
-				srcs/raycaster/raycaster.c	\
 				srcs/raycaster/ray.c	\
 				srcs/debug/debug_ray.c	\
 				srcs/validation/map_loader.c	\

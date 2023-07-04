@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 09:03:28 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/06/27 16:09:16 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/07/04 03:58:55 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,12 @@ static void	get_side_steps(t_ray *ray, t_iray *iray)
 
 static double	get_delta(t_game *game, t_ray *ray, int axis)
 {
+	(void)game;
+		// return (game->mapdata->size[axis]);
 	if (fabs(ray->dir[axis]) < 1e-9)
-		return (game->mapdata->size[axis]);
+		return (1e30);
 	else
-		return (ray->deltaDist[axis] = fabs(1 / ray->dir[axis]));
+		return (fabs(1 / ray->dir[axis]));
 }
 
 //Y cima
@@ -81,31 +83,36 @@ static void	ray_loop(t_game *game, t_ray *ray, t_iray *iray)
 					ray->hit_flag = -1;
 		}
 	}
+		// printf("side: %d | step %d\n", ray->side, ray->step[ray->side]);
 }
+
+// hit->pos[X] = iray->start[X] + hit->distance * cos(iray->rad);
+// hit->pos[Y] = iray->start[Y] - hit->distance * sin(iray->rad);
 
 static void	get_hit_info(t_ray *ray, t_rayhit *hit, t_iray *iray, int side)
 {
+
 	hit->rad = iray->rad;
 	hit->distance = ray->sideDist[side] - ray->deltaDist[side];
 	hit->side = side;
 	hit->flag = ray->hit_flag;
 	hit->face = ray->face;
-	// hit->pos[X] = iray->start[X] + hit->distance * cos(iray->rad);
-	// hit->pos[Y] = iray->start[Y] - hit->distance * sin(iray->rad);
 	hit->pos[X] = iray->start[X] + hit->distance * iray->dir[X];
 	hit->pos[Y] = iray->start[Y] + hit->distance * iray->dir[Y];
 	hit->start[X] = iray->start[X];
 	hit->start[Y] = iray->start[Y];
 	hit->dir[X] = iray->dir[X];
 	hit->dir[Y] = iray->dir[Y];
+	// printf("face: %d\n", hit->face);
 }
+
+// ray.dir[X] = cos(iray->rad);
+// ray.dir[Y] = sin(-iray->rad);
 
 void	ray2(t_game *game, t_iray *iray, t_rayhit *hit)
 {
 	t_ray	ray;
 
-	// ray.dir[X] = cos(iray->rad);
-	// ray.dir[Y] = sin(-iray->rad);
 	ray.dir[X] = iray->dir[X];
 	ray.dir[Y] = iray->dir[Y];
 	ray.deltaDist[X] = get_delta(game, &ray, X);
@@ -113,8 +120,11 @@ void	ray2(t_game *game, t_iray *iray, t_rayhit *hit)
 	ray.map[X] = (int)iray->start[X];
 	ray.map[Y] = (int)iray->start[Y];
 	ray.hit_flag = 0;
-
+	ray.side = 0;
+	ray.step[X] = 0;
+	ray.step[Y] = 0;
 	get_side_steps(&ray, iray);
 	ray_loop(game, &ray, iray);
 	get_hit_info(&ray, hit, iray, ray.side);
+	// printf("step: %d | side: %d)\n", ray.step[X], hit->side);
 }

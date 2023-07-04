@@ -16,16 +16,15 @@ void	debug_colors(t_game *game, int sf)
 {
 	printf("Red: %d\n", (game->mapdata->trgb[sf] >> 16) & 0xFF);
 	printf("Green: %d\n", (game->mapdata->trgb[sf] >> 8) & 0xFF);
-	printf("Blue: %d\n", (game->mapdata->trgb[sf] ) & 0xFF);
+	printf("Blue: %d\n", (game->mapdata->trgb[sf]) & 0xFF);
 }
 
 static int	search_errors(char **arr)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = -1;
-
 	while (arr[++i])
 	{
 		j = -1;
@@ -37,7 +36,6 @@ static int	search_errors(char **arr)
 	}
 	return (0);
 }
-
 
 int	get_skyfloor(t_game *game, char **arr, int sf)
 {
@@ -60,7 +58,6 @@ int	get_skyfloor(t_game *game, char **arr, int sf)
 	game->mapdata->trgb[sf] += ft_atoi(values[0]) << 16;
 	game->mapdata->trgb[sf] += ft_atoi(values[1]) << 8;
 	game->mapdata->trgb[sf] += ft_atoi(values[2]);
-	// debug_colors(game, sf);
 	ft_free_arr((void **)values);
 	return (0);
 }

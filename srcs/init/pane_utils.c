@@ -27,7 +27,7 @@ t_pane	*create_pane(t_game *game, char *name)
 
 void	pane_setdata(t_pane *pane, int *size, int *offset)
 {
-	int	tmp;
+	double	tmp;
 
 	if (!pane)
 		return ;
@@ -39,19 +39,19 @@ void	pane_setdata(t_pane *pane, int *size, int *offset)
 	pane->offset[Y] = offset[Y];
 	pane->size[X] = size[X];
 	pane->size[Y] = size[Y];
-	pane->scale = 1;
-	tmp = size[X] / pane->screen->size[X];
-	if (tmp < pane->scale)
+	pane->scale = 0;
+	tmp = (double)(size[X]) / pane->screen->size[X];
+	if (tmp > pane->scale)
 		pane->scale = tmp;
-	tmp = size[Y] / pane->screen->size[Y];
-	if (tmp < pane->scale)
+	tmp = (double)(size[Y]) / pane->screen->size[Y];
+	if (tmp > pane->scale)
 		pane->scale = tmp;
 }
 
 void	pane_setdata_ratio(t_pane *pane, int *size,
 		double ratio_x, double ratio_y)
 {
-	int			tmp;
+	double			tmp;
 	t_screen	*sc;
 
 	if (!pane)
@@ -65,11 +65,30 @@ void	pane_setdata_ratio(t_pane *pane, int *size,
 	pane->offset[Y] = pane->min_bounds[Y];
 	pane->size[X] = size[X];
 	pane->size[Y] = size[Y];
-	pane->scale = 1;
-	tmp = size[X] / pane->screen->size[X];
-	if (tmp < pane->scale)
+	pane->scale = 0;
+	tmp = (double)(size[X]) / pane->screen->size[X];
+	if (tmp > pane->scale)
 		pane->scale = tmp;
-	tmp = size[Y] / pane->screen->size[Y];
-	if (tmp < pane->scale)
+	tmp = (double)(size[Y]) / pane->screen->size[Y];
+	if (tmp > pane->scale)
+		pane->scale = tmp;
+}
+
+void	pane_resize(t_pane *pane, int value)
+{
+	double	tmp;
+
+	if (!pane)
+		return ;
+	pane->size[X] += value;
+	pane->size[Y] += value;
+	pane->max_bounds[X] += value;
+	pane->max_bounds[Y] += value;
+	pane->scale = 0;
+	tmp = (double)(pane->size[X]) / pane->screen->size[X];
+	if (tmp > pane->scale)
+		pane->scale = tmp;
+	tmp = (double)(pane->size[Y])/ pane->screen->size[Y];
+	if (tmp > pane->scale)
 		pane->scale = tmp;
 }

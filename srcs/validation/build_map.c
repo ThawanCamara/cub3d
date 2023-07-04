@@ -1,16 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   build_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/03 17:51:12 by tde-souz          #+#    #+#             */
+/*   Updated: 2023/07/03 17:51:12 by tde-souz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "game.h"
 
 #define ARR 0
 #define TMP 1
-
-//	==============================
-
-void	print(char *s)
-{
-	ft_printf(">> %s\n", s);
-}
-
-//	==============================
 
 size_t	get_max_len(char **arr)
 {
@@ -55,7 +58,6 @@ int	make_map(t_game *game, char **arr)
 		ft_memcpy(game->mapdata->map[i], arr[i], ft_strlen(arr[i]));
 		game->mapdata->map[i][len] = 0;
 	}
-	ft_striter(game->mapdata->map, print); //debug
 	if (map_checker(game))
 		return (1);
 	return (0);
@@ -82,6 +84,6 @@ int	build_map(t_game *game, int fd)
 	check = make_map(game, arr[ARR]);
 	ft_free_arr((void **)arr[ARR]);
 	if (check)
-		error_log("EXCESSO DE TRAGEDIA");
+		error_log("Build Error");
 	return (check);
 }

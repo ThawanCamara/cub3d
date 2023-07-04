@@ -35,13 +35,6 @@ int	map_loader(t_game *game, char *mapname)
 	if (fd < 0)
 		return (error_log(ERR_MAPREAD));
 	ret = map_read_loop(game, fd);
-	printf("RETORNO: %d\n",ret);
 	close(fd);
-	//map_clear(game);
-	//inst_clear(game);
-	//pane_clear(game);
-	//screen_clear(game);
-	//data_clear(game);
-	//exit(0);
 	return (ret);
 }

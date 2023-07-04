@@ -46,7 +46,8 @@ void	draw_line_r(t_pane *pane, t_idraw *info)
 			err[0] += delta[X];
 			info->pos[Y] += step[Y];
 		}
-		if (check_bounds(info->pos, pane->min_bounds, pane->max_bounds))
+		if (check_bounds(info->pos, pane->min_bounds, pane->max_bounds)
+			&& check_mapbounds(info->pos, pane->screen->size))
 			draw_pixel(pane->screen, info->pos, info->color);
 	}
 }
@@ -83,7 +84,8 @@ void	draw_line_dir(t_pane *pane, t_idraw *info)
 			err[0] += delta[X];
 			info->pos[Y] += step[Y];
 		}
-		if (check_bounds(info->pos, pane->min_bounds, pane->max_bounds))
+		if (check_bounds(info->pos, pane->min_bounds, pane->max_bounds)
+			&& check_mapbounds(info->pos, pane->screen->size))
 			draw_pixel(pane->screen, info->pos, info->color);
 	}
 }
@@ -96,7 +98,8 @@ void	draw_column(t_pane *pane, t_idraw *info)
 	while (i < info->length)
 	{
 		info->pos[Y] += 1;
-		if (check_bounds(info->pos, pane->min_bounds, pane->max_bounds))
+		if (check_bounds(info->pos, pane->min_bounds, pane->max_bounds)
+			&& check_mapbounds(info->pos, pane->screen->size))
 			draw_pixel(pane->screen, info->pos, info->color);
 		i++;
 	}

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_checker.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/03 17:55:33 by tde-souz          #+#    #+#             */
+/*   Updated: 2023/07/03 17:55:33 by tde-souz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "game.h"
 
 static int	check_limits(char *line)
@@ -38,7 +50,7 @@ static int	check_content(t_game *game, char *line, char *player, int y)
 		j = -1;
 		check = 0;
 		while (MAP_CONTENT[++j])
-			check += (*(line + i) == MAP_CONTENT[j]) /* || *(line + i) == 'X' */;
+			check += (*(line + i) == MAP_CONTENT[j]);
 		*player += line[i] == 'N' || line[i] == 'S' || line[i] == 'W' || line[i] == 'E';
 		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'W' || line[i] == 'E')
 		{
@@ -112,10 +124,8 @@ int	map_checker(t_game *game)
 	}
 	if (is_map_closed(game->mapdata))
 		return (1);
-	printf("player : %d\n", player);
 	game->inst[0].obj->pos[X] = game->mapdata->start_pos[X];
 	game->inst[0].obj->pos[Y] = game->mapdata->start_pos[Y];
-	printf("posX: %f | posY: %f\n", game->inst[0].obj->pos[X], game->inst[0].obj->pos[Y]);
 	game->inst[0].obj->rotation = get_rotation(game->mapdata->inst_rot[0]);
 	return ((check || player != 1));
 }

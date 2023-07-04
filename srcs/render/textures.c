@@ -1,4 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   textures.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/03 18:24:08 by tde-souz          #+#    #+#             */
+/*   Updated: 2023/07/03 18:24:08 by tde-souz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "game.h"
+
+// static void	render_wall(t_game *game, t_rayhit *hit, )
+// {
+// 	if (hit->face == FACE_EAST)
+// 	{
+// 		t_screen *tex;
+// 		char *dst;
+// 		double x;
+// 		double step;
+
+// 		x = hit->pos[Y] - (int)(hit->pos[Y]);
+// 		tex = &game->mapdata->texture[EAST];
+// 		step = (draw_end - draw_start) / tex->size[Y];
+// 		for (int i = 0; i < tex->size[Y]; i++)
+// 		{
+// 			info.pos[X] = screen_x + game->pane[FULLSCREEN]->offset[X];
+// 			info.pos[Y] = draw_start + (step * i);
+// 			info.length = step + 1;
+// 			dst = tex->addr + (i * tex->len + (int)(x * tex->size[X]) * (tex->bpp / 8));
+// 			info.color = *(int *)dst;
+// 			draw_column(game->pane[FULLSCREEN], &info);
+// 		}
+// 	}
+// }
 
 void	render_textures(t_game *game, t_rayhit *hit, int screen_x)
 {
@@ -18,7 +54,6 @@ void	render_textures(t_game *game, t_rayhit *hit, int screen_x)
 	draw_end = wall_height / 2 + game->pane[FULLSCREEN]->size[Y] / 2;
 	// if (draw_end >= game->pane[FULLSCREEN]->size[Y])
 		// draw_end = game->pane[FULLSCREEN]->size[Y] - 1;
-
 	info.pos[X] = screen_x + game->pane[FULLSCREEN]->offset[X];
 	info.pos[Y] = draw_start;
 	info.length = draw_end - draw_start;
@@ -91,21 +126,4 @@ void	render_textures(t_game *game, t_rayhit *hit, int screen_x)
 			draw_column(game->pane[FULLSCREEN], &info);
 		}
 	}
-
-
-	// esquerda
-	// if (hit->face == 0)
-	// 	info.color = 0x00FF0000;
-	// direita
-	// if (hit->face == 2)
-		// info.color = 0x0000FF00;
-	// cima
-	// if (hit->face == 4)
-	// 	info.color = 0x00FF00FF;
-	// baixo
-	// if (hit->face == 6)
-	// 	info.color = 0x000000FF;
-
-	(void)info;
-	// draw_column(game->pane[FULLSCREEN], &info);
 }

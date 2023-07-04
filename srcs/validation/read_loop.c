@@ -12,37 +12,14 @@
 
 #include "game.h"
 
-// int	get_map_start(char *str)
-// {
-// 	size_t	i;
-// 	size_t	j;
-// 	char	check;
-
-// 	i = 0;
-// 	if (str == NULL)
-// 		return (0);
-// 	check = 0;
-// 	while (*(str + i) && !ft_isescape(*(str + i)))
-// 	{
-// 		j = -1;
-// 		check = 0;
-// 		while (MAP_BORDERS[++j])
-// 			check += (*(str + i) == MAP_BORDERS[j]);
-// 		if (check == 0)
-// 			return (check);
-// 		i++;
-// 	}
-// 	return (check);
-// }
-
 static int	check_missing_data(t_game *game)
 {
 	if (game->mapdata->texture[NORTH].img
-			&& game->mapdata->texture[SOUTH].img
-			&& game->mapdata->texture[WEST].img
-			&& game->mapdata->texture[EAST].img
-			&& game->mapdata->valid_skyfloor[SKY]
-			&& game->mapdata->valid_skyfloor[FLOOR])
+		&& game->mapdata->texture[SOUTH].img
+		&& game->mapdata->texture[WEST].img
+		&& game->mapdata->texture[EAST].img
+		&& game->mapdata->valid_skyfloor[SKY]
+		&& game->mapdata->valid_skyfloor[FLOOR])
 		return (0);
 	return (1);
 }
@@ -92,13 +69,10 @@ int	map_read_loop(t_game *game, int fd)
 			if (build_map(game, fd))
 				return (clear_reading(fd, line));
 			free(line);
-			// printf("---->\n");
 			break ;
-			// ft_printf("%s%s%s", ORANGE, line, RESET);
 		}
 		else
 		{
-			// ft_printf("%s", line);
 			if (get_input(game, line))
 				return (clear_reading(fd, line));
 		}

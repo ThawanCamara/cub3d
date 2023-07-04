@@ -6,7 +6,7 @@
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:55:59 by tde-souz          #+#    #+#             */
-/*   Updated: 2023/06/27 15:57:37 by tde-souz         ###   ########.fr       */
+/*   Updated: 2023/07/04 01:31:04 by tde-souz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,8 @@ enum	e_game_state
 
 enum	e_ray_face
 {
-	FACE_WEST = 0,
-	FACE_EAST =	2,
+	FACE_EAST =	0,
+	FACE_WEST = 2,
 	FACE_NORTH = 4,
 	FACE_SOUTH = 6
 };
@@ -204,6 +204,7 @@ typedef struct s_idraw
 {
 	int		size[2];
 	int		pos[2];
+	int		offset[2];
 	int		color;
 	int		length;
 	double	rad;
@@ -255,11 +256,6 @@ typedef struct s_cam
 {	
 	int		axis[4];
 	int		orientation[2];
-	int		fov; // probably deprecated
-	int		fov_half; // probably deprecated
-	int		fov_sc_half; // probably deprecated
-	double	fov_increment; // probably deprecated
-	double	view_increment;
 	double	plane[2];
 	double	cameraX;
 }	t_cam;
@@ -283,14 +279,16 @@ typedef struct s_instance
 
 typedef struct s_game
 {
+	char		show_minimap;
 	char		enable_parallax;
 	int			total_insts;
 	int			state;
+	int			map_resize;
+	float		zoom;
 	double		degtorad;
 	char		*mapname;
 	void		*mlx;
 	void		*win;
-	float		zoom;
 	t_ui		*ui;
 	t_map		*mapdata;
 	t_inst		*inst;
@@ -348,7 +346,8 @@ int			check_bounds(int *pos, int *min, int *max);
 int			check_mapbounds(int *pos, int *bounds);
 void		draw_line_r(t_pane *pane, t_idraw *info);
 void		draw_line_dir(t_pane *pane, t_idraw *info);
-void		draw_rect(t_screen *idata, int *size, int *pos, int color);
+void		draw_rect(t_pane *pane, t_idraw *info);
+// void		draw_rect(t_screen *idata, int *size, int *pos, int color);
 void		draw_pixel(t_screen *idata, int *pos, int color);
 void		draw_column(t_pane *pane, t_idraw *info);
 
@@ -389,6 +388,8 @@ t_pane		*create_pane(t_game *game, char *name);
 void		pane_setdata(t_pane *pane, int *size, int *offset);
 void		pane_setdata_ratio(t_pane *pane, int *size,	double ratio_x,
 				double ratio_y);
+void		pane_resize(t_pane *pane, int value);
+
 
 /* UI */
 
@@ -401,9 +402,10 @@ int			map_getpixel_y(t_pane *pane, int y);
 /* Rendering */
 
 int			render_game(t_game *game);
-void		render_fov(t_game *game);
+void		render_fov(t_game *game, t_rayhit *hit);
 void		render_skyfloor(t_game *game);
 void		render_minimap(t_game *game);
+void		resize_minimap(t_game *game, int key);
 void		render_textures(t_game *game, t_rayhit *hit, int screen_x);
 
 

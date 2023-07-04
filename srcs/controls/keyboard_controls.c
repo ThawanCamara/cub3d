@@ -12,9 +12,10 @@
 
 #include "game.h"
 
+// ft_printf("Keyboard key %s(%d) was pressed\n", get_key_name(key), key);
+
 int	keyboard_onpress(int key, t_game *game)
 {
-	// ft_printf("Keyboard key %s(%d) was pressed\n", get_key_name(key), key);
 	if (key == KEY_W || key == KEY_S || key == KEY_A || key == KEY_D)
 		cmd_chdir_four(game, key, TRUE);
 	if (key == KEY_LEFT || key == KEY_RIGHT)
@@ -23,20 +24,26 @@ int	keyboard_onpress(int key, t_game *game)
 		cmd_chdir_four(game, key, TRUE);
 	if (game->enable_parallax && (key == KEY_LEFT || key == KEY_RIGHT))
 		cmd_chrot(game, key, TRUE);
+	if ((key == KEY_EQUAL || key == KEY_MINUS) && game->show_minimap)
+		resize_minimap(game, key);
 	return (0);
 }
 
+// ft_printf("Keyboard key %s(%d) was released\n", get_key_name(key), key);
+
 int	keyboard_onrelease(int key, t_game *game)
 {
-	// ft_printf("Keyboard key %s(%d) was released\n", get_key_name(key), key);
 	if (key == KEY_W || key == KEY_S || key == KEY_A || key == KEY_D)
 		cmd_chdir_four(game, key, FALSE);
 	if (key == KEY_LEFT || key == KEY_RIGHT)
 		cmd_chrot(game, key, FALSE);
-	if (game->enable_parallax && (key == KEY_UP || key == KEY_DOWN))
-		cmd_chdir_four(game, key, FALSE);
-	if (game->enable_parallax && (key == KEY_LEFT || key == KEY_RIGHT))
-		cmd_chrot(game, key, FALSE);
+	if (key == KEY_M)
+	{
+		if (game->show_minimap)
+			game->show_minimap = 0;
+		else
+			game->show_minimap = 1;
+	}
 	if (key == KEY_ESC)
 		clear_handler(game, FUNC_TABLE_SIZE - 1);
 	return (0);

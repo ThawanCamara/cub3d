@@ -12,45 +12,37 @@
 
 #include "game.h"
 
-// 16
-// 256 x 192
-// 48 x 36
-
-// 48 * (16 * f)
-
 void	render_minimap(t_game *game)
 {
 	int	i[2];
-	int	offset[2];
-	int	box[2];
+	int	color[4];
+	t_idraw	info;
 
 	vector2(0, 0, &i[X], &i[Y]);
+	vector2(game->pane[MINIMAP]->size[X], game->pane[MINIMAP]->size[Y],
+		&info.size[X], &info.size[Y]);
+	vector2(0, 0, &info.pos[X], &info.pos[Y]);
+	info.color = 0x00922222;
+	// draw_rect(game->pane[MINIMAP], &info);
+	color[0] = 0x00444444;
+	color[1] = 0x00999999;
+	color[2] = 0x00999999;
+	color[3] = 0x00444444;
 	vector2(game->ui->minimap_box_size, game->ui->minimap_box_size,
-		&box[X], &box[Y]);
+		&info.size[X], &info.size[Y]);
 	while (i[X] < game->mapdata->size[X] && i[Y] < game->mapdata->size[Y])
 	{
-		offset[X] = i[X] * box[X] + game->pane[MINIMAP]->offset[X];
-		offset[Y] = i[Y] * box[Y] + game->pane[MINIMAP]->offset[Y];
-		/* temp */
-		if (game->mapdata->map[i[Y]][i[X]] == 49)
-				draw_rect(game->screen, box, offset, 0x0077771E);
-		else if (game->mapdata->map[i[Y]][i[X]] == 48)
+		info.pos[X] = i[X] * info.size[X] + game->pane[MINIMAP]->offset[X];
+		info.pos[Y] = i[Y] * info.size[Y] + game->pane[MINIMAP]->offset[Y];
+		if (game->mapdata->map[i[Y]][i[X]] == 49 || game->mapdata->map[i[Y]][i[X]] == 32)
 		{
-			if (i[Y] % 2)
-			{
-				if (i[X] % 2)
-					draw_rect(game->screen, box, offset, 0x00999999);
-				else
-					draw_rect(game->screen, box, offset, 0x00999999);
-			}
-			else
-			{
-				if (i[X] % 2)
-					draw_rect(game->screen, box, offset, 0x00999999);
-				else
-					draw_rect(game->screen, box, offset, 0x00999999);
-			}
+			info.color = 0x00222222;
+			// draw_rect(game->pane[MINIMAP], &info);
 		}
+		else
+			info.color = color[1];
+			// info.color = color[i[Y] % 2 == 0 + (i[X] % 2 == 0)];
+		draw_rect(game->pane[MINIMAP], &info);
 		i[X]++;
 		if (i[X] == game->mapdata->size[X] && i[Y] < game->mapdata->size[Y])
 		{
@@ -58,4 +50,11 @@ void	render_minimap(t_game *game)
 			i[Y]++;
 		}
 	}
+}
+
+void	resize_minimap(t_game *game, int key)
+{
+	pane_resize(game->pane[MINIMAP], (key == KEY_EQUAL) * game->map_resize * 2 - game->map_resize);
+	game->ui->minimap_scale = get_minimap_scale(game, game->pane[MINIMAP]);
+	game->ui->minimap_box_size = BOX_SIZE * game->ui->minimap_scale;
 }

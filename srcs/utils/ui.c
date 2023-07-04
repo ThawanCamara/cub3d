@@ -12,18 +12,32 @@
 
 #include "game.h"
 
+// double	get_minimap_scale(t_game *game, t_pane *pane)
+// {
+// 	double	scale;
+// 	t_map	*mapdata;
+
+// 	mapdata = game->mapdata;
+// 	scale = 1;
+// 	if ((pane->size[X] / ((double)mapdata->size[X] * BOX_SIZE)) < scale)
+// 		scale = pane->size[X] / ((double)mapdata->size[X] * BOX_SIZE);
+// 	if ((pane->size[Y] / ((double)mapdata->size[Y] * BOX_SIZE)) < scale)
+// 		scale = pane->size[Y] / ((double)mapdata->size[Y] * BOX_SIZE);
+// 	return (scale);
+// }
 double	get_minimap_scale(t_game *game, t_pane *pane)
 {
-	double	scale;
+	double	scale_x;
+	double	scale_y;
 	t_map	*mapdata;
 
 	mapdata = game->mapdata;
-	scale = 1;
-	if ((pane->size[X] / ((double)mapdata->size[X] * BOX_SIZE)) < scale)
-		scale = pane->size[X] / ((double)mapdata->size[X] * BOX_SIZE);
-	if ((pane->size[Y] / ((double)mapdata->size[Y] * BOX_SIZE)) < scale)
-		scale = pane->size[Y] / ((double)mapdata->size[Y] * BOX_SIZE);
-	return (scale);
+	scale_x = pane->size[X] / ((double)mapdata->size[X] * BOX_SIZE);
+	scale_y = pane->size[Y] / ((double)mapdata->size[Y] * BOX_SIZE);
+	if (scale_x < scale_y)
+		return (scale_x);
+	else
+		return (scale_y);
 }
 
 void	map_topixel(t_pane *pane, int *pos, int *pixel)

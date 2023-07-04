@@ -12,21 +12,22 @@
 
 #include "game.h"
 
-void	draw_rect(t_screen *idata, int *size, int *pos, int color)
+void	draw_rect(t_pane *pane, t_idraw *info)
 {
 	int	i[2];
 	int	newpos[2];
 
 	i[X] = 0;
 	i[Y] = 0;
-	while (i[X] < size[X] && i[Y] < size[Y])
+	while (i[X] < info->size[X] && i[Y] < info->size[Y])
 	{
-		newpos[X] = pos[X] + i[X];
-		newpos[Y] = pos[Y] + i[Y];
-		// if (i[X] != 0 && i[X] != size[X] && i[Y] != 0 && i[Y] != size[Y])
-			draw_pixel(idata, newpos, color);
+		newpos[X] = info->pos[X] + i[X];
+		newpos[Y] = info->pos[Y] + i[Y];
+		if (check_bounds(newpos, pane->min_bounds, pane->max_bounds)
+			&& check_mapbounds(newpos, pane->screen->size))
+			draw_pixel(pane->screen, newpos, info->color);
 		i[X]++;
-		if (i[X] == size[X] && i[Y] < size[Y])
+		if (i[X] == info->size[X] && i[Y] < info->size[Y])
 		{
 			i[X] = 0;
 			i[Y]++;
