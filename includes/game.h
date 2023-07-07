@@ -24,7 +24,6 @@
 # include <math.h>
 # include "libft.h"
 # include "mlx.h"
-// # include "mlx_int.h"
 # include "keys.h"
 # include "events.h"
 # include "colortag.h"
@@ -173,22 +172,15 @@ typedef struct s_rayhit
 
 typedef struct s_ray
 {
-	int		side;
-	int		face;
-	int		line_height; //not
-	int		draw_start; //not
-	int		draw_end; //not
-	int		hit_flag; // needed?
-	int		map[2];
-	int		step[2];
-	double	perp_wall_dist; //not
-	double	sideDist[2];
-	double	dir[2];
-	double	deltaDist[2];
-	char	*col;
-	double	*p;
-	int		*f;
-	t_rayhit hit;
+	int			side;
+	int			face;
+	int			hit_flag;
+	int			map[2];
+	int			step[2];
+	double		side_dist[2];
+	double		dir[2];
+	double		delta_dist[2];
+	char		*col;
 }	t_ray;
 
 typedef struct s_iray
@@ -223,13 +215,13 @@ typedef struct s_pane
 	struct s_game	*game;
 }	t_pane;
 
-typedef struct	s_ui
+typedef struct s_ui
 {
 	int		minimap_box_size;
 	double	minimap_scale;
 }	t_ui;
 
-typedef struct	s_screen
+typedef struct s_screen
 {
 	int		bpp;
 	int		len;
@@ -239,17 +231,16 @@ typedef struct	s_screen
 	void	*img;
 }	t_screen;
 
-
 typedef struct s_map
 {
-	char	valid_skyfloor[2];
-	int		trgb[2];
-	int		size[2];
-	int		tex_size[4][2];
-	char	inst_rot[2];
-	char	**map;
+	char		valid_skyfloor[2];
+	int			trgb[2];
+	int			size[2];
+	int			tex_size[4][2];
+	char		inst_rot[2];
+	char		**map;
 	t_screen	*texture;
-	int		*start_pos;
+	int			*start_pos;
 }	t_map;
 
 typedef struct s_cam
@@ -257,7 +248,6 @@ typedef struct s_cam
 	int		axis[4];
 	int		orientation[2];
 	double	plane[2];
-	double	cameraX;
 }	t_cam;
 
 typedef struct s_object
@@ -280,6 +270,8 @@ typedef struct s_instance
 typedef struct s_game
 {
 	char		show_minimap;
+	char		allow_resize;
+	char		allow_zoom;
 	char		enable_parallax;
 	int			total_insts;
 	int			state;
@@ -295,6 +287,17 @@ typedef struct s_game
 	t_screen	*screen;
 	t_pane		**pane;
 }	t_game;
+
+typedef struct s_wall
+{
+	int			screen_x;
+	double		dist;
+	double		height;
+	double		start;
+	double		end;
+	t_rayhit	*hit;
+	t_game		*game;
+}	t_wall;
 
 // ****************************************************************************
 // *                                FUNCTIONS                                 *
@@ -331,14 +334,12 @@ int			window_init(t_game *game);
 void		window_clear(t_game *game);
 void		setup_controls(t_game *game);
 
-
 /* Logging */
 
 void		print_log(int n, ...);
 int			assert_log(char test, char *str_true, char *str_false);
 void		header_log(char *header, char *message, char *color);
 int			error_log(char *msg);
-
 
 /* Drawing */
 
@@ -351,11 +352,9 @@ void		draw_rect(t_pane *pane, t_idraw *info);
 void		draw_pixel(t_screen *idata, int *pos, int color);
 void		draw_column(t_pane *pane, t_idraw *info);
 
-
 /* Vectors */
 
 void		vector2(int i, int j, int *target_i, int *target_j);
-
 
 /* Game Controls */
 
@@ -368,8 +367,7 @@ int			window_onclose(t_game *game);
 int			window_onresize(t_game *game);
 
 char		*get_key_name(int value);
-int			get_key_value(char* name);
-
+int			get_key_value(char *name);
 
 /* Commands */
 
@@ -377,10 +375,8 @@ void		cmd_chdir_two(t_game *game, int key, char pressed);
 void		cmd_chdir_four(t_game *game, int key, char pressed);
 void		cmd_chrot(t_game *game, int key, char pressed);
 
-
 /* Behaviours */
 void		player_move_rot(t_game *game, t_inst *inst);
-
 
 /* Pane System */
 
@@ -390,7 +386,6 @@ void		pane_setdata_ratio(t_pane *pane, int *size,	double ratio_x,
 				double ratio_y);
 void		pane_resize(t_pane *pane, int value);
 
-
 /* UI */
 
 double		get_minimap_scale(t_game *game, t_pane *pane);
@@ -398,29 +393,23 @@ void		map_topixel(t_pane *pane, int *pos, int *pixel);
 int			map_getpixel_x(t_pane *pane, int x);
 int			map_getpixel_y(t_pane *pane, int y);
 
-
 /* Rendering */
 
 int			render_game(t_game *game);
 void		render_fov(t_game *game, t_rayhit *hit);
 void		render_skyfloor(t_game *game);
-void		render_minimap(t_game *game);
+void		render_minimap(t_game *game, char **map);
 void		resize_minimap(t_game *game, int key);
 void		render_textures(t_game *game, t_rayhit *hit, int screen_x);
-
 
 /* Raycasting */
 
 void		ray2(t_game *game, t_iray *iray, t_rayhit *hit);
-t_rayhit	*ray(t_game *game, t_inst *inst, t_pane *pane, double camera_x, int w, double view, int color);
 int			ray_get_face(int step, int side);
-
-
 
 /* Debugging */
 
 void		debug_ray(t_game *game, t_rayhit *hit, int color);
-
 
 /* Validation */
 
@@ -433,7 +422,10 @@ int			get_textures(t_game *game, char **input);
 int			get_skyfloor(t_game *game, char **arr, int sf);
 int			build_map(t_game *game, int fd);
 int			map_checker(t_game *game);
-
+char		validate_player(char c);
+int			check_empty_line(char *line);
+int			type_handler(char *type);
+int			check_limits(char *line);
 
 /* Other */
 

@@ -84,14 +84,14 @@ SRCS		:=	\
 				srcs/render/skyfloor.c	\
 				srcs/raycaster/ray.c	\
 				srcs/debug/debug_ray.c	\
+				srcs/validation/data_textures.c	\
+				srcs/validation/data_skyfloor.c	\
+				srcs/validation/input_args.c	\
 				srcs/validation/map_loader.c	\
-				srcs/validation/get_textures.c	\
-				srcs/validation/check_args.c	\
-				srcs/validation/validation_utils.c	\
-				srcs/validation/read_loop.c	\
-				srcs/validation/get_skyfloor.c	\
+				srcs/validation/map_read_loop.c	\
 				srcs/validation/build_map.c	\
-				srcs/validation/map_checker.c	\
+				srcs/validation/build_checker.c	\
+				srcs/validation/validation_utils.c	\
 				srcs/render/textures.c	\
 				srcs/raycaster/ray_utils.c	\
 				srcs/main.c

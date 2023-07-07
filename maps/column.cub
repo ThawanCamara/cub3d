@@ -1,11 +1,9 @@
-NO ./assets/textures/graywall.xpm
+C 128,128,123
 SO ./assets/textures/wall_blue.xpm
+NO ./assets/textures/false.xpm
+F 82,82,82
 WE ./assets/textures/wall_flag.xpm
 EA ./assets/textures/wall_wooden.xpm
-
-F 82,82,82
-
-C 128,128,136
 
 1111
 1001

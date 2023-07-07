@@ -24,7 +24,8 @@ int	keyboard_onpress(int key, t_game *game)
 		cmd_chdir_four(game, key, TRUE);
 	if (game->enable_parallax && (key == KEY_LEFT || key == KEY_RIGHT))
 		cmd_chrot(game, key, TRUE);
-	if ((key == KEY_EQUAL || key == KEY_MINUS) && game->show_minimap)
+	if ((key == KEY_EQUAL || key == KEY_MINUS) && game->show_minimap
+		&& game->allow_resize)
 		resize_minimap(game, key);
 	return (0);
 }

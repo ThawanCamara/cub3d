@@ -35,13 +35,17 @@ const char	**get_map(void)
 	return ((const char **)map);
 }
 
-static int	validate_textures(char **textures)
-{
-	return (textures[NORTH]
-		&& textures[SOUTH]
-		&& textures[WEST]
-		&& textures[EAST]);
-}
+// static int	validate_textures(char **textures)
+// static int	validate_textures(t_screen *textures)
+// {
+// 	if (!textures)
+// 		return (0);
+// 	else
+// 		return (textures[NORTH]
+// 			&& textures[SOUTH]
+// 			&& textures[WEST]
+// 			&& textures[EAST]);
+// }
 
 int	map_init(t_game *game)
 {
@@ -51,12 +55,10 @@ int	map_init(t_game *game)
 	print_log(1, STR_BUILD_MAP);
 	game->mapdata = NULL;
 	valid = map_loader(game, game->mapname);
-	assert_log(validate_textures((char **)game->mapdata->texture) && valid == 0,
+	assert_log(game->mapdata->texture && valid == 0,
 		STR_BUILD_MAP_S, STR_BUILD_DATA_F);
 	return (game->mapdata != NULL && valid == 0);
 }
-
-// free(game->mapdata->inst_rot);
 
 void	map_clear(t_game *game)
 {

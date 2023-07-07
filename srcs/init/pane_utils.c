@@ -51,7 +51,7 @@ void	pane_setdata(t_pane *pane, int *size, int *offset)
 void	pane_setdata_ratio(t_pane *pane, int *size,
 		double ratio_x, double ratio_y)
 {
-	double			tmp;
+	double		tmp;
 	t_screen	*sc;
 
 	if (!pane)
@@ -88,7 +88,7 @@ void	pane_resize(t_pane *pane, int value)
 	tmp = (double)(pane->size[X]) / pane->screen->size[X];
 	if (tmp > pane->scale)
 		pane->scale = tmp;
-	tmp = (double)(pane->size[Y])/ pane->screen->size[Y];
+	tmp = (double)(pane->size[Y]) / pane->screen->size[Y];
 	if (tmp > pane->scale)
 		pane->scale = tmp;
 }

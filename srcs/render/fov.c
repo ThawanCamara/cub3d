@@ -35,6 +35,7 @@ static void	cast_rays(t_game *game, t_rayhit *hit, double *raydir, int screen_x)
 }
 
 // if (camera_x < 0.002500 && camera_x > -0.002500)
+// if (camera_x < 0.003500 && camera_x > -0.003500)
 
 void	get_fov(t_game *game, t_rayhit *hit, t_inst *inst, t_pane *pane)
 {
@@ -48,16 +49,7 @@ void	get_fov(t_game *game, t_rayhit *hit, t_inst *inst, t_pane *pane)
 		camera_x = -2 * i / (double)pane->size[X] + 1;
 		raydir[X] = inst->obj->dir[X] + inst->cam->plane[X] * camera_x;
 		raydir[Y] = inst->obj->dir[Y] + inst->cam->plane[Y] * camera_x;
-		// if (camera_x < 0.1500 && camera_x > -0.1500)
-		// if (camera_x < 0.003500 && camera_x > -0.003500)
-		// if (camera_x < 0.013500 && camera_x > -0.013500)
-		{
-			cast_rays(game, hit, raydir, i);
-			// printf("%d) dist %f, face: %d\n", i, hit[i].distance, hit[i].face);
-
-			// printf("%d)face: %d\n", i, hit[i].face);
-
-		}
+		cast_rays(game, hit, raydir, i);
 	}
 }
 

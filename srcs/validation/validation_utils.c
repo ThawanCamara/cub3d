@@ -17,14 +17,15 @@ int	map_setup_memory(t_game *game)
 	game->mapdata = (t_map *)malloc(sizeof(t_map));
 	if (game->mapdata == NULL)
 		return (1);
-	game->mapdata->texture = (t_screen *)malloc(sizeof(t_screen ) * 4);
+	game->mapdata->texture = (t_screen *)malloc(sizeof(t_screen) * 4);
 	if (game->mapdata->texture == NULL)
 		return (1);
 	game->mapdata->texture[NORTH].img = NULL;
 	game->mapdata->texture[SOUTH].img = NULL;
 	game->mapdata->texture[WEST].img = NULL;
 	game->mapdata->texture[EAST].img = NULL;
-	game->mapdata->start_pos = (int *)malloc(sizeof(int) * (2 * game->total_insts));
+	game->mapdata->start_pos = (int *)malloc(sizeof(int)
+			* (2 * game->total_insts));
 	if (game->mapdata->start_pos == NULL)
 		return (1);
 	game->mapdata->map = NULL;
@@ -48,4 +49,9 @@ double	get_rotation(char rot)
 	else if (rot == 'E')
 		return (0);
 	return (35);
+}
+
+char	validate_player(char c)
+{
+	return (c == 'N' || c == 'S' || c == 'W' || c == 'E');
 }

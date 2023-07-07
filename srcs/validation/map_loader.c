@@ -28,7 +28,7 @@ int	map_loader(t_game *game, char *mapname)
 {
 	int	fd;
 	int	ret;
-	
+
 	if (map_setup_memory(game))
 		return (1);
 	fd = open_file(mapname);

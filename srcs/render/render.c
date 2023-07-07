@@ -50,20 +50,13 @@ void	render_player(t_game *game, t_rayhit *hit)
 
 int	render_game(t_game *game)
 {
-	// t_iray		iray;
 	t_rayhit	hit[SCREEN_WIDTH];
 
-	// iray.dir[X] = game->inst[0].obj->dir[X];
-	// iray.dir[Y] = -game->inst[0].obj->dir[Y];
-	// iray.start[X] = game->inst[0].obj->pos[X];
-	// iray.start[Y] = game->inst[0].obj->pos[Y];
-	// iray.max_len = 100;
-	// ray2(game, &iray, &hit);
 	render_skyfloor(game);
 	render_fov(game, hit);
 	if (game->show_minimap)
 	{
-		render_minimap(game);
+		render_minimap(game, game->mapdata->map);
 		render_player(game, hit);
 	}
 	mlx_put_image_to_window(game->mlx, game->win, game->screen->img, 0, 0);

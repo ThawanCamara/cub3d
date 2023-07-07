@@ -15,7 +15,7 @@
 #define ARR 0
 #define TMP 1
 
-size_t	get_max_len(char **arr)
+static size_t	get_max_len(char **arr)
 {
 	size_t	len;
 	size_t	tmp;
@@ -34,7 +34,7 @@ size_t	get_max_len(char **arr)
 	return (len);
 }
 
-int	make_map(t_game *game, char **arr)
+static int	make_map(t_game *game, char **arr)
 {
 	size_t	i;
 	size_t	size;
@@ -59,7 +59,7 @@ int	make_map(t_game *game, char **arr)
 		game->mapdata->map[i][len] = 0;
 	}
 	if (map_checker(game))
-		return (1);
+		return (error_log("Error on checking."));
 	return (0);
 }
 

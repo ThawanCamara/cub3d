@@ -16,15 +16,16 @@
 
 int	mouse_onpress(int key, int x, int y, t_game *game)
 {
-	(void)game;
-	(void)key;
 	(void)x;
 	(void)y;
-	if (key == KEY_SCR_DOWN && game->zoom > 0.20)
-		game->zoom -= 0.15;
-	if (key == KEY_SCR_UP && game->zoom)
-		game->zoom += 0.15;
-	printf("Zoom = %f\n", game->zoom);
+	if (game->allow_zoom)
+	{
+		if (key == KEY_SCR_DOWN && game->zoom > 0.20)
+			game->zoom -= 0.15;
+		if (key == KEY_SCR_UP && game->zoom < 5)
+			game->zoom += 0.15;
+		printf("Zoom = %f\n", game->zoom);
+	}
 	return (0);
 }
 

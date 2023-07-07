@@ -19,9 +19,9 @@ int	perception(t_game *game, t_inst *inst, int value, int angle)
 	int			color;
 
 	iray.dir[X] = cos((inst->obj->rotation + angle)
-	* game->degtorad);
+			* game->degtorad);
 	iray.dir[Y] = -sin((inst->obj->rotation + angle)
-	* game->degtorad);
+			* game->degtorad);
 	iray.start[X] = inst->obj->pos[X];
 	iray.start[Y] = inst->obj->pos[Y];
 	iray.max_len = 0.2;
