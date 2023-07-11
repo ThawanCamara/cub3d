@@ -6,14 +6,14 @@
 #    By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 07:08:10 by tde-souz          #+#    #+#              #
-#    Updated: 2023/07/03 19:27:08 by tde-souz         ###   ########.fr        #
+#    Updated: 2023/07/09 13:01:42 by tde-souz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ******************************************************************************
 # *									SETTINGS								   *
 # ******************************************************************************
-NAME		:=	cub3d
+NAME		:=	cub3D
 
 CURRENT_OS	:=	$(shell uname)
 INCLUDES	=	-I libft/ -I includes 
@@ -113,7 +113,7 @@ else
 endif
 
 ${LIBFT_DIR}${LIBFT}.a:
-	make -C ${LIBFT_DIR} extra
+	make --Silent -C ${LIBFT_DIR} extra
 
 ${MLX_DIR}${MLX}.a:
 	make -C ${MLX_DIR}
