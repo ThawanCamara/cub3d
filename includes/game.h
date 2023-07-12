@@ -426,6 +426,7 @@ char		validate_player(char c);
 int			check_empty_line(char *line);
 int			type_handler(char *type);
 int			check_limits(char *line);
+int			single_map(t_game *game);
 
 /* Other */
 

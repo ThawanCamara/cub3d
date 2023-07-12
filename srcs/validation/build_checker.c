@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_checker.c                                      :+:      :+:    :+:   */
+/*   build_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -76,9 +76,9 @@ static int	check_spots(t_map *map, int x, int y, int bounds[2])
 		|| y < 0
 		|| y > bounds[Y] - 1)
 		return (0);
-	if (map->map[y][x] == '0')
-		return (1);
-	return (0);
+	if (map->map[y][x] == '1' || map->map[y][x] == ' ')
+		return (0);
+	return (1);
 }
 
 // int	is_map_closed(t_game *game)
@@ -127,7 +127,7 @@ int	map_checker(t_game *game)
 		else
 			check += check_content(game, game->mapdata->map[i], &player, i);
 	}
-	if (is_map_closed(game->mapdata))
+	if (is_map_closed(game->mapdata) || single_map(game) > 2)
 		return (1);
 	game->inst[0].obj->pos[X] = game->mapdata->start_pos[X] + 0.5;
 	game->inst[0].obj->pos[Y] = game->mapdata->start_pos[Y] + 0.5;
