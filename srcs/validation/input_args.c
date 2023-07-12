@@ -71,7 +71,7 @@ int	check_args(t_game *game, int argc, char *argv[])
 	return (status);
 }
 
-int check_empty_line(char *line)
+int	check_empty_line(char *line)
 {
 	char	*s;
 	char	valid;
@@ -87,8 +87,8 @@ int check_empty_line(char *line)
 int	type_handler(char *type)
 {
 	const char	*tab[] = {"NO\0", "SO\0", "WE\0", "EA\0", 0};
-	char	valid;
-	int		i;
+	char		valid;
+	int			i;
 
 	valid = 0;
 	i = -1;
@@ -97,7 +97,7 @@ int	type_handler(char *type)
 		if (ft_strncmp(tab[i], type, 3) == 0)
 			return (1);
 	}
-	if (ft_strncmp(type, "C\0", 2) == 0 || ft_strncmp(type, "F\0", 2) == 0 )
+	if (ft_strncmp(type, "C\0", 2) == 0 || ft_strncmp(type, "F\0", 2) == 0)
 		valid = 2;
 	else if (check_empty_line(type))
 		valid = 3;

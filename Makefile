@@ -6,7 +6,7 @@
 #    By: tde-souz <tde-souz@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 07:08:10 by tde-souz          #+#    #+#              #
-#    Updated: 2023/07/09 13:01:42 by tde-souz         ###   ########.fr        #
+#    Updated: 2023/07/12 12:45:09 by tde-souz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -114,7 +114,7 @@ else
 endif
 
 ${LIBFT_DIR}${LIBFT}.a:
-	make --Silent -C ${LIBFT_DIR} extra
+	make -s -C ${LIBFT_DIR} extra
 
 ${MLX_DIR}${MLX}.a:
 	make -C ${MLX_DIR}

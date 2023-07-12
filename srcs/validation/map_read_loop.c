@@ -12,10 +12,6 @@
 
 #include "game.h"
 
-// procurar pelo inicio do mapa na check_missing_data
-// fazer split com virgula no rgb e nao fazer split de espaço e passar a string deslocada
-// não podem haver espaços no miolo do mapa
-
 static int	check_missing_data(t_game *game)
 {
 	if (game->mapdata->texture[NORTH].img
@@ -38,7 +34,7 @@ static int	get_input(t_game *game, char *line)
 	if (line == NULL)
 		return (0);
 	arr = ft_split(line, ' ');
-	if (arr != NULL /* && ft_strarr_size(arr) == 2 */)
+	if (arr != NULL)
 	{
 		check = type_handler(arr[0]);
 		if (check == 2)
@@ -46,10 +42,7 @@ static int	get_input(t_game *game, char *line)
 		else if (check == 1)
 			valid += get_textures(game, arr);
 		else if (check != 3)
-		{
-			printf("%s - %d\n", arr[0], valid);
 			valid += error_log("Unknown specifier.");
-		}
 	}
 	ft_free_arr((void **)arr);
 	return (valid);

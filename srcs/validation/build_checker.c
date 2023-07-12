@@ -17,13 +17,11 @@ int	check_limits(char *line)
 	size_t	i;
 	size_t	j;
 	char	check;
-	// char	wall;
 
 	i = 0;
 	if (line == NULL)
 		return (0);
 	check = 0;
-	// wall = 0;
 	while (*(line + i) && !ft_isescape(*(line + i)))
 	{
 		j = -1;
@@ -31,9 +29,8 @@ int	check_limits(char *line)
 		while (MAP_BORDERS[++j])
 		{
 			check += (*(line + i) == MAP_BORDERS[j]);
-			// wall += *(line + i) == 1;
 		}
-		if (check == 0 /* || wall == 0 */)
+		if (check == 0)
 			return (1);
 		i++;
 	}
@@ -120,8 +117,6 @@ int	map_checker(t_game *game)
 	i = -1;
 	while (game->mapdata->map[++i] && check == 0)
 	{
-		// if (check_empty_line(game->mapdata->map[i]))
-		// 	return (1);
 		if (i == 0 || i == (ft_strarr_size(game->mapdata->map) - 1))
 			check += check_limits(game->mapdata->map[i]);
 		else

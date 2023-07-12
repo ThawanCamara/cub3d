@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   extra_val.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: llima <llima@student.42.rio>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/12 13:31:00 by llima             #+#    #+#             */
+/*   Updated: 2023/07/12 13:32:03 by tde-souz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "game.h"
 
@@ -9,10 +19,8 @@ static int	is_line_blank(char *line)
 	i = -1;
 	while (line[++i] != '\0')
 	{
-		
 		if (line[i] != ' ' && line[i] != '\n')
 			return (0);
-
 	}
 	return (1);
 }
@@ -27,11 +35,9 @@ static int	is_col_blank(t_game *game, int i)
 		if (game->mapdata->map[j][i] != ' '
 		&& game->mapdata->map[j][i] != '\n')
 			return (0);
-		
 	}
 	return (1);
 }
-
 
 int	single_map(t_game *game)
 {
@@ -43,7 +49,7 @@ int	single_map(t_game *game)
 	while (game->mapdata->map[++i] != NULL)
 	{
 		if (is_line_blank(game->mapdata->map[i]))
-			continue;
+			continue ;
 		mf++;
 		while (is_line_blank(game->mapdata->map[i]) == 0
 			&& game->mapdata->map[i + 1] != NULL)
@@ -53,7 +59,7 @@ int	single_map(t_game *game)
 	while (game->mapdata->map[0][++i])
 	{
 		if (is_col_blank(game, i))
-			continue;
+			continue ;
 		mf++;
 		while (is_col_blank(game, i) == 0
 			&& game->mapdata->map[0][i + 1] != '\0')
