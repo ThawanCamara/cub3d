@@ -1,0 +1,16 @@
+C 255,255,255
+
+NO ./assets/textures/graywall.xpm
+SO ./assets/textures/wall_blue.xpm
+
+WE ./assets/textures/wall_flag.xpm
+
+F 25,25,255
+
+EA ./assets/textures/wall_wooden.xpm
+
+
+1111111
+1 S   1
+111111
+

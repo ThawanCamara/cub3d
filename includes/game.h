@@ -36,7 +36,7 @@
 #  define TITLE			"SILENT VIRAS"
 # endif
 
-# define SCREEN_OFFSET	800 // could be a screen variable
+# define SCREEN_OFFSET	800
 # define SCREEN_WIDTH	800
 # define SCREEN_HEIGHT	600
 
@@ -348,7 +348,6 @@ int			check_mapbounds(int *pos, int *bounds);
 void		draw_line_r(t_pane *pane, t_idraw *info);
 void		draw_line_dir(t_pane *pane, t_idraw *info);
 void		draw_rect(t_pane *pane, t_idraw *info);
-// void		draw_rect(t_screen *idata, int *size, int *pos, int color);
 void		draw_pixel(t_screen *idata, int *pos, int color);
 void		draw_column(t_pane *pane, t_idraw *info);
 
@@ -427,6 +426,7 @@ int			check_empty_line(char *line);
 int			type_handler(char *type);
 int			check_limits(char *line);
 int			single_map(t_game *game);
+int			check_limits_h(char **map);
 
 /* Other */
 

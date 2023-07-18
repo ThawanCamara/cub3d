@@ -14,13 +14,9 @@
 
 static int	open_file(char *raw_name)
 {
-	const char	path[] = "maps/";
-	char		*filename;
-	int			fd;
+	int	fd;
 
-	filename = ft_strjoin(path, raw_name);
-	fd = open(filename, O_RDONLY);
-	free(filename);
+	fd = open(raw_name, O_RDONLY);
 	return (fd);
 }
 

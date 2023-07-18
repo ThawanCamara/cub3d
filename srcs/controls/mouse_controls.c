@@ -12,8 +12,6 @@
 
 #include "game.h"
 
-// ft_printf("Mouse key %s was pressed at [%d,%d]\n", get_key_name(key), x, y);
-
 int	mouse_onpress(int key, int x, int y, t_game *game)
 {
 	(void)x;
@@ -29,8 +27,6 @@ int	mouse_onpress(int key, int x, int y, t_game *game)
 	return (0);
 }
 
-// ft_printf("Mouse key %s was released at [%d,%d]\n", get_key_name(key), x, y);
-
 int	mouse_onrelease(int key, int x, int y, t_game *game)
 {
 	(void)game;
@@ -40,7 +36,6 @@ int	mouse_onrelease(int key, int x, int y, t_game *game)
 	return (0);
 }
 
-// ft_printf("Mouse moved. Current position is [%d,%d]\n", x, y);
 int	mouse_move(int x, int y, t_game *game)
 {
 	(void)game;

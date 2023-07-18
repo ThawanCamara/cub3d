@@ -20,8 +20,8 @@ int	main(int argc, char *argv[])
 		return (1);
 	game.enable_parallax = FALSE;
 	game.total_insts = 1 + game.enable_parallax;
-	game.allow_resize = 1;
-	game.allow_zoom = 1;
+	game.allow_resize = 0;
+	game.allow_zoom = 0;
 	game.zoom = 1;
 	game.show_minimap = 0;
 	init_handler(&game);

@@ -34,9 +34,6 @@ static void	cast_rays(t_game *game, t_rayhit *hit, double *raydir, int screen_x)
 	render_textures(game, &hit[screen_x], screen_x);
 }
 
-// if (camera_x < 0.002500 && camera_x > -0.002500)
-// if (camera_x < 0.003500 && camera_x > -0.003500)
-
 void	get_fov(t_game *game, t_rayhit *hit, t_inst *inst, t_pane *pane)
 {
 	int		i;

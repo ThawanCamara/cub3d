@@ -46,7 +46,7 @@ static int	count_commas(char *str)
 
 	i = ft_strlen(str);
 	sum = 0;
-	while (--i > 0)
+	while (--i >= 0)
 		sum += *(str + i) == ',';
 	return (sum);
 }
@@ -61,7 +61,7 @@ int	get_skyfloor(t_game *game, char **arr, int sf)
 		return (error_log("Double attempt on writing TRGB"));
 	arr[1][ft_strlen(arr[1]) - 1] = 0;
 	if (count_commas(arr[1]) != 2)
-		return (error_log("Wrong amount of commas"));
+		return (error_log("Wrong color format"));
 	values = ft_split(arr[1], ',');
 	if (values == NULL)
 		return (error_log("Failed allocation for TRGB processing"));

@@ -12,8 +12,6 @@
 
 #include "game.h"
 
-//Note: Could use dirX dirY instead of cos(-info->radians)
-
 static void	set_data_r(t_idraw *info, int *pos, int *delta, int *step)
 {
 	pos[X] = info->pos[X] + info->length * cos(-info->rad);

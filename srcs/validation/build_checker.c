@@ -78,7 +78,6 @@ static int	check_spots(t_map *map, int x, int y, int bounds[2])
 	return (1);
 }
 
-// int	is_map_closed(t_game *game)
 static int	is_map_closed(t_map *map)
 {
 	int	i[2];
@@ -122,7 +121,8 @@ int	map_checker(t_game *game)
 		else
 			check += check_content(game, game->mapdata->map[i], &player, i);
 	}
-	if (is_map_closed(game->mapdata) || single_map(game) > 2)
+	if (is_map_closed(game->mapdata) || single_map(game) > 2
+		|| check_limits_h(game->mapdata->map))
 		return (1);
 	game->inst[0].obj->pos[X] = game->mapdata->start_pos[X] + 0.5;
 	game->inst[0].obj->pos[Y] = game->mapdata->start_pos[Y] + 0.5;

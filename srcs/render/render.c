@@ -12,26 +12,6 @@
 
 #include "game.h"
 
-	// int color;
-	// color = 0x000000ff;
-	// debug_ray(game, &hit, color);
-	// for (int i = 0; i < 4; i++)
-	// {
-	// 	iray.dir[X] = cos((game->inst[0].obj->rotation + 90 * i)
-		//* game->degtorad);
-	// 	iray.dir[Y] = -sin((game->inst[0].obj->rotation + 90 * i)
-		//* game->degtorad);
-	// 	iray.start[X] = game->inst[0].obj->pos[X];
-	// 	iray.start[Y] = game->inst[0].obj->pos[Y];
-	// 	iray.max_len = 2;
-	// 	ray2(game, &iray, &hit);
-	// 	if (hit.flag == 1)
-	// 		color = 0x00ff0000;
-	// 	else
-	// 		color = 0x0000ff00;
-	// 	debug_ray(game, &hit, color);
-	// }
-
 void	render_player(t_game *game, t_rayhit *hit)
 {
 	int	color;

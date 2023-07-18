@@ -67,3 +67,19 @@ int	single_map(t_game *game)
 	}
 	return (mf);
 }
+
+int	check_limits_h(char **map)
+{
+	int	i;
+	int	len;
+
+	i = -1;
+	len = ft_strlen(map[0]) - 1;
+	while (map[++i])
+	{
+		if ((map[i][0] != '1' && map[i][0] != ' ')
+			|| (map[i][len] != '1' && map[i][len] != ' '))
+			return (1);
+	}
+	return (0);
+}

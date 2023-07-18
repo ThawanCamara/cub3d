@@ -35,18 +35,6 @@ const char	**get_map(void)
 	return ((const char **)map);
 }
 
-// static int	validate_textures(char **textures)
-// static int	validate_textures(t_screen *textures)
-// {
-// 	if (!textures)
-// 		return (0);
-// 	else
-// 		return (textures[NORTH]
-// 			&& textures[SOUTH]
-// 			&& textures[WEST]
-// 			&& textures[EAST]);
-// }
-
 int	map_init(t_game *game)
 {
 	char	valid;
